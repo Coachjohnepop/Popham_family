@@ -79,3 +79,57 @@ export function markerOffsetTop(kind: TimelineMarkerKind): number {
       return 26;
   }
 }
+
+export type TimelineTickGrid = "century" | "half";
+
+export type TimelineTick = {
+  year: number;
+  left: number;
+  grid: TimelineTickGrid | null;
+  isStart: boolean;
+  isEnd: boolean;
+};
+
+export function yearToTimelineLeft(year: number, min: number, max: number): number {
+  const span = Math.max(max - min, 1);
+  return ((year - min) / span) * 100;
+}
+
+export function formatTimelineYear(year: number): string {
+  return year.toLocaleString("en-US");
+}
+
+export function buildTimelineTicks(min: number, max: number): TimelineTick[] {
+  const byYear = new Map<number, TimelineTick>();
+
+  function upsert(year: number, patch: Partial<Omit<TimelineTick, "year" | "left">>) {
+    const existing = byYear.get(year);
+    if (existing) {
+      byYear.set(year, { ...existing, ...patch });
+      return;
+    }
+
+    byYear.set(year, {
+      year,
+      left: yearToTimelineLeft(year, min, max),
+      grid: null,
+      isStart: false,
+      isEnd: false,
+      ...patch,
+    });
+  }
+
+  const firstFifty = Math.ceil(min / 50) * 50;
+  for (let year = firstFifty; year <= max; year += 50) {
+    upsert(year, { grid: year % 100 === 0 ? "century" : "half" });
+  }
+
+  if (min !== max) {
+    upsert(min, { isStart: true });
+    upsert(max, { isEnd: true });
+  } else {
+    upsert(min, { isStart: true, isEnd: true });
+  }
+
+  return Array.from(byYear.values()).sort((a, b) => a.year - b.year);
+}

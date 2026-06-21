@@ -3,10 +3,13 @@
 import { useMemo } from "react";
 import {
   buildTimelineMarkers,
+  buildTimelineTicks,
+  formatTimelineYear,
   getMarkerColor,
   getMarkerLabel,
   markerOffsetTop,
   type TimelineMarkerKind,
+  type TimelineTick,
 } from "@/lib/timeline";
 import type { TimelineEvent } from "@/lib/types";
 
@@ -18,8 +21,32 @@ type TimelineBarProps = {
   onYearChange: (year: number) => void;
 };
 
+function tickLabelClass(tick: TimelineTick): string {
+  if (tick.grid === "century") {
+    return "font-serif text-[11px] font-semibold tracking-wide text-[#2b2118]";
+  }
+  if (tick.grid === "half") {
+    return "text-[10px] font-medium text-[#6f5c49]";
+  }
+  if (tick.isStart || tick.isEnd) {
+    return "text-[10px] font-semibold text-[#8b5e34]";
+  }
+  return "text-[10px] text-[#6f5c49]";
+}
+
+function tickMarkClass(tick: TimelineTick): string {
+  if (tick.grid === "century") {
+    return "h-3 w-px bg-[#8b5e34]";
+  }
+  if (tick.grid === "half") {
+    return "h-2 w-px bg-[#c9b89e]";
+  }
+  return "h-2 w-px bg-[#8b5e34]/50";
+}
+
 export default function TimelineBar({ events, min, max, year, onYearChange }: TimelineBarProps) {
   const markers = useMemo(() => buildTimelineMarkers(events, min, max), [events, min, max]);
+  const ticks = useMemo(() => buildTimelineTicks(min, max), [min, max]);
 
   return (
     <div className="rounded-2xl border border-[#e2d4bf] bg-[#fffaf2] p-5">
@@ -28,11 +55,34 @@ export default function TimelineBar({ events, min, max, year, onYearChange }: Ti
         <span>{year}</span>
       </div>
 
-      <div className="relative px-1 pt-9 pb-1">
+      <div className="relative px-1 pt-9 pb-7">
         <div
           className="pointer-events-none absolute inset-x-1 top-9 h-1.5 rounded-full bg-[#e2d4bf]"
           aria-hidden
         />
+
+        {ticks.map((tick) => {
+          const isEdgeStart = tick.year === min;
+          const isEdgeEnd = tick.year === max && !isEdgeStart;
+
+          return (
+            <div
+              key={`tick-${tick.year}`}
+              className="pointer-events-none absolute top-9 z-[5] flex flex-col items-center"
+              style={{
+                left: `calc(${tick.left}% + 4px)`,
+                transform: isEdgeStart
+                  ? "translateX(0)"
+                  : isEdgeEnd
+                    ? "translateX(-100%)"
+                    : "translateX(-50%)",
+              }}
+              aria-hidden
+            >
+              <span className={tickMarkClass(tick)} />
+            </div>
+          );
+        })}
 
         {markers.map((marker) => {
           const isActive = marker.year === year;
@@ -67,11 +117,30 @@ export default function TimelineBar({ events, min, max, year, onYearChange }: Ti
           className="relative z-10 w-full accent-[#8b5e34]"
           aria-label="Timeline year"
         />
-      </div>
 
-      <div className="mt-2 flex justify-between text-xs text-[#6f5c49]">
-        <span>{min}</span>
-        <span>{max}</span>
+        <div className="pointer-events-none absolute inset-x-1 top-[calc(2.25rem+0.75rem)] h-5">
+          {ticks.map((tick) => {
+            const isEdgeStart = tick.year === min;
+            const isEdgeEnd = tick.year === max && !isEdgeStart;
+
+            return (
+              <span
+                key={`label-${tick.year}`}
+                className={`absolute whitespace-nowrap tabular-nums ${tickLabelClass(tick)}`}
+                style={{
+                  left: `calc(${tick.left}% + 4px)`,
+                  transform: isEdgeStart
+                    ? "translateX(0)"
+                    : isEdgeEnd
+                      ? "translateX(-100%)"
+                      : "translateX(-50%)",
+                }}
+              >
+                {formatTimelineYear(tick.year)}
+              </span>
+            );
+          })}
+        </div>
       </div>
 
       <div className="mt-3 flex flex-wrap gap-3 text-[11px] text-[#6f5c49]">
