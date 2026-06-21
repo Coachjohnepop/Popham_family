@@ -24,7 +24,7 @@ export default function AppTabs() {
               The Story of Winifred Coss
             </h1>
             <p className="mt-1 max-w-2xl text-sm text-[#6f5c49]">
-              A sixth-grade family history — where the Coss tree meets famous people and places.
+              Where the Coss family tree meets famous people and places in history.
             </p>
           </div>
           <nav className="flex gap-2">

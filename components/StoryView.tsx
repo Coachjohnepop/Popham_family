@@ -39,17 +39,10 @@ export default function StoryView() {
             <p className="mt-1 text-xs text-[#6f5c49]">{story.teaser}</p>
           </button>
         ))}
-        <p className="text-xs leading-relaxed text-[#6f5c49]">
-          Phase 1 will expand this to all 79 chapters from the Word document, rewritten at
-          sixth-grade reading level with family × famous-people callouts.
-        </p>
       </aside>
 
       <article className="rounded-3xl border border-[#e2d4bf] bg-white p-6 shadow-sm sm:p-8">
-        <p className="text-[10px] font-semibold uppercase tracking-[0.3em] text-[#8b5e34]">
-          Grade 6 story
-        </p>
-        <h2 className="mt-2 font-serif text-3xl font-semibold tracking-tight">{active.title}</h2>
+        <h2 className="font-serif text-3xl font-semibold tracking-tight">{active.title}</h2>
         <div className="mt-4 flex flex-wrap gap-2">
           {active.famousPeople.map((name) => (
             <span
