@@ -9,7 +9,7 @@ import StoryIndexView from "@/components/StoryIndexView";
 import MapTimelineView from "@/components/MapTimelineView";
 import FamilyTreeView from "@/components/FamilyTreeView";
 import { APP_TABS, type TabId } from "@/lib/tabs";
-import { SITE_URL } from "@/lib/site";
+import SiteFooter from "@/components/SiteFooter";
 
 function StoryRouter() {
   const pathname = usePathname();
@@ -94,17 +94,7 @@ export default function AppTabs({ initialTab }: AppTabsProps) {
         )}
       </main>
 
-      <footer className="border-t border-[#d9cbb6] bg-[#fffaf2]">
-        <div className="mx-auto flex max-w-6xl flex-col gap-2 px-4 py-4 text-sm text-[#6f5c49] sm:flex-row sm:items-center sm:justify-between">
-          <p>The Story of Winifred Coss — family history for Dad</p>
-          <a
-            href={SITE_URL}
-            className="font-medium text-[#8b5e34] hover:text-[#6f4a28]"
-          >
-            {SITE_URL.replace("https://", "")}
-          </a>
-        </div>
-      </footer>
+      <SiteFooter />
     </div>
   );
 }
