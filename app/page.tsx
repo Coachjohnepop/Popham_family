@@ -1,5 +1,5 @@
-import AppTabs from "@/components/AppTabs";
+import LandingPage from "@/components/LandingPage";
 
 export default function Home() {
-  return <AppTabs />;
+  return <LandingPage />;
 }
