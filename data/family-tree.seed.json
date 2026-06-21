@@ -1,0 +1,164 @@
+{
+  "title": "Winifred Eloise Coss — family convergence",
+  "subtitle": "Two branches from England and Québec meet in Iowa, 1853",
+  "rootId": "winifred",
+  "people": [
+    {
+      "id": "george-alcock",
+      "name": "George Alcock",
+      "branch": "powers",
+      "born": 1581,
+      "place": "Cambridge, England",
+      "note": "Powers branch patriarch in the story"
+    },
+    {
+      "id": "walter-powers-jr",
+      "name": "Walter Powers Jr.",
+      "branch": "powers",
+      "born": 1639,
+      "place": "Essex, England",
+      "parents": ["walter-powers-sr", "joane-newman"]
+    },
+    {
+      "id": "nathaniel-powers",
+      "name": "Nathaniel Powers",
+      "branch": "powers",
+      "spouseId": "esther-johnson"
+    },
+    {
+      "id": "esther-johnson",
+      "name": "Esther Johnson",
+      "branch": "powers",
+      "spouseId": "nathaniel-powers"
+    },
+    {
+      "id": "edith-powers",
+      "name": "Edith Powers",
+      "branch": "powers",
+      "born": 1800,
+      "place": "Athens, Vermont",
+      "parents": ["nathaniel-powers", "esther-johnson"],
+      "spouseId": "warren-coss"
+    },
+    {
+      "id": "louis-hebert",
+      "name": "Louis Hébert",
+      "branch": "goodwater",
+      "born": 1575,
+      "place": "Paris, France",
+      "note": "First French farmer in Canada; Goodwater branch start"
+    },
+    {
+      "id": "jean-bonneau",
+      "name": "Jean Bonneau",
+      "branch": "goodwater",
+      "born": 1595,
+      "place": "France"
+    },
+    {
+      "id": "benjamin-goodwater",
+      "name": "Benjamin Goodwater III",
+      "branch": "goodwater",
+      "spouseId": "mary-louise-carriere"
+    },
+    {
+      "id": "mary-louise-carriere",
+      "name": "Mary Louise Carrière",
+      "branch": "goodwater",
+      "spouseId": "benjamin-goodwater"
+    },
+    {
+      "id": "mary-goodwater",
+      "name": "Mary Ann Goodwater",
+      "branch": "goodwater",
+      "born": 1839,
+      "place": "Lancaster, New York",
+      "parents": ["benjamin-goodwater", "mary-louise-carriere"],
+      "spouseId": "joseph-warren-coss"
+    },
+    {
+      "id": "warren-coss",
+      "name": "Warren Coss",
+      "branch": "coss",
+      "born": 1791,
+      "place": "Lowell, Massachusetts",
+      "spouseId": "edith-powers"
+    },
+    {
+      "id": "joseph-warren-coss",
+      "name": "Joseph Warren Coss",
+      "branch": "coss",
+      "born": 1827,
+      "place": "Massachusetts / New Hampshire",
+      "parents": ["warren-coss", "edith-powers"],
+      "spouseId": "mary-goodwater",
+      "note": "Married 2 Apr 1853 — joins both major branches"
+    },
+    {
+      "id": "edgar-coss",
+      "name": "Edgar Putnam Coss",
+      "branch": "coss",
+      "born": 1855,
+      "place": "Wisconsin",
+      "parents": ["joseph-warren-coss", "mary-goodwater"],
+      "spouseId": "sarah-collingwood"
+    },
+    {
+      "id": "sarah-collingwood",
+      "name": "Sarah Collingwood",
+      "branch": "coss",
+      "spouseId": "edgar-coss"
+    },
+    {
+      "id": "charles-coss",
+      "name": "Charles Whitcomb Coss",
+      "branch": "coss",
+      "born": 1890,
+      "place": "Grand Forks, North Dakota",
+      "parents": ["edgar-coss", "sarah-collingwood"],
+      "spouseId": "ethel-raymond"
+    },
+    {
+      "id": "ethel-raymond",
+      "name": "Ethel Cannon Raymond",
+      "branch": "coss",
+      "spouseId": "charles-coss"
+    },
+    {
+      "id": "winifred",
+      "name": "Winifred Eloise Coss",
+      "branch": "coss",
+      "born": 1922,
+      "place": "Arvilla, North Dakota",
+      "parents": ["charles-coss", "ethel-raymond"],
+      "spouseId": "morris-batie",
+      "highlight": true
+    },
+    {
+      "id": "morris-batie",
+      "name": "Morris Rankin Batie",
+      "branch": "coss",
+      "spouseId": "winifred",
+      "note": "Married 25 Apr 1942, Las Vegas"
+    }
+  ],
+  "powersChain": [
+    "george-alcock",
+    "walter-powers-jr",
+    "nathaniel-powers",
+    "edith-powers"
+  ],
+  "goodwaterChain": [
+    "louis-hebert",
+    "jean-bonneau",
+    "benjamin-goodwater",
+    "mary-goodwater"
+  ],
+  "cossDescent": [
+    "warren-coss",
+    "joseph-warren-coss",
+    "edgar-coss",
+    "charles-coss",
+    "winifred"
+  ]
+}

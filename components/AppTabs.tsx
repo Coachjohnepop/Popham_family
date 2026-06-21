@@ -3,9 +3,11 @@
 import { useState } from "react";
 import StoryView from "@/components/StoryView";
 import MapTimelineView from "@/components/MapTimelineView";
+import FamilyTreeView from "@/components/FamilyTreeView";
 
 const TABS = [
   { id: "story", label: "Storybook" },
+  { id: "tree", label: "Family Tree" },
   { id: "map", label: "Map & Timeline" },
 ] as const;
 
@@ -47,7 +49,9 @@ export default function AppTabs() {
       </header>
 
       <main className="mx-auto w-full max-w-6xl flex-1 px-4 py-6">
-        {tab === "story" ? <StoryView /> : <MapTimelineView />}
+        {tab === "story" && <StoryView />}
+        {tab === "tree" && <FamilyTreeView />}
+        {tab === "map" && <MapTimelineView />}
       </main>
     </div>
   );
