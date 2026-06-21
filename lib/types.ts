@@ -24,10 +24,28 @@ export type TimelineEvent = {
   branch: Branch;
   famousPeople: string[];
   familyNames: string[];
+  mentionsFamily?: boolean;
   location: {
     name: string;
     lat: number;
     lng: number;
     scope: MapScope;
   };
+};
+
+export type IndexedLocation = {
+  id: string;
+  name: string;
+  lat: number;
+  lng: number;
+  scope: MapScope;
+};
+
+export type IndexMeta = {
+  timelineElementsRaw: number;
+  timelineElementsMapped: number;
+  indexedLocations: number;
+  yearMin: number;
+  yearMax: number;
+  withFamousOrFamily: number;
 };

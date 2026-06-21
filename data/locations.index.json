@@ -1,0 +1,478 @@
+[
+  {
+    "id": "massachusetts-bay-colony",
+    "name": "Massachusetts Bay Colony",
+    "lat": 42.36,
+    "lng": -71.05,
+    "scope": "us"
+  },
+  {
+    "id": "plymouth-colony",
+    "name": "Plymouth Colony",
+    "lat": 41.96,
+    "lng": -70.67,
+    "scope": "us"
+  },
+  {
+    "id": "rhode-island-colony",
+    "name": "Rhode Island Colony",
+    "lat": 41.82,
+    "lng": -71.41,
+    "scope": "us"
+  },
+  {
+    "id": "new-hampshire-colony",
+    "name": "New Hampshire Colony",
+    "lat": 43.2,
+    "lng": -71.5,
+    "scope": "us"
+  },
+  {
+    "id": "connecticut-colony",
+    "name": "Connecticut Colony",
+    "lat": 41.76,
+    "lng": -72.67,
+    "scope": "us"
+  },
+  {
+    "id": "massachusetts-bay",
+    "name": "Massachusetts Bay",
+    "lat": 42.36,
+    "lng": -71.05,
+    "scope": "us"
+  },
+  {
+    "id": "trois-rivi-res",
+    "name": "Trois-Rivi\u00e8res",
+    "lat": 46.34,
+    "lng": -72.55,
+    "scope": "world"
+  },
+  {
+    "id": "ville-marie",
+    "name": "Ville-Marie",
+    "lat": 45.5,
+    "lng": -73.57,
+    "scope": "world"
+  },
+  {
+    "id": "beauport",
+    "name": "Beauport",
+    "lat": 46.86,
+    "lng": -71.19,
+    "scope": "world"
+  },
+  {
+    "id": "new-england",
+    "name": "New England",
+    "lat": 42.5,
+    "lng": -71.5,
+    "scope": "us"
+  },
+  {
+    "id": "new-france",
+    "name": "New France",
+    "lat": 46.8,
+    "lng": -71.2,
+    "scope": "world"
+  },
+  {
+    "id": "st-lawrence",
+    "name": "St. Lawrence",
+    "lat": 48.0,
+    "lng": -68.0,
+    "scope": "world"
+  },
+  {
+    "id": "hudson-bay",
+    "name": "Hudson Bay",
+    "lat": 59.0,
+    "lng": -86.0,
+    "scope": "world"
+  },
+  {
+    "id": "leicestershire",
+    "name": "Leicestershire",
+    "lat": 52.63,
+    "lng": -1.13,
+    "scope": "world"
+  },
+  {
+    "id": "wittenberg",
+    "name": "Wittenberg",
+    "lat": 51.87,
+    "lng": 12.65,
+    "scope": "world"
+  },
+  {
+    "id": "massachusetts",
+    "name": "Massachusetts",
+    "lat": 42.4,
+    "lng": -71.5,
+    "scope": "us"
+  },
+  {
+    "id": "boston",
+    "name": "Boston",
+    "lat": 42.36,
+    "lng": -71.06,
+    "scope": "us"
+  },
+  {
+    "id": "salem",
+    "name": "Salem",
+    "lat": 42.52,
+    "lng": -70.89,
+    "scope": "us"
+  },
+  {
+    "id": "plymouth",
+    "name": "Plymouth",
+    "lat": 41.96,
+    "lng": -70.67,
+    "scope": "us"
+  },
+  {
+    "id": "cambridge",
+    "name": "Cambridge",
+    "lat": 42.37,
+    "lng": -71.11,
+    "scope": "us"
+  },
+  {
+    "id": "lexington",
+    "name": "Lexington",
+    "lat": 42.45,
+    "lng": -71.23,
+    "scope": "us"
+  },
+  {
+    "id": "concord",
+    "name": "Concord",
+    "lat": 42.46,
+    "lng": -71.35,
+    "scope": "us"
+  },
+  {
+    "id": "ipswich",
+    "name": "Ipswich",
+    "lat": 42.68,
+    "lng": -70.84,
+    "scope": "us"
+  },
+  {
+    "id": "andover",
+    "name": "Andover",
+    "lat": 42.66,
+    "lng": -71.14,
+    "scope": "us"
+  },
+  {
+    "id": "haverhill",
+    "name": "Haverhill",
+    "lat": 42.78,
+    "lng": -71.08,
+    "scope": "us"
+  },
+  {
+    "id": "newbury",
+    "name": "Newbury",
+    "lat": 42.8,
+    "lng": -70.87,
+    "scope": "us"
+  },
+  {
+    "id": "mystic",
+    "name": "Mystic",
+    "lat": 41.35,
+    "lng": -72.01,
+    "scope": "us"
+  },
+  {
+    "id": "hartford",
+    "name": "Hartford",
+    "lat": 41.76,
+    "lng": -72.68,
+    "scope": "us"
+  },
+  {
+    "id": "new-haven",
+    "name": "New Haven",
+    "lat": 41.31,
+    "lng": -72.92,
+    "scope": "us"
+  },
+  {
+    "id": "connecticut",
+    "name": "Connecticut",
+    "lat": 41.6,
+    "lng": -72.7,
+    "scope": "us"
+  },
+  {
+    "id": "rhode-island",
+    "name": "Rhode Island",
+    "lat": 41.58,
+    "lng": -71.48,
+    "scope": "us"
+  },
+  {
+    "id": "providence",
+    "name": "Providence",
+    "lat": 41.82,
+    "lng": -71.41,
+    "scope": "us"
+  },
+  {
+    "id": "new-hampshire",
+    "name": "New Hampshire",
+    "lat": 43.2,
+    "lng": -71.5,
+    "scope": "us"
+  },
+  {
+    "id": "portsmouth",
+    "name": "Portsmouth",
+    "lat": 43.07,
+    "lng": -70.76,
+    "scope": "us"
+  },
+  {
+    "id": "vermont",
+    "name": "Vermont",
+    "lat": 44.0,
+    "lng": -72.7,
+    "scope": "us"
+  },
+  {
+    "id": "virginia",
+    "name": "Virginia",
+    "lat": 37.5,
+    "lng": -78.5,
+    "scope": "us"
+  },
+  {
+    "id": "jamestown",
+    "name": "Jamestown",
+    "lat": 37.22,
+    "lng": -76.78,
+    "scope": "us"
+  },
+  {
+    "id": "new-york",
+    "name": "New York",
+    "lat": 42.65,
+    "lng": -73.75,
+    "scope": "us"
+  },
+  {
+    "id": "albany",
+    "name": "Albany",
+    "lat": 42.65,
+    "lng": -73.75,
+    "scope": "us"
+  },
+  {
+    "id": "pennsylvania",
+    "name": "Pennsylvania",
+    "lat": 40.9,
+    "lng": -77.8,
+    "scope": "us"
+  },
+  {
+    "id": "ohio",
+    "name": "Ohio",
+    "lat": 40.4,
+    "lng": -82.8,
+    "scope": "us"
+  },
+  {
+    "id": "illinois",
+    "name": "Illinois",
+    "lat": 40.0,
+    "lng": -89.0,
+    "scope": "us"
+  },
+  {
+    "id": "missouri",
+    "name": "Missouri",
+    "lat": 38.5,
+    "lng": -92.5,
+    "scope": "us"
+  },
+  {
+    "id": "iowa",
+    "name": "Iowa",
+    "lat": 42.0,
+    "lng": -93.5,
+    "scope": "us"
+  },
+  {
+    "id": "minnesota",
+    "name": "Minnesota",
+    "lat": 46.0,
+    "lng": -94.0,
+    "scope": "us"
+  },
+  {
+    "id": "wisconsin",
+    "name": "Wisconsin",
+    "lat": 44.5,
+    "lng": -89.5,
+    "scope": "us"
+  },
+  {
+    "id": "nebraska",
+    "name": "Nebraska",
+    "lat": 41.5,
+    "lng": -99.5,
+    "scope": "us"
+  },
+  {
+    "id": "kansas",
+    "name": "Kansas",
+    "lat": 38.5,
+    "lng": -98.5,
+    "scope": "us"
+  },
+  {
+    "id": "dakota",
+    "name": "Dakota",
+    "lat": 44.5,
+    "lng": -100.0,
+    "scope": "us"
+  },
+  {
+    "id": "texas",
+    "name": "Texas",
+    "lat": 31.0,
+    "lng": -99.0,
+    "scope": "us"
+  },
+  {
+    "id": "california",
+    "name": "California",
+    "lat": 36.8,
+    "lng": -119.4,
+    "scope": "us"
+  },
+  {
+    "id": "qu-bec",
+    "name": "Qu\u00e9bec",
+    "lat": 46.81,
+    "lng": -71.21,
+    "scope": "world"
+  },
+  {
+    "id": "quebec",
+    "name": "Quebec",
+    "lat": 46.81,
+    "lng": -71.21,
+    "scope": "world"
+  },
+  {
+    "id": "montreal",
+    "name": "Montreal",
+    "lat": 45.5,
+    "lng": -73.57,
+    "scope": "world"
+  },
+  {
+    "id": "canada",
+    "name": "Canada",
+    "lat": 56.0,
+    "lng": -96.0,
+    "scope": "world"
+  },
+  {
+    "id": "paris",
+    "name": "Paris",
+    "lat": 48.86,
+    "lng": 2.35,
+    "scope": "world"
+  },
+  {
+    "id": "perche",
+    "name": "Perche",
+    "lat": 48.59,
+    "lng": 0.69,
+    "scope": "world"
+  },
+  {
+    "id": "normandy",
+    "name": "Normandy",
+    "lat": 49.0,
+    "lng": -0.5,
+    "scope": "world"
+  },
+  {
+    "id": "france",
+    "name": "France",
+    "lat": 46.5,
+    "lng": 2.5,
+    "scope": "world"
+  },
+  {
+    "id": "london",
+    "name": "London",
+    "lat": 51.51,
+    "lng": -0.13,
+    "scope": "world"
+  },
+  {
+    "id": "england",
+    "name": "England",
+    "lat": 52.5,
+    "lng": -1.5,
+    "scope": "world"
+  },
+  {
+    "id": "scotland",
+    "name": "Scotland",
+    "lat": 56.5,
+    "lng": -4.0,
+    "scope": "world"
+  },
+  {
+    "id": "ireland",
+    "name": "Ireland",
+    "lat": 53.4,
+    "lng": -7.7,
+    "scope": "world"
+  },
+  {
+    "id": "wales",
+    "name": "Wales",
+    "lat": 52.3,
+    "lng": -3.7,
+    "scope": "world"
+  },
+  {
+    "id": "germany",
+    "name": "Germany",
+    "lat": 51.0,
+    "lng": 10.0,
+    "scope": "world"
+  },
+  {
+    "id": "spain",
+    "name": "Spain",
+    "lat": 40.0,
+    "lng": -3.7,
+    "scope": "world"
+  },
+  {
+    "id": "italy",
+    "name": "Italy",
+    "lat": 42.5,
+    "lng": 12.5,
+    "scope": "world"
+  },
+  {
+    "id": "newfoundland",
+    "name": "Newfoundland",
+    "lat": 48.5,
+    "lng": -56.0,
+    "scope": "world"
+  }
+]

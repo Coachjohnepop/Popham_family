@@ -1,54 +1,61 @@
 "use client";
 
+import dynamic from "next/dynamic";
 import { useMemo, useState } from "react";
-import { getTimelineEvents, getYearBounds } from "@/lib/data";
-import type { TimelineEvent } from "@/lib/types";
+import { getIndexMeta, getTimelineEvents, getYearBounds } from "@/lib/data";
+
+const FamilyMap = dynamic(() => import("@/components/FamilyMap"), {
+  ssr: false,
+  loading: () => (
+    <div className="flex h-[420px] items-center justify-center rounded-3xl border border-[#e2d4bf] bg-[#dce9f7] text-sm text-[#6f5c49]">
+      Loading map…
+    </div>
+  ),
+});
 
 const events = getTimelineEvents();
 const bounds = getYearBounds(events);
-
-function projectPoint(event: TimelineEvent, width: number, height: number, scope: "us" | "world") {
-  const filtered = events.filter((e) => e.location.scope === scope || scope === "world");
-  const minLat = Math.min(...filtered.map((e) => e.location.lat));
-  const maxLat = Math.max(...filtered.map((e) => e.location.lat));
-  const minLng = Math.min(...filtered.map((e) => e.location.lng));
-  const maxLng = Math.max(...filtered.map((e) => e.location.lng));
-  const x = ((event.location.lng - minLng) / (maxLng - minLng || 1)) * (width - 40) + 20;
-  const y = height - (((event.location.lat - minLat) / (maxLat - minLat || 1)) * (height - 40) + 20);
-  return { x, y };
-}
+const meta = getIndexMeta();
 
 export default function MapTimelineView() {
   const [year, setYear] = useState(bounds.min);
   const [scope, setScope] = useState<"us" | "world">("us");
+  const [onlyHighlights, setOnlyHighlights] = useState(false);
 
-  const visible = useMemo(() => {
+  const scopedEvents = useMemo(() => {
     return events.filter((event) => {
-      const inScope = scope === "world" || event.location.scope === "us";
-      return inScope && event.year <= year;
+      if (onlyHighlights && !(event.famousPeople.length > 0 || event.mentionsFamily)) {
+        return false;
+      }
+      return scope === "world" || event.location.scope === "us";
     });
-  }, [year, scope]);
+  }, [scope, onlyHighlights]);
+
+  const visible = useMemo(
+    () => scopedEvents.filter((event) => event.year <= year),
+    [scopedEvents, year],
+  );
 
   const active = useMemo(() => {
-    const scoped = events.filter((e) => scope === "world" || e.location.scope === "us");
-    return [...scoped].reverse().find((e) => e.year <= year) ?? scoped[0];
-  }, [year, scope]);
-
-  const width = 900;
-  const height = 480;
+    return [...visible].reverse().find((e) => e.year <= year) ?? visible[0];
+  }, [visible, year]);
 
   return (
     <div className="space-y-4">
-      <div className="flex flex-wrap items-center justify-between gap-3">
+      <div className="flex flex-wrap items-end justify-between gap-3">
         <div>
           <p className="text-xs font-semibold uppercase tracking-[0.25em] text-[#8b5e34]">
             Interactive map
           </p>
           <p className="text-sm text-[#6f5c49]">
-            Slide the timeline — highlighted circles show where history and family met.
+            Slide the timeline — dots show where events from the family story happened.
+          </p>
+          <p className="mt-1 text-xs text-[#6f5c49]">
+            {meta.timelineElementsRaw} timeline elements in the document · {meta.timelineElementsMapped}{" "}
+            mapped to {meta.indexedLocations} places · {visible.length} visible at {year}
           </p>
         </div>
-        <div className="flex gap-2">
+        <div className="flex flex-wrap gap-2">
           {(["us", "world"] as const).map((mode) => (
             <button
               key={mode}
@@ -61,40 +68,32 @@ export default function MapTimelineView() {
               {mode === "us" ? "United States" : "World"}
             </button>
           ))}
+          <button
+            type="button"
+            onClick={() => setOnlyHighlights((v) => !v)}
+            className={`rounded-full px-3 py-1.5 text-xs font-semibold uppercase tracking-wider ${
+              onlyHighlights ? "bg-[#7c3aed] text-white" : "bg-[#efe4d2] text-[#5c4a38]"
+            }`}
+          >
+            Famous × Family
+          </button>
         </div>
       </div>
 
-      <div className="overflow-hidden rounded-3xl border border-[#e2d4bf] bg-[#dce9f7] shadow-sm">
-        <svg viewBox={`0 0 ${width} ${height}`} className="h-auto w-full">
-          <rect width={width} height={height} fill="#dce9f7" />
-          <rect x="20" y="20" width={width - 40} height={height - 40} rx="24" fill="#c7dcf0" />
-          <text x="36" y="52" className="fill-[#4d6480] text-[14px] font-semibold">
-            {scope === "us" ? "United States focus" : "World view"} · {year}
-          </text>
+      <div className="overflow-hidden rounded-3xl border border-[#e2d4bf] shadow-sm">
+        <FamilyMap events={scopedEvents} year={year} scope={scope} activeId={active?.id} />
+      </div>
 
-          {visible.map((event) => {
-            const { x, y } = projectPoint(event, width, height, scope);
-            const isActive = active?.id === event.id;
-            return (
-              <g key={event.id}>
-                {isActive && (
-                  <circle cx={x} cy={y} r="22" fill="#d97706" opacity="0.25">
-                    <animate attributeName="r" values="18;28;18" dur="2s" repeatCount="indefinite" />
-                    <animate attributeName="opacity" values="0.35;0.12;0.35" dur="2s" repeatCount="indefinite" />
-                  </circle>
-                )}
-                <circle
-                  cx={x}
-                  cy={y}
-                  r={isActive ? 9 : 6}
-                  fill={isActive ? "#b45309" : "#8b5e34"}
-                  stroke="#fffaf2"
-                  strokeWidth="2"
-                />
-              </g>
-            );
-          })}
-        </svg>
+      <div className="flex flex-wrap gap-3 text-[11px] text-[#6f5c49]">
+        <span className="inline-flex items-center gap-1">
+          <span className="inline-block h-2.5 w-2.5 rounded-full bg-[#8b5e34]" /> Event
+        </span>
+        <span className="inline-flex items-center gap-1">
+          <span className="inline-block h-2.5 w-2.5 rounded-full bg-[#7c3aed]" /> Famous or family
+        </span>
+        <span className="inline-flex items-center gap-1">
+          <span className="inline-block h-2.5 w-2.5 rounded-full bg-[#b45309]" /> Active year
+        </span>
       </div>
 
       {active && (
@@ -104,6 +103,26 @@ export default function MapTimelineView() {
           </div>
           <h3 className="mt-1 font-serif text-2xl font-semibold">{active.title}</h3>
           <p className="mt-2 text-sm leading-relaxed text-[#5c4a38]">{active.summary}</p>
+          {(active.famousPeople.length > 0 || active.familyNames.length > 0) && (
+            <div className="mt-3 flex flex-wrap gap-2">
+              {active.famousPeople.map((name) => (
+                <span
+                  key={name}
+                  className="rounded-full bg-[#efe4d2] px-2.5 py-1 text-[11px] font-medium text-[#5c4a38]"
+                >
+                  {name}
+                </span>
+              ))}
+              {active.familyNames.map((name) => (
+                <span
+                  key={name}
+                  className="rounded-full bg-[#f3e8ff] px-2.5 py-1 text-[11px] font-medium text-[#5b3c88]"
+                >
+                  {name}
+                </span>
+              ))}
+            </div>
+          )}
         </div>
       )}
 
@@ -124,10 +143,6 @@ export default function MapTimelineView() {
           <span>{bounds.min}</span>
           <span>{bounds.max}</span>
         </div>
-        <p className="mt-3 text-xs text-[#6f5c49]">
-          Phase 3 swaps this placeholder map for a real US/world map (Mapbox or Leaflet) and geocodes
-          all ~350 years of events from the document.
-        </p>
       </div>
     </div>
   );
