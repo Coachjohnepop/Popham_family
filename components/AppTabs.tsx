@@ -4,6 +4,7 @@ import { useState } from "react";
 import StoryView from "@/components/StoryView";
 import MapTimelineView from "@/components/MapTimelineView";
 import FamilyTreeView from "@/components/FamilyTreeView";
+import { SITE_URL } from "@/lib/site";
 
 const TABS = [
   { id: "story", label: "Storybook" },
@@ -19,9 +20,12 @@ export default function AppTabs() {
       <header className="border-b border-[#d9cbb6] bg-[#fffaf2]">
         <div className="mx-auto flex max-w-6xl flex-col gap-4 px-4 py-5 sm:flex-row sm:items-end sm:justify-between">
           <div>
-            <p className="text-[10px] font-semibold uppercase tracking-[0.35em] text-[#8b5e34]">
-              Preview
-            </p>
+            <a
+              href={SITE_URL}
+              className="text-[10px] font-semibold uppercase tracking-[0.35em] text-[#8b5e34] hover:text-[#6f4a28]"
+            >
+              coss-family-story.vercel.app
+            </a>
             <h1 className="font-serif text-2xl font-semibold tracking-tight sm:text-3xl">
               The Story of Winifred Coss
             </h1>
@@ -53,6 +57,18 @@ export default function AppTabs() {
         {tab === "tree" && <FamilyTreeView />}
         {tab === "map" && <MapTimelineView />}
       </main>
+
+      <footer className="border-t border-[#d9cbb6] bg-[#fffaf2]">
+        <div className="mx-auto flex max-w-6xl flex-col gap-2 px-4 py-4 text-sm text-[#6f5c49] sm:flex-row sm:items-center sm:justify-between">
+          <p>The Story of Winifred Coss — family history for Dad</p>
+          <a
+            href={SITE_URL}
+            className="font-medium text-[#8b5e34] hover:text-[#6f4a28]"
+          >
+            {SITE_URL.replace("https://", "")}
+          </a>
+        </div>
+      </footer>
     </div>
   );
 }

@@ -18,7 +18,7 @@ export default function StoryView() {
     <div className="grid gap-6 lg:grid-cols-[280px_1fr]">
       <aside className="space-y-3">
         <p className="text-xs font-semibold uppercase tracking-[0.25em] text-[#8b5e34]">
-          Chapters (preview)
+          Chapters
         </p>
         {stories.map((story) => (
           <button
