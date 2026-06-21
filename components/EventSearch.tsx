@@ -3,7 +3,7 @@
 import { useRouter } from "next/navigation";
 import { useEffect, useId, useMemo, useRef, useState } from "react";
 import { getKindLabel, searchEntries } from "@/lib/search";
-import type { SearchEntry } from "@/lib/types";
+import type { SearchEntry, SearchReference } from "@/lib/types";
 
 const KIND_STYLES: Record<SearchEntry["kind"], string> = {
   event: "bg-[#dbeafe] text-[#1e3a8a]",
@@ -27,12 +27,20 @@ export default function EventSearch({
   const [query, setQuery] = useState("");
   const [open, setOpen] = useState(false);
   const [activeIndex, setActiveIndex] = useState(0);
+  const [selected, setSelected] = useState<SearchEntry | null>(null);
+  const [referenceIndex, setReferenceIndex] = useState(0);
 
   const results = useMemo(() => searchEntries(query), [query]);
+  const activeReference: SearchReference | undefined =
+    selected?.references[referenceIndex] ?? selected?.references[0];
 
   useEffect(() => {
     setActiveIndex(0);
   }, [query]);
+
+  useEffect(() => {
+    setReferenceIndex(0);
+  }, [selected?.id]);
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
@@ -44,10 +52,17 @@ export default function EventSearch({
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  function goTo(entry: SearchEntry) {
+  function openDocument(reference?: SearchReference) {
+    const target = reference ?? activeReference;
+    if (!target) return;
+    setOpen(false);
+    router.push(target.href);
+  }
+
+  function selectEntry(entry: SearchEntry) {
+    setSelected(entry);
     setQuery(entry.label);
     setOpen(false);
-    router.push(entry.href);
   }
 
   function onKeyDown(event: React.KeyboardEvent<HTMLInputElement>) {
@@ -68,14 +83,21 @@ export default function EventSearch({
       return;
     }
 
-    if (event.key === "Enter" && results[activeIndex]) {
+    if (event.key === "Enter") {
       event.preventDefault();
-      goTo(results[activeIndex]);
+      if (selected && activeReference) {
+        openDocument(activeReference);
+        return;
+      }
+      if (results[activeIndex]) {
+        selectEntry(results[activeIndex]);
+      }
       return;
     }
 
     if (event.key === "Escape") {
       setOpen(false);
+      setSelected(null);
     }
   }
 
@@ -92,6 +114,7 @@ export default function EventSearch({
         value={query}
         onChange={(event) => {
           setQuery(event.target.value);
+          setSelected(null);
           setOpen(true);
         }}
         onFocus={() => setOpen(true)}
@@ -118,7 +141,7 @@ export default function EventSearch({
                 <button
                   type="button"
                   onMouseEnter={() => setActiveIndex(index)}
-                  onClick={() => goTo(entry)}
+                  onClick={() => selectEntry(entry)}
                   className={`flex w-full items-start gap-3 px-4 py-3 text-left transition ${
                     index === activeIndex ? "bg-[#fffaf2]" : "hover:bg-[#fffaf2]"
                   }`}
@@ -131,12 +154,78 @@ export default function EventSearch({
                   <span className="min-w-0">
                     <span className="block font-medium text-[#2b2118]">{entry.label}</span>
                     <span className="block text-xs text-[#6f5c49]">{entry.subtitle}</span>
+                    {entry.summary[0] && (
+                      <span className="mt-1 line-clamp-2 block text-xs leading-relaxed text-[#5c4a38]">
+                        {entry.summary[0]}
+                      </span>
+                    )}
                   </span>
                 </button>
               </li>
             ))
           )}
         </ul>
+      )}
+
+      {selected && (
+        <div className="mt-3 rounded-2xl border border-[#e2d4bf] bg-[#fffaf2] p-4 shadow-sm">
+          <div className="flex flex-wrap items-start justify-between gap-2">
+            <div>
+              <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-[#8b5e34]">
+                {getKindLabel(selected.kind)} · {selected.subtitle}
+              </p>
+              <h3 className="mt-1 font-serif text-lg font-semibold text-[#2b2118]">
+                {selected.label}
+              </h3>
+            </div>
+            <button
+              type="button"
+              onClick={() => setSelected(null)}
+              className="text-xs font-medium text-[#8b5e34] hover:underline"
+            >
+              Clear
+            </button>
+          </div>
+
+          <div className="mt-3 space-y-2 text-sm leading-relaxed text-[#5c4a38]">
+            {selected.summary.map((paragraph) => (
+              <p key={paragraph.slice(0, 24)}>{paragraph}</p>
+            ))}
+          </div>
+
+          <div className="mt-4 flex flex-col gap-3 sm:flex-row sm:items-end">
+            {selected.references.length > 1 ? (
+              <label className="flex-1 text-sm">
+                <span className="mb-1 block text-[10px] font-semibold uppercase tracking-wider text-[#8b5e34]">
+                  Open in document
+                </span>
+                <select
+                  value={referenceIndex}
+                  onChange={(event) => setReferenceIndex(Number(event.target.value))}
+                  className="w-full rounded-xl border border-[#d9cbb6] bg-white px-3 py-2 text-sm text-[#2b2118]"
+                >
+                  {selected.references.map((reference, index) => (
+                    <option key={reference.href} value={index}>
+                      {reference.label}
+                    </option>
+                  ))}
+                </select>
+              </label>
+            ) : (
+              <p className="flex-1 text-xs text-[#6f5c49]">
+                Opens: {selected.references[0]?.label ?? "Document"}
+              </p>
+            )}
+
+            <button
+              type="button"
+              onClick={() => openDocument()}
+              className="rounded-full bg-[#8b5e34] px-5 py-2.5 text-sm font-semibold text-white hover:bg-[#6f4a28]"
+            >
+              Open
+            </button>
+          </div>
+        </div>
       )}
     </div>
   );

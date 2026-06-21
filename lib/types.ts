@@ -83,13 +83,22 @@ export type IndexMeta = {
 
 export type SearchKind = "event" | "chapter" | "person" | "place";
 
+export type SearchReferenceKind = "story" | "map" | "tree";
+
+export type SearchReference = {
+  label: string;
+  href: string;
+  kind: SearchReferenceKind;
+};
+
 export type SearchEntry = {
   id: string;
   kind: SearchKind;
   label: string;
   subtitle: string;
   year?: number;
-  href: string;
+  summary: string[];
+  references: SearchReference[];
   terms: string[];
 };
 
