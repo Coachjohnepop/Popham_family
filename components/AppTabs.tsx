@@ -53,7 +53,7 @@ export default function AppTabs({ initialTab }: AppTabsProps) {
               </Link>
             </h1>
             <p className="mt-1 max-w-2xl text-sm text-[#6f5c49]">
-              Where the Coss family tree meets famous people and places in history.
+              Where the Coss family fits into history
             </p>
           </div>
           <nav className="flex flex-wrap gap-2">

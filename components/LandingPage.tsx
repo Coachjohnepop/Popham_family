@@ -20,8 +20,7 @@ export default function LandingPage() {
             The Story of Winifred Coss
           </h1>
           <p className="mt-4 text-base leading-relaxed text-[#6f5c49] sm:text-lg">
-            Where the Coss family tree meets famous people and places in history. Choose how
-            you&apos;d like to begin.
+            Where the Coss family fits into history
           </p>
         </div>
 
