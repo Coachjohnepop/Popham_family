@@ -1,0 +1,39 @@
+[
+  {
+    "id": "winthrop-fleet-1630",
+    "title": "Puritans Arrive in the Winthrop Fleet",
+    "branch": "powers",
+    "yearStart": 1630,
+    "readingLevel": "grade6",
+    "teaser": "Eleven ships, one big dream, and ancestors who helped start Massachusetts.",
+    "story": "Picture eleven wooden ships crowded with families, cows, and hope. In 1630 they sailed from England to a place almost no one in Europe knew well. John Winthrop led the fleet. He told the passengers they were building a \"city upon a hill\" — a community other people would watch and learn from.\n\nAmong those travelers were ancestors on Edith Powers' side of Winifred's family tree. They were Puritans: Christians who wanted to worship in their own way. England had become too strict for them. The ocean trip was miserable. People were seasick for weeks. Babies cried. Food was salty and boring.\n\nWhen they landed in Massachusetts Bay, everything was new. Pine forests. Cold winds. Native nations who had lived there for thousands of years. The newcomers built Salem and Boston. They farmed, prayed, and made strict rules. It was not easy, but they stayed.\n\nYour family was not famous like John Winthrop. They were farmers, neighbors, and church members who did the quiet work of staying alive. That is how big history and a regular family meet: the famous person opens the door, and your ancestors walk through it.",
+    "famousPeople": ["John Winthrop"],
+    "familyNames": ["Powers", "Alcock"],
+    "highlight": true
+  },
+  {
+    "id": "quebec-1634",
+    "title": "Building Québec with Robert Giffard's Colonists",
+    "branch": "goodwater",
+    "yearStart": 1634,
+    "readingLevel": "grade6",
+    "teaser": "French carpenters and masons — including Goodwater ancestors — raise a colony out of the forest.",
+    "story": "While English families were landing in Massachusetts, French settlers were busy far to the north in Canada. Samuel de Champlain had already started a tiny post called Québec. It was cold, lonely, and surrounded by forest.\n\nIn 1634, Robert Giffard brought more than thirty colonists from the Perche region of France. Zacharie Cloutier was a master carpenter. Jean Guyon was a master mason. They signed contracts: work hard for three years, and receive land and animals to start a farm.\n\nThey built a brick manor, a church, and bigger walls for Fort Saint-Louis. Horses and oxen had not arrived yet, so men dragged logs and stones by hand. Jesuit priest Paul Le Jeune wrote that they worked like heroes.\n\nMary Ann Goodwater's branch of the family tree connects to these French builders and to the \"filles à marier\" — marriageable young women who sailed to Québec to start families. Famous explorers and landlords made headlines. Your ancestors made houses, barns, and babies. Both kinds of people are part of the same story.",
+    "famousPeople": ["Samuel de Champlain", "Robert Giffard", "Zacharie Cloutier", "Jean Guyon"],
+    "familyNames": ["Goodwater", "Cloutier", "Guyon", "Langlois"],
+    "highlight": true
+  },
+  {
+    "id": "two-branches-one-winifred",
+    "title": "Two Roads That Become One Family",
+    "branch": "both",
+    "yearStart": 1910,
+    "yearEnd": 1920,
+    "readingLevel": "grade6",
+    "teaser": "England to Massachusetts. France to Québec. Generations later — Winifred Coss.",
+    "story": "Winifred Eloise Coss's family tree is really two long adventures that finally shake hands.\n\nAdventure one starts in England around 1581 with George Alcock. Puritan families cross the ocean, survive wars with Native nations, witch panic in Salem, and the American Revolution. That is the Powers branch. It ends when Warren Coss marries Edith Powers.\n\nAdventure two starts in Paris around 1575 with Louis Hébert, the first French farmer in Canada. Families build Québec, fight Iroquois raids, survive brutal winters, and fill the colony with the King's Daughters. That is the Goodwater branch. It ends when Joseph Warren Coss marries Mary Ann Goodwater.\n\nFamous kings, explorers, and generals appear in both stories. So do carpenters, mothers, and teenagers who chose their own husbands in Canada. The Coss name is where the threads tie together.\n\nThat is the magic of this project: you are not memorizing random dates. You are watching real relatives walk through famous moments in history.",
+    "famousPeople": ["Henry VIII", "Samuel de Champlain", "George Washington"],
+    "familyNames": ["Coss", "Powers", "Goodwater"],
+    "highlight": true
+  }
+]

@@ -1,0 +1,122 @@
+[
+  {
+    "id": "reformation-1517",
+    "year": 1517,
+    "title": "Martin Luther starts the Reformation",
+    "summary": "A monk questions church practices. The religious split later pushes Puritan families toward New England — including ancestors on the Powers branch.",
+    "branch": "powers",
+    "famousPeople": ["Martin Luther", "Henry VIII"],
+    "familyNames": ["Powers"],
+    "location": { "name": "Wittenberg, Germany", "lat": 51.87, "lng": 12.65, "scope": "world" }
+  },
+  {
+    "id": "cartier-1534",
+    "year": 1534,
+    "title": "Jacques Cartier claims Canada for France",
+    "summary": "France plants a flag on the St. Lawrence River — the doorway Mary Ann Goodwater's French ancestors will travel through two centuries later.",
+    "branch": "goodwater",
+    "famousPeople": ["Jacques Cartier"],
+    "familyNames": ["Goodwater", "Hébert"],
+    "location": { "name": "Gulf of St. Lawrence", "lat": 48.5, "lng": -61.5, "scope": "world" }
+  },
+  {
+    "id": "winthrop-fleet-1630",
+    "year": 1630,
+    "title": "Winthrop Fleet reaches Massachusetts Bay",
+    "summary": "Eleven ships carry Puritan families — including early Powers relatives — to build the Massachusetts Bay Colony.",
+    "branch": "powers",
+    "famousPeople": ["John Winthrop"],
+    "familyNames": ["Powers", "Alcock"],
+    "location": { "name": "Massachusetts Bay", "lat": 42.36, "lng": -71.05, "scope": "us" }
+  },
+  {
+    "id": "quebec-1634",
+    "year": 1634,
+    "title": "Robert Giffard's colonists reach Québec",
+    "summary": "Carpenters, masons, and filles à marier from Perche, France help build Beauport — ancestors on the Goodwater branch are in this wave.",
+    "branch": "goodwater",
+    "famousPeople": ["Robert Giffard", "Samuel de Champlain", "Zacharie Cloutier", "Jean Guyon"],
+    "familyNames": ["Goodwater", "Cloutier", "Guyon", "Langlois"],
+    "location": { "name": "Québec City, Canada", "lat": 46.81, "lng": -71.21, "scope": "world" }
+  },
+  {
+    "id": "pequot-war-1637",
+    "year": 1637,
+    "title": "Pequot War in Connecticut",
+    "summary": "English colonists and Native allies clash. Colonial families — including future Coss ancestors — live on the edge of this violent frontier.",
+    "branch": "powers",
+    "famousPeople": ["John Winthrop"],
+    "familyNames": ["Powers"],
+    "location": { "name": "Mystic, Connecticut", "lat": 41.35, "lng": -72.01, "scope": "us" }
+  },
+  {
+    "id": "king-philips-war-1675",
+    "year": 1675,
+    "title": "King Philip's War",
+    "summary": "The bloodiest war per person in American history. New England towns where Powers-branch families lived are attacked and burned.",
+    "branch": "powers",
+    "famousPeople": ["Metacom", "King Philip"],
+    "familyNames": ["Powers"],
+    "location": { "name": "New England", "lat": 42.1, "lng": -72.0, "scope": "us" }
+  },
+  {
+    "id": "salem-1692",
+    "year": 1692,
+    "title": "Salem Witch Trials",
+    "summary": "Fear sweeps Massachusetts. The colony your ancestors helped build turns on its own people in a famous panic.",
+    "branch": "powers",
+    "famousPeople": [],
+    "familyNames": ["Powers"],
+    "location": { "name": "Salem, Massachusetts", "lat": 42.52, "lng": -70.89, "scope": "us" }
+  },
+  {
+    "id": "filles-du-roi-1663",
+    "year": 1663,
+    "title": "Filles du Roi arrive in New France",
+    "summary": "The King's Daughters sail to Québec to marry settlers and grow the colony — several are direct Goodwater-branch ancestors.",
+    "branch": "goodwater",
+    "famousPeople": ["Louis XIV"],
+    "familyNames": ["Goodwater"],
+    "location": { "name": "Québec City, Canada", "lat": 46.81, "lng": -71.21, "scope": "world" }
+  },
+  {
+    "id": "french-indian-1754",
+    "year": 1754,
+    "title": "French and Indian War",
+    "summary": "Britain and France fight for North America. Families with roots in both New England and New France live on opposite sides of the conflict.",
+    "branch": "both",
+    "famousPeople": ["George Washington"],
+    "familyNames": ["Powers", "Goodwater"],
+    "location": { "name": "Ohio River Valley", "lat": 40.42, "lng": -80.59, "scope": "us" }
+  },
+  {
+    "id": "revolution-1775",
+    "year": 1775,
+    "title": "American Revolution begins",
+    "summary": "Colonists rebel against Britain. Powers-branch cousins in Vermont and Massachusetts feel the shot heard round the world.",
+    "branch": "powers",
+    "famousPeople": ["George Washington", "Thomas Jefferson"],
+    "familyNames": ["Powers", "Coss"],
+    "location": { "name": "Lexington, Massachusetts", "lat": 42.45, "lng": -71.23, "scope": "us" }
+  },
+  {
+    "id": "coss-goodwater-marriage",
+    "year": 1880,
+    "title": "Two branches meet: Coss and Goodwater",
+    "summary": "Joseph Warren Coss marries Mary Ann Goodwater — the English Puritan line and the French-Canadian line finally join in one family tree.",
+    "branch": "both",
+    "famousPeople": [],
+    "familyNames": ["Coss", "Goodwater"],
+    "location": { "name": "Dakota Territory", "lat": 44.37, "lng": -100.35, "scope": "us" }
+  },
+  {
+    "id": "coss-powers-marriage",
+    "year": 1910,
+    "title": "Warren Coss marries Edith Powers",
+    "summary": "The Powers branch and Coss line unite — Winifred Eloise Coss's story brings both colonial journeys into one family.",
+    "branch": "both",
+    "famousPeople": [],
+    "familyNames": ["Coss", "Powers"],
+    "location": { "name": "Midwest United States", "lat": 41.88, "lng": -87.63, "scope": "us" }
+  }
+]
