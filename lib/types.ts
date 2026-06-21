@@ -80,3 +80,21 @@ export type IndexMeta = {
   yearMax: number;
   withFamousOrFamily: number;
 };
+
+export type SearchKind = "event" | "chapter" | "person" | "place";
+
+export type SearchEntry = {
+  id: string;
+  kind: SearchKind;
+  label: string;
+  subtitle: string;
+  year?: number;
+  href: string;
+  terms: string[];
+};
+
+export type SearchIndexData = {
+  entryCount: number;
+  kinds: Record<SearchKind, number>;
+  entries: SearchEntry[];
+};

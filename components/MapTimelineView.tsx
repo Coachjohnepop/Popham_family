@@ -1,7 +1,8 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import { useMemo, useState } from "react";
+import { useSearchParams } from "next/navigation";
+import { useEffect, useMemo, useState } from "react";
 import TimelineBar from "@/components/TimelineBar";
 import { getIndexMeta, getTimelineEvents, getYearBounds } from "@/lib/data";
 
@@ -19,9 +20,39 @@ const bounds = getYearBounds(events);
 const meta = getIndexMeta();
 
 export default function MapTimelineView() {
-  const [year, setYear] = useState(bounds.min);
+  const searchParams = useSearchParams();
+  const yearParam = searchParams.get("year");
+  const eventParam = searchParams.get("event");
+  const placeParam = searchParams.get("place");
+
+  const [year, setYear] = useState(() => {
+    const parsed = yearParam ? Number(yearParam) : bounds.min;
+    return Number.isFinite(parsed) ? parsed : bounds.min;
+  });
   const [scope, setScope] = useState<"us" | "world">("us");
   const [onlyHighlights, setOnlyHighlights] = useState(false);
+
+  useEffect(() => {
+    if (yearParam) {
+      const parsed = Number(yearParam);
+      if (Number.isFinite(parsed)) {
+        setYear(parsed);
+      }
+    }
+  }, [yearParam]);
+
+  useEffect(() => {
+    if (!placeParam) return;
+    const match = events.find(
+      (event) =>
+        event.location.name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "") ===
+        placeParam,
+    );
+    if (match) {
+      setYear(match.year);
+      setScope(match.location.scope);
+    }
+  }, [placeParam]);
 
   const scopedEvents = useMemo(() => {
     return events.filter((event) => {
@@ -38,8 +69,12 @@ export default function MapTimelineView() {
   );
 
   const active = useMemo(() => {
+    if (eventParam) {
+      const match = events.find((event) => event.id === eventParam);
+      if (match) return match;
+    }
     return [...visible].reverse().find((e) => e.year <= year) ?? visible[0];
-  }, [visible, year]);
+  }, [visible, year, eventParam]);
 
   return (
     <div className="space-y-4">

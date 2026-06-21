@@ -2,6 +2,8 @@
 
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
+import { Suspense } from "react";
+import EventSearch from "@/components/EventSearch";
 import StoryChapterView from "@/components/StoryChapterView";
 import StoryIndexView from "@/components/StoryIndexView";
 import MapTimelineView from "@/components/MapTimelineView";
@@ -71,12 +73,25 @@ export default function AppTabs({ initialTab }: AppTabsProps) {
             ))}
           </nav>
         </div>
+        <div className="mx-auto max-w-6xl px-4 pb-4">
+          <Suspense fallback={null}>
+            <EventSearch />
+          </Suspense>
+        </div>
       </header>
 
       <main className="mx-auto w-full max-w-6xl flex-1 px-4 py-6">
         {tab === "story" && <StoryRouter />}
-        {tab === "tree" && <FamilyTreeView />}
-        {tab === "map" && <MapTimelineView />}
+        {tab === "tree" && (
+          <Suspense fallback={<p className="text-sm text-[#6f5c49]">Loading family tree…</p>}>
+            <FamilyTreeView />
+          </Suspense>
+        )}
+        {tab === "map" && (
+          <Suspense fallback={<p className="text-sm text-[#6f5c49]">Loading map…</p>}>
+            <MapTimelineView />
+          </Suspense>
+        )}
       </main>
 
       <footer className="border-t border-[#d9cbb6] bg-[#fffaf2]">

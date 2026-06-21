@@ -1,6 +1,7 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useSearchParams } from "next/navigation";
+import { useEffect, useMemo, useState } from "react";
 import { getFamilyTree, getTreePerson, getTreePeople, type TreePerson } from "@/lib/family-tree";
 
 const tree = getFamilyTree();
@@ -83,7 +84,15 @@ function ChainColumn({
 }
 
 export default function FamilyTreeView() {
-  const [selectedId, setSelectedId] = useState(tree.rootId);
+  const searchParams = useSearchParams();
+  const personParam = searchParams.get("person");
+  const [selectedId, setSelectedId] = useState(personParam ?? tree.rootId);
+
+  useEffect(() => {
+    if (personParam && getTreePerson(personParam)) {
+      setSelectedId(personParam);
+    }
+  }, [personParam]);
 
   const selected = useMemo(() => getTreePerson(selectedId), [selectedId]);
 

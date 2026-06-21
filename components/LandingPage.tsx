@@ -1,4 +1,6 @@
 import Link from "next/link";
+import { Suspense } from "react";
+import EventSearch from "@/components/EventSearch";
 import LandingPhotoCollage from "@/components/LandingPhotoCollage";
 import { getLandingImages } from "@/lib/landing-images";
 import { APP_TABS } from "@/lib/tabs";
@@ -21,6 +23,12 @@ export default function LandingPage() {
             Where the Coss family tree meets famous people and places in history. Choose how
             you&apos;d like to begin.
           </p>
+        </div>
+
+        <div className="mx-auto mt-8 w-full max-w-2xl">
+          <Suspense fallback={null}>
+            <EventSearch placeholder="Search Winifred’s story — events, people, places…" />
+          </Suspense>
         </div>
 
         <LandingPhotoCollage images={images} totalInDocument={totalInDocument} />
