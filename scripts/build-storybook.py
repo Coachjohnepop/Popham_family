@@ -62,6 +62,16 @@ FAMILY_NAMES = [
     "Hebert",
 ]
 
+TARGET_SECTION_COUNT = 28
+MAX_PARAGRAPH_CHARS = 240
+MAX_PARAGRAPH_SENTENCES = 2
+MAX_PARAGRAPHS_PER_SECTION = 20
+
+DROP_SECTION_TITLES = {
+    "format of the story",
+    "the old map on the next page that shows the major towns in the east coast of north america in the 1600s",
+}
+
 HEADING_MARKERS = (
     "colony",
     "war",
@@ -149,9 +159,13 @@ def is_heading(text: str, bold: bool) -> bool:
     cleaned = clean_heading(text)
     if not cleaned or cleaned.lower() in SKIP_HEADINGS:
         return False
-    if len(cleaned) > 95:
+    if len(cleaned) > 72:
         return False
-    if re.match(r"^(in |on |about |between |sometime |note:|see |back in |while |since |later |during |after |before |if the |no \d|the following)", cleaned, re.I):
+    if cleaned[0].islower():
+        return False
+    if re.match(r"^(in\d{4}|in |on |about |between |sometime |note:|see |back in |while |since |later |during |after |before |if the |no \d|the following)", cleaned, re.I):
+        return False
+    if cleaned.lower() in DROP_SECTION_TITLES:
         return False
     if re.match(r"^(in |on |about |between |sometime )\d{4}", cleaned, re.I):
         return False
@@ -295,6 +309,218 @@ def parse_docx(docx: Path) -> list[dict]:
     return sections
 
 
+def split_sentences(text: str) -> list[str]:
+    return [s.strip() for s in re.split(r"(?<=[.!?])\s+", text) if s.strip()]
+
+
+def paragraph_score(text: str) -> int:
+    return sum(sentence_score(sentence) for sentence in split_sentences(text))
+
+
+def sentence_score(sentence: str) -> int:
+    score = 0
+    if re.search(r"\b(1[0-9]{3}|20[0-9]{2})\b", sentence):
+        score += 2
+    if any(name.lower() in sentence.lower() for name in FAMOUS_PEOPLE):
+        score += 2
+    if any(re.search(rf"\b{re.escape(name)}\b", sentence, re.I) for name in FAMILY_NAMES):
+        score += 3
+    if re.search(r"\b(married|born|died|sailed|arrived|family|ancestor)\b", sentence, re.I):
+        score += 1
+    return score
+
+
+def tighten_paragraph(text: str) -> str | None:
+    text = re.sub(r"\s+", " ", text).strip()
+    if not text or len(text) < 24:
+        return None
+    if re.fullmatch(r"\d{1,3}", text):
+        return None
+
+    sentences = split_sentences(text)
+    if not sentences:
+        return text[:MAX_PARAGRAPH_CHARS]
+
+    ranked = sorted(
+        sentences,
+        key=lambda sentence: (sentence_score(sentence), -len(sentence)),
+        reverse=True,
+    )
+    chosen: list[str] = []
+    for sentence in ranked:
+        if sentence in chosen:
+            continue
+        chosen.append(sentence)
+        if len(chosen) >= MAX_PARAGRAPH_SENTENCES:
+            break
+
+    if not chosen:
+        chosen = sentences[:MAX_PARAGRAPH_SENTENCES]
+
+    ordered = [s for s in sentences if s in chosen]
+    result = " ".join(ordered)
+    if len(result) > MAX_PARAGRAPH_CHARS:
+        result = result[: MAX_PARAGRAPH_CHARS - 1].rstrip() + "…"
+    return result
+
+
+def tighten_blocks(blocks: list[dict]) -> list[dict]:
+    items: list[tuple[str, object]] = []
+    paragraph_buffer: list[str] = []
+    seen_paragraphs: set[str] = set()
+
+    def flush_paragraphs() -> None:
+        nonlocal paragraph_buffer
+        if not paragraph_buffer:
+            return
+        merged = " ".join(paragraph_buffer)
+        paragraph_buffer = []
+        tightened = tighten_paragraph(merged)
+        if not tightened:
+            return
+        key = tightened[:96].lower()
+        if key in seen_paragraphs:
+            return
+        seen_paragraphs.add(key)
+        items.append(("p", {"text": tightened, "score": paragraph_score(tightened)}))
+
+    for block in blocks:
+        if block["type"] == "paragraph":
+            paragraph_buffer.append(block["text"])
+            if len(" ".join(paragraph_buffer)) > 180:
+                flush_paragraphs()
+            continue
+        flush_paragraphs()
+        items.append(("m", block))
+    flush_paragraphs()
+
+    paragraph_indices = [index for index, (kind, _) in enumerate(items) if kind == "p"]
+    if len(paragraph_indices) > MAX_PARAGRAPHS_PER_SECTION:
+        ranked = sorted(
+            ((items[index][1]["score"], index) for index in paragraph_indices),
+            reverse=True,
+        )
+        keep = {paragraph_indices[0]}
+        for _, index in ranked:
+            if len(keep) >= MAX_PARAGRAPHS_PER_SECTION:
+                break
+            keep.add(index)
+        items = [item for index, item in enumerate(items) if item[0] != "p" or index in keep]
+
+    out: list[dict] = []
+    for kind, payload in items:
+        if kind == "p":
+            out.append({"type": "paragraph", "text": payload["text"]})
+        else:
+            out.append(payload)
+    return out
+
+
+def clean_merged_title(title: str) -> str:
+    lower = title.lower()
+    if lower.startswith("the old map on the next page"):
+        return "New England Towns & Colonies"
+    if lower.startswith("must have either signed"):
+        return "Marriage in New France"
+    if " & " in title:
+        parts = [part.strip() for part in title.split(" & ")]
+        trimmed: list[str] = []
+        for part in parts:
+            if part.lower().startswith("the old map"):
+                continue
+            if part.lower().startswith("must have either signed"):
+                continue
+            if part not in trimmed:
+                trimmed.append(part)
+        if len(trimmed) == 1:
+            return trimmed[0]
+        if len(trimmed) == 2:
+            return f"{trimmed[0]} & {trimmed[1]}"
+        return f"{trimmed[0]} & {trimmed[1]} (+{len(trimmed) - 2} more)"
+    return title
+
+
+def merge_two_sections(left: dict, right: dict) -> dict:
+    title = left["title"]
+    right_title = right["title"]
+    if right_title.lower() not in title.lower() and len(right["blocks"]) >= 4:
+        if len(title) < 48 and len(right_title) < 42:
+            title = f"{title} & {right_title}"
+        elif len(right_title) > len(title):
+            title = right_title
+
+    title = clean_merged_title(title)
+
+    return {
+        "id": slug(title),
+        "title": title,
+        "branch": "both",
+        "blocks": tighten_blocks(left["blocks"] + right["blocks"]),
+    }
+
+
+def absorb_fragments(sections: list[dict]) -> list[dict]:
+    if not sections:
+        return sections
+
+    merged: list[dict] = []
+    carry: dict | None = None
+
+    for section in sections:
+        blocks = section["blocks"]
+        para_count = sum(1 for b in blocks if b["type"] == "paragraph")
+        image_count = sum(
+            1 if b["type"] == "image" else len(b.get("images", []))
+            for b in blocks
+            if b["type"] in {"image", "slideshow"}
+        )
+        is_fragment = para_count <= 2 and image_count == 0
+        is_drop = section["title"].lower() in DROP_SECTION_TITLES
+
+        if carry is None:
+            carry = section
+            continue
+
+        if is_fragment or is_drop:
+            carry = merge_two_sections(carry, section)
+        else:
+            merged.append(carry)
+            carry = section
+
+    if carry:
+        merged.append(carry)
+    return merged
+
+
+def consolidate_sections(sections: list[dict], target: int = TARGET_SECTION_COUNT) -> list[dict]:
+    sections = absorb_fragments(sections)
+    if len(sections) <= target:
+        return sections
+
+    while len(sections) > target:
+        best_index = 0
+        best_score = float("inf")
+        for i in range(len(sections) - 1):
+            left_len = len(sections[i]["blocks"])
+            right_len = len(sections[i + 1]["blocks"])
+            score = left_len + right_len
+            if score < best_score:
+                best_score = score
+                best_index = i
+        merged = merge_two_sections(sections[best_index], sections[best_index + 1])
+        sections = sections[:best_index] + [merged] + sections[best_index + 2 :]
+
+    seen_ids: dict[str, int] = {}
+    normalized: list[dict] = []
+    for section in sections:
+        base_id = slug(section["title"])
+        count = seen_ids.get(base_id, 0)
+        seen_ids[base_id] = count + 1
+        section["id"] = base_id if count == 0 else f"{base_id}-{count + 1}"
+        normalized.append(section)
+    return normalized
+
+
 def enrich_section(section: dict) -> dict:
     text_blob = " ".join(b["text"] for b in section["blocks"] if b["type"] == "paragraph")
     years = [int(y) for y in re.findall(r"\b(1[0-9]{3}|20[0-9]{2})\b", text_blob)]
@@ -359,7 +585,10 @@ def main() -> int:
 
     image_count = extract_images(docx)
     raw_sections = parse_docx(docx)
-    sections = [enrich_section(s) for s in raw_sections if s["blocks"]]
+    consolidated = consolidate_sections([s for s in raw_sections if s["blocks"]])
+    for section in consolidated:
+        section["blocks"] = tighten_blocks(section["blocks"])
+    sections = [enrich_section(s) for s in consolidated]
 
     total_images_mapped = sum(s["imageCount"] for s in sections)
     payload = {

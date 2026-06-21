@@ -5,9 +5,9 @@ export const APP_TABS = [
     href: "/story",
     tagline: "Read the chapters",
     description:
-      "56 linkable sections from the original document — full narrative, every photo, and slideshows throughout.",
+      "28 tightened chapters from the original document — key family moments, every photo, optional slideshows.",
     accent: "border-[#3b82f6] bg-[#eff6ff] text-[#1e3a8a]",
-    badge: "56 sections · 134 photos",
+    badge: "28 chapters · 134 photos",
   },
   {
     id: "tree",

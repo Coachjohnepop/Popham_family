@@ -12,7 +12,7 @@ export default function StorySidebar({ activeId }: StorySidebarProps) {
     <aside className="space-y-3 lg:sticky lg:top-6 lg:max-h-[calc(100vh-8rem)] lg:overflow-y-auto lg:pr-1">
       <div className="flex items-center justify-between gap-2">
         <p className="text-xs font-semibold uppercase tracking-[0.25em] text-[#8b5e34]">
-          Sections
+          Chapters
         </p>
         <Link href="/story" className="text-xs font-medium text-[#8b5e34] hover:underline">
           All

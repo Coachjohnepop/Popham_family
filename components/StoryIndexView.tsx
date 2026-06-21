@@ -18,9 +18,9 @@ export default function StoryIndexView() {
             The full family story
           </h2>
           <p className="mt-3 text-sm leading-relaxed text-[#6f5c49]">
-            {book.sectionCount} linkable sections drawn from the original document, with{" "}
-            {book.imageCountInDocument} photographs and illustrations — including slideshows where
-            multiple images appear together.
+            {book.sectionCount} tightened chapters drawn from the original document, with{" "}
+            {book.imageCountInDocument} photographs and illustrations — open slideshows when you
+            want them.
           </p>
         </div>
 
