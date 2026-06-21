@@ -84,6 +84,25 @@ export default function MapTimelineView() {
         <FamilyMap events={scopedEvents} year={year} scope={scope} activeId={active?.id} />
       </div>
 
+      <div className="rounded-2xl border border-[#e2d4bf] bg-[#fffaf2] p-5">
+        <div className="mb-2 flex items-center justify-between text-xs font-semibold uppercase tracking-wider text-[#8b5e34]">
+          <span>Timeline</span>
+          <span>{year}</span>
+        </div>
+        <input
+          type="range"
+          min={bounds.min}
+          max={bounds.max}
+          value={year}
+          onChange={(e) => setYear(Number(e.target.value))}
+          className="w-full accent-[#8b5e34]"
+        />
+        <div className="mt-2 flex justify-between text-xs text-[#6f5c49]">
+          <span>{bounds.min}</span>
+          <span>{bounds.max}</span>
+        </div>
+      </div>
+
       <div className="flex flex-wrap gap-3 text-[11px] text-[#6f5c49]">
         <span className="inline-flex items-center gap-1">
           <span className="inline-block h-2.5 w-2.5 rounded-full bg-[#8b5e34]" /> Event
@@ -125,25 +144,6 @@ export default function MapTimelineView() {
           )}
         </div>
       )}
-
-      <div className="rounded-2xl border border-[#e2d4bf] bg-[#fffaf2] p-5">
-        <div className="mb-2 flex items-center justify-between text-xs font-semibold uppercase tracking-wider text-[#8b5e34]">
-          <span>Timeline</span>
-          <span>{year}</span>
-        </div>
-        <input
-          type="range"
-          min={bounds.min}
-          max={bounds.max}
-          value={year}
-          onChange={(e) => setYear(Number(e.target.value))}
-          className="w-full accent-[#8b5e34]"
-        />
-        <div className="mt-2 flex justify-between text-xs text-[#6f5c49]">
-          <span>{bounds.min}</span>
-          <span>{bounds.max}</span>
-        </div>
-      </div>
     </div>
   );
 }
