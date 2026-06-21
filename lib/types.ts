@@ -16,6 +16,37 @@ export type StoryChapter = {
   highlight: boolean;
 };
 
+export type StoryImage = {
+  src: string;
+  caption: string;
+  media: string;
+};
+
+export type StoryBlock =
+  | { type: "paragraph"; text: string }
+  | ({ type: "image" } & StoryImage)
+  | { type: "slideshow"; images: StoryImage[] };
+
+export type StorySection = {
+  id: string;
+  title: string;
+  branch: Branch;
+  yearStart: number;
+  yearEnd?: number;
+  teaser: string;
+  famousPeople: string[];
+  familyNames: string[];
+  imageCount: number;
+  blocks: StoryBlock[];
+};
+
+export type StorybookData = {
+  sectionCount: number;
+  imageCountInDocument: number;
+  imageCountMapped: number;
+  sections: StorySection[];
+};
+
 export type TimelineEvent = {
   id: string;
   year: number;

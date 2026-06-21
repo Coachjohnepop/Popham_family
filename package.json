@@ -10,6 +10,7 @@
     "lint": "eslint",
     "extract": "python3 scripts/extract-docx.py",
     "extract:images": "python3 scripts/extract-images.py",
+    "build:storybook": "python3 scripts/build-storybook.py",
     "index:locations": "python3 scripts/build-location-index.py"
   },
   "dependencies": {

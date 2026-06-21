@@ -5,9 +5,9 @@ export const APP_TABS = [
     href: "/story",
     tagline: "Read the chapters",
     description:
-      "Narrative chapters where the Coss, Powers, and Goodwater families cross paths with famous people and moments in history.",
+      "56 linkable sections from the original document — full narrative, every photo, and slideshows throughout.",
     accent: "border-[#3b82f6] bg-[#eff6ff] text-[#1e3a8a]",
-    badge: "Powers · Goodwater · Coss",
+    badge: "56 sections · 134 photos",
   },
   {
     id: "tree",

@@ -2,11 +2,21 @@
 
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import StoryView from "@/components/StoryView";
+import StoryChapterView from "@/components/StoryChapterView";
+import StoryIndexView from "@/components/StoryIndexView";
 import MapTimelineView from "@/components/MapTimelineView";
 import FamilyTreeView from "@/components/FamilyTreeView";
 import { APP_TABS, type TabId } from "@/lib/tabs";
 import { SITE_URL } from "@/lib/site";
+
+function StoryRouter() {
+  const pathname = usePathname();
+  const match = pathname.match(/^\/story\/([^/]+)$/);
+  if (match?.[1]) {
+    return <StoryChapterView sectionId={match[1]} />;
+  }
+  return <StoryIndexView />;
+}
 
 type AppTabsProps = {
   initialTab: TabId;
@@ -64,7 +74,7 @@ export default function AppTabs({ initialTab }: AppTabsProps) {
       </header>
 
       <main className="mx-auto w-full max-w-6xl flex-1 px-4 py-6">
-        {tab === "story" && <StoryView />}
+        {tab === "story" && <StoryRouter />}
         {tab === "tree" && <FamilyTreeView />}
         {tab === "map" && <MapTimelineView />}
       </main>
