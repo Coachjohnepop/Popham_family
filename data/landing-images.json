@@ -1,0 +1,54 @@
+{
+  "totalInDocument": 134,
+  "curatedCount": 8,
+  "images": [
+    {
+      "id": "morris-and-wini",
+      "src": "/images/landing/morris-and-wini.png",
+      "caption": "Morris and Winifred Coss",
+      "category": "family"
+    },
+    {
+      "id": "wini-lake-mead",
+      "src": "/images/landing/wini-lake-mead.png",
+      "caption": "Winifred at Lake Mead, Nevada",
+      "category": "family"
+    },
+    {
+      "id": "charles-coss",
+      "src": "/images/landing/charles-coss.png",
+      "caption": "Charles Whitcomb Coss",
+      "category": "family"
+    },
+    {
+      "id": "family-tree-chart",
+      "src": "/images/landing/family-tree-chart.png",
+      "caption": "Four generations of the Coss family",
+      "category": "family"
+    },
+    {
+      "id": "cloutier-contract",
+      "src": "/images/landing/cloutier-contract.jpg",
+      "caption": "1634 \u2014 Cloutier & Guyon depart for Qu\u00e9bec",
+      "category": "history"
+    },
+    {
+      "id": "quebec-settlement",
+      "src": "/images/landing/quebec-settlement.jpg",
+      "caption": "Samuel de Champlain at Qu\u00e9bec, 1608",
+      "category": "history"
+    },
+    {
+      "id": "winthrop-era",
+      "src": "/images/landing/winthrop-era.png",
+      "caption": "Massachusetts Bay Colony, 1630s",
+      "category": "history"
+    },
+    {
+      "id": "quebec-cathedral",
+      "src": "/images/landing/quebec-cathedral.png",
+      "caption": "Cath\u00e9drale de Qu\u00e9bec",
+      "category": "places"
+    }
+  ]
+}

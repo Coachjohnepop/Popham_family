@@ -1,8 +1,12 @@
 import Link from "next/link";
+import LandingPhotoCollage from "@/components/LandingPhotoCollage";
+import { getLandingImages } from "@/lib/landing-images";
 import { APP_TABS } from "@/lib/tabs";
 import { SITE_URL } from "@/lib/site";
 
 export default function LandingPage() {
+  const { images, totalInDocument } = getLandingImages();
+
   return (
     <div className="flex min-h-screen flex-col bg-[#f6f1e8] text-[#2b2118]">
       <main className="mx-auto flex w-full max-w-6xl flex-1 flex-col px-4 py-10 sm:py-16">
@@ -19,7 +23,9 @@ export default function LandingPage() {
           </p>
         </div>
 
-        <div className="mt-10 grid gap-5 sm:mt-14 sm:grid-cols-3">
+        <LandingPhotoCollage images={images} totalInDocument={totalInDocument} />
+
+        <div className="mt-10 grid gap-5 sm:mt-12 sm:grid-cols-3">
           {APP_TABS.map((tab) => (
             <Link
               key={tab.id}
