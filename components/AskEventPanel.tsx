@@ -10,12 +10,14 @@ import { processAskEventTranscript } from "@/lib/ask-event";
 import {
   getEventBrief,
   getEventBriefBody,
+  getEventBriefDelta,
   isAnswerDepth,
+  isDeeperDepth,
   type AnswerDepth,
   type EventBrief,
 } from "@/lib/event-briefs";
 import { getPromptById, type PromptChoice } from "@/lib/prompt-index";
-import { speakText } from "@/lib/speak-text";
+import { speakText, type SpeakController, type SpeakState } from "@/lib/speak-text";
 
 type AskEventPanelProps = {
   chapterBriefs: EventBrief[];
@@ -28,7 +30,7 @@ export default function AskEventPanel({ chapterBriefs }: AskEventPanelProps) {
   const reader = useOptionalReader();
   const prompt = getPromptById("ask-event");
   const answerRef = useRef<HTMLDivElement>(null);
-  const speakStopRef = useRef<(() => void) | null>(null);
+  const speakControllerRef = useRef<SpeakController | null>(null);
   const spokenKeyRef = useRef<string | null>(null);
 
   const [activeBriefId, setActiveBriefId] = useState<string | null>(null);
@@ -39,25 +41,47 @@ export default function AskEventPanel({ chapterBriefs }: AskEventPanelProps) {
   const [autoSpeaking, setAutoSpeaking] = useState(false);
   const [voiceHealthHint, setVoiceHealthHint] = useState<string | null>(null);
   const [inDialogue, setInDialogue] = useState(false);
+  const [addendumFromDepth, setAddendumFromDepth] = useState<AnswerDepth | null>(null);
+  const [speechState, setSpeechState] = useState<SpeakState>("idle");
 
   const activeBrief =
     (activeBriefId ? getEventBrief(activeBriefId) : undefined) ??
     chapterBriefs.find((b) => b.id === activeBriefId);
 
   const answerDepth = reader?.answerDepth ?? "standard";
-  const answerBody = activeBrief ? getEventBriefBody(activeBrief, answerDepth) : "";
-  const answerScript = activeBrief && confirmedQuestion
-    ? `You asked: ${confirmedQuestion}. Here is the answer. ${answerBody}`
+  const isAddendum =
+    Boolean(activeBrief && addendumFromDepth && isDeeperDepth(addendumFromDepth, answerDepth));
+  const answerBody = activeBrief
+    ? isAddendum
+      ? getEventBriefDelta(activeBrief, addendumFromDepth!, answerDepth)
+      : getEventBriefBody(activeBrief, answerDepth)
     : "";
+  const answerScript =
+    activeBrief && confirmedQuestion && answerBody
+      ? isAddendum
+        ? `Here is more detail. ${answerBody}`
+        : `You asked: ${confirmedQuestion}. Here is the answer. ${answerBody}`
+      : "";
 
   function revealBrief(eventId: string) {
     setActiveBriefId(eventId);
     setInDialogue(true);
   }
 
-  function handleDepth(depth: AnswerDepth) {
+  function handleDepth(depth: AnswerDepth, opts?: { fromDepth?: AnswerDepth }) {
+    const fromDepth = opts?.fromDepth ?? answerDepth;
+    if (activeBriefId && isDeeperDepth(fromDepth, depth)) {
+      setAddendumFromDepth(fromDepth);
+    } else if (!isDeeperDepth(fromDepth, depth)) {
+      setAddendumFromDepth(null);
+    }
+    spokenKeyRef.current = null;
     reader?.setAnswerDepth(depth);
-    setVoiceMessage(`Showing ${depth === "deep" ? "more detail" : depth} answer.`);
+    setVoiceMessage(
+      isDeeperDepth(fromDepth, depth)
+        ? "Reading only the new detail you haven't heard yet."
+        : `Showing ${depth === "deep" ? "more detail" : depth} answer.`,
+    );
     setVoiceError(null);
     setInDialogue(true);
   }
@@ -69,16 +93,17 @@ export default function AskEventPanel({ chapterBriefs }: AskEventPanelProps) {
     setVoiceError(null);
 
     const outcome = processAskEventTranscript(heard, chapterBriefs);
+    const depthBeforeAsk = answerDepth;
 
     if (outcome.type === "reveal") {
+      setAddendumFromDepth(null);
       revealBrief(outcome.eventId);
       setVoiceMessage(outcome.message);
       return;
     }
 
     if (outcome.type === "depth") {
-      spokenKeyRef.current = null;
-      handleDepth(outcome.depth);
+      handleDepth(outcome.depth, { fromDepth: depthBeforeAsk });
       if (!activeBriefId && chapterBriefs[0]) {
         revealBrief(chapterBriefs[0].id);
       }
@@ -86,6 +111,7 @@ export default function AskEventPanel({ chapterBriefs }: AskEventPanelProps) {
     }
 
     if (chapterBriefs[0]) {
+      setAddendumFromDepth(null);
       revealBrief(chapterBriefs[0].id);
       setVoiceMessage(`Showing answer for: “${heard}”`);
       return;
@@ -138,9 +164,33 @@ export default function AskEventPanel({ chapterBriefs }: AskEventPanelProps) {
     setConfirmedQuestion(null);
     setVoiceMessage(null);
     setVoiceError(null);
+    setAddendumFromDepth(null);
     spokenKeyRef.current = null;
-    speakStopRef.current?.();
+    speakControllerRef.current?.stop();
+    speakControllerRef.current = null;
     setAutoSpeaking(false);
+    setSpeechState("idle");
+  }
+
+  function handlePauseResume() {
+    const controller = speakControllerRef.current;
+    if (!controller) return;
+    if (controller.getState() === "paused") {
+      controller.resume();
+      setSpeechState("speaking");
+      setAutoSpeaking(true);
+    } else {
+      controller.pause();
+      setSpeechState("paused");
+      setAutoSpeaking(false);
+    }
+  }
+
+  function handleStopReading() {
+    speakControllerRef.current?.stop();
+    speakControllerRef.current = null;
+    setAutoSpeaking(false);
+    setSpeechState("idle");
   }
 
   useEffect(() => {
@@ -155,28 +205,44 @@ export default function AskEventPanel({ chapterBriefs }: AskEventPanelProps) {
   useEffect(() => {
     if (!activeBrief || !confirmedQuestion || !answerScript) return;
 
-    const speakKey = `${activeBrief.id}:${confirmedQuestion}:${answerDepth}`;
+    const speakKey = `${activeBrief.id}:${confirmedQuestion}:${answerDepth}:${addendumFromDepth ?? "full"}`;
     if (spokenKeyRef.current === speakKey) return;
     spokenKeyRef.current = speakKey;
 
     answerRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
 
-    speakStopRef.current?.();
+    speakControllerRef.current?.stop();
     setAutoSpeaking(true);
+    setSpeechState("loading");
 
     void speakText(answerScript, {
-      onLoading: () => setAutoSpeaking(true),
-      onSpeaking: () => setAutoSpeaking(true),
-      onIdle: () => setAutoSpeaking(false),
+      onLoading: () => {
+        setAutoSpeaking(true);
+        setSpeechState("loading");
+      },
+      onSpeaking: () => {
+        setAutoSpeaking(true);
+        setSpeechState("speaking");
+      },
+      onPaused: () => {
+        setAutoSpeaking(false);
+        setSpeechState("paused");
+      },
+      onIdle: () => {
+        setAutoSpeaking(false);
+        setSpeechState("idle");
+      },
     }).then((controller) => {
-      speakStopRef.current = controller.stop;
+      speakControllerRef.current = controller;
     });
 
     return () => {
-      speakStopRef.current?.();
+      speakControllerRef.current?.stop();
+      speakControllerRef.current = null;
       setAutoSpeaking(false);
+      setSpeechState("idle");
     };
-  }, [activeBrief, confirmedQuestion, answerScript, answerDepth]);
+  }, [activeBrief, confirmedQuestion, answerScript, answerDepth, addendumFromDepth]);
 
   if (!prompt) return null;
 
@@ -261,8 +327,26 @@ export default function AskEventPanel({ chapterBriefs }: AskEventPanelProps) {
           <p className="mt-2 font-serif text-lg font-semibold text-[#14532d]">
             &ldquo;{confirmedQuestion}&rdquo;
           </p>
-          {autoSpeaking && (
-            <p className="mt-2 text-sm text-[#166534]">Reading the answer aloud…</p>
+          {(autoSpeaking || speechState === "paused") && (
+            <div className="mt-3 flex flex-wrap items-center gap-2">
+              <p className="text-sm text-[#166534]">
+                {speechState === "paused" ? "Paused" : "Reading aloud…"}
+              </p>
+              <button
+                type="button"
+                onClick={handlePauseResume}
+                className="rounded-full bg-[#166534] px-3 py-1.5 text-xs font-semibold text-white hover:bg-[#14532d]"
+              >
+                {speechState === "paused" ? "Resume" : "Pause"}
+              </button>
+              <button
+                type="button"
+                onClick={handleStopReading}
+                className="rounded-full bg-white px-3 py-1.5 text-xs font-semibold text-[#166534] ring-1 ring-[#86efac] hover:bg-[#ecfdf5]"
+              >
+                Stop
+              </button>
+            </div>
           )}
         </div>
       )}
@@ -319,8 +403,10 @@ export default function AskEventPanel({ chapterBriefs }: AskEventPanelProps) {
           </div>
           <EventBriefCard
             brief={activeBrief}
-            question={prompt.question}
+            question={isAddendum ? undefined : prompt.question}
             depth={answerDepth}
+            bodyOverride={isAddendum ? answerBody : undefined}
+            bodyHeading={isAddendum ? "Additional detail" : undefined}
           />
         </div>
       )}

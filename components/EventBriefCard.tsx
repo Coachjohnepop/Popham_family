@@ -15,6 +15,9 @@ type EventBriefCardProps = {
   depth?: AnswerDepth;
   onDepthChange?: (depth: AnswerDepth) => void;
   question?: string;
+  /** When set, show only this text (e.g. addendum after "tell me more"). */
+  bodyOverride?: string;
+  bodyHeading?: string;
 };
 
 export default function EventBriefCard({
@@ -22,13 +25,15 @@ export default function EventBriefCard({
   depth: depthProp,
   onDepthChange,
   question,
+  bodyOverride,
+  bodyHeading,
 }: EventBriefCardProps) {
   const reader = useOptionalReader();
   const sessionDepth = reader?.answerDepth ?? "standard";
   const depth = depthProp ?? sessionDepth;
   const [pinned, setPinned] = useState(true);
 
-  const body = getEventBriefBody(brief, depth);
+  const body = bodyOverride ?? getEventBriefBody(brief, depth);
 
   function handleDepthChange(next: AnswerDepth) {
     reader?.setAnswerDepth(next);
@@ -90,7 +95,12 @@ export default function EventBriefCard({
         ))}
       </div>
 
-      <div className="mt-4 space-y-3 text-sm leading-relaxed text-[#3f342c]">
+      {bodyHeading && (
+        <p className="mt-4 text-xs font-semibold uppercase tracking-wider text-[#c2410c]">
+          {bodyHeading}
+        </p>
+      )}
+      <div className={`space-y-3 text-sm leading-relaxed text-[#3f342c] ${bodyHeading ? "mt-2" : "mt-4"}`}>
         {body.split("\n\n").map((para, i) => (
           <p key={i}>{para}</p>
         ))}
