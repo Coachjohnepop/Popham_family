@@ -1,10 +1,11 @@
+import {
+  formatChoiceHints,
+  matchPromptIndex,
+  type VoiceNavResult,
+} from "@/lib/prompt-index";
 import type { StorySection } from "@/lib/types";
 
-export type VoiceNavResult =
-  | { action: "chapter"; sectionId: string; label: string }
-  | { action: "resume" }
-  | { action: "open-toc" }
-  | { action: "unknown"; heard: string };
+export type { VoiceNavResult };
 
 function normalize(s: string): string {
   return s
@@ -39,85 +40,16 @@ function scoreTitleMatch(transcript: string, title: string): number {
   return score;
 }
 
-function firstByBranch(sections: StorySection[], branch: StorySection["branch"]): StorySection {
-  return (
-    sections.find((s) => s.branch === branch) ??
-    sections[0]
-  );
-}
-
-function findGoodwaterStart(sections: StorySection[]): StorySection | undefined {
-  return (
-    sections.find((s) => normalize(s.title).includes("goodwater") && normalize(s.title).includes("quebec")) ??
-    sections.find((s) => s.branch === "goodwater")
-  );
-}
-
-function findPowersStart(sections: StorySection[]): StorySection | undefined {
-  return (
-    sections.find((s) => normalize(s.title).includes("edith powers")) ??
-    sections.find((s) => normalize(s.title).includes("powers") && normalize(s.title).includes("branch")) ??
-    sections.find((s) => s.branch === "powers")
-  );
-}
-
 export function matchVoiceNavigation(
   transcript: string,
   sections: StorySection[],
+  context?: string,
 ): VoiceNavResult {
   const heard = transcript.trim();
-  const t = normalize(heard);
-  if (!t) return { action: "unknown", heard };
+  if (!heard) return { action: "unknown", heard };
 
-  if (
-    /^(continue|resume|last chapter|where i left off|pick up where|left off)/.test(t) ||
-    /continue where i left/.test(t) ||
-    /last (screen|place|chapter|session)/.test(t)
-  ) {
-    return { action: "resume" };
-  }
-
-  if (
-    /^(open )?table of contents/.test(t) ||
-    /show (the )?chapters/.test(t) ||
-    /list (of )?chapters/.test(t) ||
-    /different section/.test(t) ||
-    /choose (a )?different/.test(t) ||
-    /another (chapter|section)/.test(t)
-  ) {
-    return { action: "open-toc" };
-  }
-
-  if (
-    /^(the )?beginning/.test(t) ||
-    /from the start/.test(t) ||
-    /first chapter/.test(t) ||
-    /^start over/.test(t) ||
-    /^start from the beginning/.test(t)
-  ) {
-    const first = sections[0];
-    return { action: "chapter", sectionId: first.id, label: first.title };
-  }
-
-  if (/edith powers|powers branch|england branch/.test(t) || /^powers$/.test(t)) {
-    const section = findPowersStart(sections) ?? firstByBranch(sections, "powers");
-    return { action: "chapter", sectionId: section.id, label: section.title };
-  }
-
-  if (
-    /goodwater|good water|quebec|quebec settlement|france branch|canada branch|mary ann goodwater/.test(t)
-  ) {
-    const section = findGoodwaterStart(sections) ?? firstByBranch(sections, "goodwater");
-    return { action: "chapter", sectionId: section.id, label: section.title };
-  }
-
-  if (/1853|joseph warren|merge|convergence/.test(t)) {
-    const section =
-      sections.find((s) => normalize(s.title).includes("dakota")) ??
-      sections.find((s) => s.branch === "both") ??
-      sections[sections.length - 1];
-    return { action: "chapter", sectionId: section.id, label: section.title };
-  }
+  const fromIndex = matchPromptIndex(heard, sections, context);
+  if (fromIndex) return fromIndex;
 
   let best: StorySection | null = null;
   let bestScore = 0;
@@ -136,6 +68,6 @@ export function matchVoiceNavigation(
   return { action: "unknown", heard };
 }
 
-export function describeVoiceHints(): string {
-  return 'Try: "the beginning", "Powers branch", "Québec", "Salem Witch Trials", or "continue where I left off".';
+export function describeVoiceHints(context = "toc"): string {
+  return formatChoiceHints(context);
 }

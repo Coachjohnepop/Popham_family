@@ -1,0 +1,211 @@
+{
+  "version": 1,
+  "description": "WCFT guided reader — questions the AI asks and phrases readers can say or click.",
+  "prompts": [
+    {
+      "id": "where-to-begin",
+      "question": "Where would you like to begin?",
+      "dadDocRef": "Ai will ask where they would like to start using the table of contents — voice or click.",
+      "contexts": ["intro", "toc"],
+      "choiceGroups": [
+        {
+          "id": "start-here",
+          "label": "Good starting points",
+          "choices": [
+            {
+              "id": "beginning",
+              "label": "From the beginning",
+              "say": ["the beginning", "from the start", "first chapter", "start over", "start from the beginning"],
+              "action": "chapter",
+              "target": "first"
+            },
+            {
+              "id": "powers-branch",
+              "label": "Edith Powers branch (England)",
+              "say": ["powers branch", "edith powers", "england branch", "powers"],
+              "action": "chapter",
+              "target": "powers-start"
+            },
+            {
+              "id": "goodwater-branch",
+              "label": "Mary Ann Goodwater branch (Québec)",
+              "say": [
+                "goodwater",
+                "good water",
+                "quebec",
+                "québec",
+                "quebec settlement",
+                "france branch",
+                "canada branch",
+                "mary ann goodwater"
+              ],
+              "action": "chapter",
+              "target": "goodwater-start"
+            },
+            {
+              "id": "merge-1853",
+              "label": "Where the branches meet (1853)",
+              "say": ["1853", "joseph warren coss", "merge", "convergence", "dakota territory"],
+              "action": "chapter",
+              "target": "dakota"
+            }
+          ]
+        },
+        {
+          "id": "featured-chapters",
+          "label": "Popular chapters (say the name)",
+          "choices": [
+            {
+              "id": "ch-protestant-reformation",
+              "label": "Early History of England, France and the Protestant Reformation",
+              "say": ["protestant reformation", "england and france", "early history"],
+              "action": "chapter",
+              "target": "early-history-of-england-france-and-the-protestant-reformation"
+            },
+            {
+              "id": "ch-salem",
+              "label": "Salem Witch Trials",
+              "say": ["salem witch trials", "salem witch", "witch trials"],
+              "action": "chapter",
+              "target": "salem-witch-trials"
+            },
+            {
+              "id": "ch-filles-du-roi",
+              "label": "Filles du Roi / King's Daughters",
+              "say": ["king's daughters", "filles du roi", "kings daughters", "marriageable girls"],
+              "action": "chapter",
+              "target": "le-d-orl-ans-island-filles-du-roi-or-king-s-daughters"
+            },
+            {
+              "id": "ch-french-indian",
+              "label": "French and Indian War",
+              "say": ["french and indian war", "british quebec"],
+              "action": "chapter",
+              "target": "french-and-indian-war-british-quebec-1-more"
+            },
+            {
+              "id": "ch-depression",
+              "label": "Great Depression and Dust Bowl",
+              "say": ["great depression", "dust bowl"],
+              "action": "chapter",
+              "target": "great-depression-and-dust-bowl"
+            }
+          ]
+        },
+        {
+          "id": "navigation",
+          "label": "Browse",
+          "choices": [
+            {
+              "id": "open-toc",
+              "label": "Show all chapters",
+              "say": [
+                "table of contents",
+                "open table of contents",
+                "show chapters",
+                "list chapters",
+                "all chapters"
+              ],
+              "action": "open-toc"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "welcome-back",
+      "question": "Would you like to continue where you left off, or choose a different section?",
+      "dadDocRef": "Returning login — resume last screen or another TOC section.",
+      "contexts": ["returning"],
+      "choiceGroups": [
+        {
+          "id": "returning",
+          "label": "Returning readers",
+          "choices": [
+            {
+              "id": "resume",
+              "label": "Continue last chapter",
+              "say": [
+                "continue",
+                "resume",
+                "where i left off",
+                "continue where i left off",
+                "last chapter",
+                "pick up where i left off",
+                "last screen",
+                "last session"
+              ],
+              "action": "resume"
+            },
+            {
+              "id": "different",
+              "label": "Pick a different chapter",
+              "say": [
+                "different section",
+                "another chapter",
+                "choose different",
+                "table of contents",
+                "new chapter"
+              ],
+              "action": "open-toc"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ask-person",
+      "question": "Tell me about this family member.",
+      "contexts": ["chapter"],
+      "choiceGroups": [
+        {
+          "id": "person-followups",
+          "label": "About a person (future AI)",
+          "choices": [
+            {
+              "id": "birth",
+              "label": "When were they born?",
+              "say": ["when were they born", "birth date", "where were they born"],
+              "action": "ask-ai",
+              "topic": "birth"
+            },
+            {
+              "id": "occupation",
+              "label": "How did they make their living?",
+              "say": ["how did they make their living", "what did they do", "occupation"],
+              "action": "ask-ai",
+              "topic": "occupation"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ask-event",
+      "question": "What happened in this historical event, and why does it matter to our family?",
+      "contexts": ["chapter", "map"],
+      "choiceGroups": [
+        {
+          "id": "event-followups",
+          "label": "Historical events (future AI)",
+          "choices": [
+            {
+              "id": "quebec",
+              "label": "Québec settlement",
+              "say": ["quebec settlement", "jacques cartier", "stadacona", "why quebec"],
+              "action": "event-brief",
+              "target": "quebec-settlement"
+            },
+            {
+              "id": "why-matters",
+              "label": "Why does this matter to our family?",
+              "say": ["why does this matter", "why is this important", "impact on our family"],
+              "action": "ask-ai",
+              "topic": "family-impact"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -3,9 +3,11 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
+import PromptChoicesPanel from "@/components/PromptChoicesPanel";
 import ReadAloudButton from "@/components/ReadAloudButton";
 import VoicePickButton from "@/components/VoicePickButton";
 import { useReader } from "@/components/ReaderProvider";
+import { executePromptChoice, type PromptChoice } from "@/lib/prompt-index";
 import { getStorySections } from "@/lib/storybook";
 import { describeVoiceHints, matchVoiceNavigation } from "@/lib/voice-navigation";
 
@@ -56,9 +58,16 @@ export default function GuidedWelcome() {
     router.push(`/story/${id}`);
   }
 
-  function handleVoiceTranscript(transcript: string) {
-    setVoiceError(null);
-    const result = matchVoiceNavigation(transcript, sections);
+  function applyNavResult(
+    result: ReturnType<typeof matchVoiceNavigation> | null,
+    fallbackHeard?: string,
+  ) {
+    if (!result) {
+      if (fallbackHeard) {
+        setVoiceMessage(`Heard “${fallbackHeard}” — ${describeVoiceHints(voiceContext)}`);
+      }
+      return;
+    }
 
     if (result.action === "resume") {
       if (session?.lastChapterId) {
@@ -83,7 +92,20 @@ export default function GuidedWelcome() {
       return;
     }
 
-    setVoiceMessage(`Heard “${result.heard}” — ${describeVoiceHints()}`);
+    setVoiceMessage(`Heard “${result.heard}” — ${describeVoiceHints(voiceContext)}`);
+  }
+
+  const voiceContext =
+    step === "returning" ? "returning" : step === "toc" ? "toc" : "intro";
+
+  function handleVoiceTranscript(transcript: string) {
+    setVoiceError(null);
+    applyNavResult(matchVoiceNavigation(transcript, sections, voiceContext), transcript);
+  }
+
+  function handleChoicePick(choice: PromptChoice) {
+    setVoiceError(null);
+    applyNavResult(executePromptChoice(choice, sections));
   }
 
   return (
@@ -149,6 +171,9 @@ export default function GuidedWelcome() {
               onError={setVoiceError}
             />
           </div>
+          <div className="mt-6">
+            <PromptChoicesPanel promptId="welcome-back" onPick={handleChoicePick} compact />
+          </div>
           {voiceMessage && <p className="mt-4 text-sm text-[#5b21b6]">{voiceMessage}</p>}
           {voiceError && <p className="mt-4 text-sm text-[#b45309]">{voiceError}</p>}
         </section>
@@ -198,7 +223,10 @@ export default function GuidedWelcome() {
               onError={setVoiceError}
             />
           </div>
-          <p className="mt-3 text-xs text-[#6f5c49]">{describeVoiceHints()}</p>
+          <p className="mt-3 text-xs text-[#6f5c49]">{describeVoiceHints("intro")}</p>
+          <div className="mt-6">
+            <PromptChoicesPanel promptId="where-to-begin" onPick={handleChoicePick} compact />
+          </div>
           {voiceMessage && <p className="mt-2 text-sm text-[#5b21b6]">{voiceMessage}</p>}
           {voiceError && <p className="mt-2 text-sm text-[#b45309]">{voiceError}</p>}
         </section>
@@ -225,10 +253,11 @@ export default function GuidedWelcome() {
                 label="Hear the question"
               />
             </div>
-            <p className="mt-2 text-xs text-[#6f5c49]">{describeVoiceHints()}</p>
+            <p className="mt-2 text-xs text-[#6f5c49]">{describeVoiceHints("toc")}</p>
             {voiceMessage && <p className="mt-2 text-sm font-medium text-[#5b21b6]">{voiceMessage}</p>}
             {voiceError && <p className="mt-2 text-sm text-[#b45309]">{voiceError}</p>}
           </div>
+          <PromptChoicesPanel promptId="where-to-begin" onPick={handleChoicePick} />
           <div className="grid gap-3 sm:grid-cols-2">
             {sections.map((section) => (
               <button
