@@ -89,10 +89,6 @@ export default function StoryOverviewSummaries({
           >
             Hear the whole family story
           </h2>
-          <p className="mx-auto mt-2 max-w-lg text-center text-sm leading-relaxed text-[#6f5c49]">
-            Three spoken summaries from Dad&apos;s paper — short, medium, or full — before you
-            explore chapter by chapter.
-          </p>
         </>
       ) : (
         <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-[#8b5e34]">
