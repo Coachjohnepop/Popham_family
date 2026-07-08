@@ -1,12 +1,13 @@
 import { NextResponse } from "next/server";
+import { extensionForAudioMime, getOpenAiApiKey, parseOpenAiError } from "@/lib/openai-server";
 
 export async function POST(request: Request) {
-  const apiKey = process.env.OPENAI_API_KEY;
+  const apiKey = getOpenAiApiKey();
   if (!apiKey) {
     return NextResponse.json(
       {
         error: "Transcription not configured",
-        hint: "Add OPENAI_API_KEY on Vercel, or type your question instead.",
+        hint: "Add OPENAI_API_KEY on Vercel (Production), then redeploy.",
       },
       { status: 503 },
     );
@@ -28,8 +29,9 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "audio too large" }, { status: 413 });
   }
 
+  const ext = extensionForAudioMime(audio.type || "audio/webm");
   const upstream = new FormData();
-  upstream.append("file", audio, "speech.webm");
+  upstream.append("file", audio, `speech.${ext}`);
   upstream.append("model", "whisper-1");
   upstream.append("language", "en");
   upstream.append(
@@ -50,14 +52,21 @@ export async function POST(request: Request) {
       return NextResponse.json(
         {
           error: "Transcription failed",
-          hint: "Try again or type your question in the box above.",
+          hint: parseOpenAiError(detail),
         },
         { status: 502 },
       );
     }
 
     const data = (await res.json()) as { text?: string };
-    return NextResponse.json({ text: data.text?.trim() ?? "" });
+    const text = data.text?.trim() ?? "";
+    if (!text) {
+      return NextResponse.json(
+        { error: "Empty transcript", hint: "Speak a little longer, then tap Done again." },
+        { status: 422 },
+      );
+    }
+    return NextResponse.json({ text });
   } catch (err) {
     console.error("transcribe route:", err);
     return NextResponse.json({ error: "Transcription error" }, { status: 500 });

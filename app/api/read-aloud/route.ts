@@ -1,10 +1,14 @@
 import { NextResponse } from "next/server";
+import { getOpenAiApiKey, parseOpenAiError } from "@/lib/openai-server";
 import { chunkTextForTts, TTS_INSTRUCTIONS, TTS_VOICE } from "@/lib/tts-config";
 
 export async function POST(request: Request) {
-  const apiKey = process.env.OPENAI_API_KEY;
+  const apiKey = getOpenAiApiKey();
   if (!apiKey) {
-    return NextResponse.json({ error: "TTS not configured" }, { status: 503 });
+    return NextResponse.json(
+      { error: "TTS not configured", hint: "Add OPENAI_API_KEY on Vercel and redeploy." },
+      { status: 503 },
+    );
   }
 
   let body: { text?: string };
@@ -43,7 +47,10 @@ export async function POST(request: Request) {
     if (!res.ok) {
       const detail = await res.text();
       console.error("OpenAI TTS failed:", res.status, detail);
-      return NextResponse.json({ error: "TTS generation failed" }, { status: 502 });
+      return NextResponse.json(
+        { error: "TTS generation failed", hint: parseOpenAiError(detail) },
+        { status: 502 },
+      );
     }
 
     const audio = await res.arrayBuffer();

@@ -300,8 +300,10 @@ export default function VoicePickButton({
         releaseMicrophone(streamRef.current);
         streamRef.current = null;
 
-        if (blob.size < 800) {
-          throw new Error("No speech captured. Speak longer, then tap Done again.");
+        if (blob.size < 200) {
+          throw new Error(
+            `No audio captured (${blob.size} bytes). Allow the mic, speak for a few seconds, then tap Done.`,
+          );
         }
 
         const text = await transcribeAudioBlob(blob);
@@ -314,7 +316,8 @@ export default function VoicePickButton({
       } catch (err) {
         const message = err instanceof Error ? err.message : "Transcription failed.";
         onErrorRef.current?.(message);
-        setStatusLine(null);
+        setStatusLine(message);
+        setCompleted(false);
       } finally {
         if (session === sessionRef.current) {
           setTranscribing(false);

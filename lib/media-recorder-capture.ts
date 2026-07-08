@@ -55,8 +55,16 @@ export class AudioChunkRecorder {
         const type = recorder.mimeType || this.chunks[0]?.type || "audio/webm";
         resolve(new Blob(this.chunks, { type }));
       };
-      if (recorder.state !== "inactive") recorder.stop();
-      else resolve(new Blob(this.chunks, { type: recorder.mimeType || "audio/webm" }));
+      if (recorder.state === "recording") {
+        try {
+          recorder.requestData();
+        } catch {
+          /* optional on some browsers */
+        }
+        recorder.stop();
+      } else {
+        resolve(new Blob(this.chunks, { type: recorder.mimeType || "audio/webm" }));
+      }
     });
   }
 
@@ -65,20 +73,30 @@ export class AudioChunkRecorder {
   }
 }
 
+function filenameForBlob(blob: Blob): string {
+  const type = blob.type.toLowerCase();
+  if (type.includes("mp4") || type.includes("m4a")) return "speech.m4a";
+  if (type.includes("mpeg") || type.includes("mp3")) return "speech.mp3";
+  if (type.includes("ogg")) return "speech.ogg";
+  if (type.includes("wav")) return "speech.wav";
+  return "speech.webm";
+}
+
 export async function transcribeAudioBlob(blob: Blob): Promise<string> {
   const form = new FormData();
-  form.append("audio", blob, "speech.webm");
+  form.append("audio", blob, filenameForBlob(blob));
 
   const res = await fetch("/api/transcribe", { method: "POST", body: form });
   const data = (await res.json()) as { text?: string; error?: string; hint?: string };
 
   if (!res.ok) {
-    const hint =
+    throw new Error(
       data.hint ??
-      (res.status === 503
-        ? "Speech-to-text is not configured on the server. Add OPENAI_API_KEY on Vercel, or type your question above."
-        : data.error ?? "Transcription failed");
-    throw new Error(hint);
+        data.error ??
+        (res.status === 503
+          ? "Speech-to-text is not configured. Add OPENAI_API_KEY on Vercel and redeploy."
+          : "Transcription failed"),
+    );
   }
 
   return data.text?.trim() ?? "";

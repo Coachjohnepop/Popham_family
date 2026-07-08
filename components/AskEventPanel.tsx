@@ -37,6 +37,7 @@ export default function AskEventPanel({ chapterBriefs }: AskEventPanelProps) {
   const [voiceMessage, setVoiceMessage] = useState<string | null>(null);
   const [voiceError, setVoiceError] = useState<string | null>(null);
   const [autoSpeaking, setAutoSpeaking] = useState(false);
+  const [voiceHealthHint, setVoiceHealthHint] = useState<string | null>(null);
 
   const activeBrief =
     (activeBriefId ? getEventBrief(activeBriefId) : undefined) ??
@@ -117,6 +118,15 @@ export default function AskEventPanel({ chapterBriefs }: AskEventPanelProps) {
   }
 
   useEffect(() => {
+    void fetch("/api/voice-health")
+      .then((r) => r.json())
+      .then((data: { ok?: boolean; hint?: string }) => {
+        if (!data.ok && data.hint) setVoiceHealthHint(data.hint);
+      })
+      .catch(() => {});
+  }, []);
+
+  useEffect(() => {
     if (!activeBrief || !confirmedQuestion || !answerScript) return;
 
     const speakKey = `${activeBrief.id}:${confirmedQuestion}:${answerDepth}`;
@@ -180,6 +190,20 @@ export default function AskEventPanel({ chapterBriefs }: AskEventPanelProps) {
         compact
         interactiveActions={["event-brief", "answer-depth", "ask-ai"]}
       />
+
+      {voiceHealthHint && (
+        <p className="rounded-xl border border-[#fdba74] bg-[#fff7ed] px-4 py-3 text-sm text-[#9a3412]">
+          Voice server: {voiceHealthHint}{" "}
+          <a
+            href="/api/voice-health"
+            target="_blank"
+            rel="noreferrer"
+            className="font-semibold underline"
+          >
+            Check status
+          </a>
+        </p>
+      )}
 
       <VoicePickButton
         label="Or say your question"

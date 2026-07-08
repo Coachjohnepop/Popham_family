@@ -63,7 +63,16 @@ export async function speakText(
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ text: chunk }),
       });
-      if (!res.ok) throw new Error(`TTS ${res.status}`);
+      if (!res.ok) {
+        let hint = `TTS ${res.status}`;
+        try {
+          const err = (await res.json()) as { hint?: string; error?: string };
+          hint = err.hint ?? err.error ?? hint;
+        } catch {
+          /* ignore */
+        }
+        throw new Error(hint);
+      }
       const blob = await res.blob();
       if (cancelled) break;
       await playBlob(blob);
