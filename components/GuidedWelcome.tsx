@@ -4,8 +4,10 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
 import ReadAloudButton from "@/components/ReadAloudButton";
+import VoicePickButton from "@/components/VoicePickButton";
 import { useReader } from "@/components/ReaderProvider";
 import { getStorySections } from "@/lib/storybook";
+import { describeVoiceHints, matchVoiceNavigation } from "@/lib/voice-navigation";
 
 type Step = "name" | "returning" | "intro" | "toc";
 
@@ -26,6 +28,8 @@ export default function GuidedWelcome() {
 
   const [step, setStep] = useState<Step>("name");
   const [nameInput, setNameInput] = useState(readerName);
+  const [voiceMessage, setVoiceMessage] = useState<string | null>(null);
+  const [voiceError, setVoiceError] = useState<string | null>(null);
 
   useEffect(() => {
     if (!session) return;
@@ -50,6 +54,36 @@ export default function GuidedWelcome() {
   function startChapter(id: string) {
     completeOnboarding();
     router.push(`/story/${id}`);
+  }
+
+  function handleVoiceTranscript(transcript: string) {
+    setVoiceError(null);
+    const result = matchVoiceNavigation(transcript, sections);
+
+    if (result.action === "resume") {
+      if (session?.lastChapterId) {
+        setVoiceMessage(`Continuing where you left off…`);
+        startChapter(session.lastChapterId);
+      } else {
+        setVoiceMessage("No previous chapter yet — pick one from the list below.");
+        setStep("toc");
+      }
+      return;
+    }
+
+    if (result.action === "open-toc") {
+      setVoiceMessage("Opening the table of contents.");
+      setStep("toc");
+      return;
+    }
+
+    if (result.action === "chapter") {
+      setVoiceMessage(`Starting: ${result.label}`);
+      startChapter(result.sectionId);
+      return;
+    }
+
+    setVoiceMessage(`Heard “${result.heard}” — ${describeVoiceHints()}`);
   }
 
   return (
@@ -94,7 +128,7 @@ export default function GuidedWelcome() {
           <p className="mt-3 text-sm text-[#6f5c49]">
             Would you like to continue where you left off, or choose a new chapter?
           </p>
-          <div className="mt-6 flex flex-col gap-3 sm:flex-row">
+          <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">
             <button
               type="button"
               onClick={() => startChapter(session.lastChapterId!)}
@@ -109,7 +143,14 @@ export default function GuidedWelcome() {
             >
               Choose a different section
             </button>
+            <VoicePickButton
+              label='Say "continue" or a chapter'
+              onTranscript={handleVoiceTranscript}
+              onError={setVoiceError}
+            />
           </div>
+          {voiceMessage && <p className="mt-4 text-sm text-[#5b21b6]">{voiceMessage}</p>}
+          {voiceError && <p className="mt-4 text-sm text-[#b45309]">{voiceError}</p>}
         </section>
       )}
 
@@ -143,13 +184,23 @@ export default function GuidedWelcome() {
           <p className="mt-4 whitespace-pre-line text-sm leading-relaxed text-[#6f5c49]">
             {INTRO_SCRIPT}
           </p>
-          <button
-            type="button"
-            onClick={() => setStep("toc")}
-            className="mt-6 rounded-full bg-[#8b5e34] px-6 py-3 text-sm font-semibold text-white"
-          >
-            Open table of contents
-          </button>
+          <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">
+            <button
+              type="button"
+              onClick={() => setStep("toc")}
+              className="rounded-full bg-[#8b5e34] px-6 py-3 text-sm font-semibold text-white"
+            >
+              Open table of contents
+            </button>
+            <VoicePickButton
+              label="Say where to begin"
+              onTranscript={handleVoiceTranscript}
+              onError={setVoiceError}
+            />
+          </div>
+          <p className="mt-3 text-xs text-[#6f5c49]">{describeVoiceHints()}</p>
+          {voiceMessage && <p className="mt-2 text-sm text-[#5b21b6]">{voiceMessage}</p>}
+          {voiceError && <p className="mt-2 text-sm text-[#b45309]">{voiceError}</p>}
         </section>
       )}
 
@@ -160,8 +211,23 @@ export default function GuidedWelcome() {
               {readerName ? `${readerName}, pick a chapter` : "Table of contents"}
             </h2>
             <p className="mt-2 text-sm text-[#6f5c49]">
-              Click a chapter to start reading. Family names in the text can be clicked for details.
+              Click a chapter or say one out loud. Family names in the text can be clicked for
+              details.
             </p>
+            <div className="mt-4 flex flex-wrap items-center gap-3">
+              <VoicePickButton
+                label="Say a chapter name"
+                onTranscript={handleVoiceTranscript}
+                onError={setVoiceError}
+              />
+              <ReadAloudButton
+                text={`${readerName}, where would you like to begin? ${describeVoiceHints()}`}
+                label="Hear the question"
+              />
+            </div>
+            <p className="mt-2 text-xs text-[#6f5c49]">{describeVoiceHints()}</p>
+            {voiceMessage && <p className="mt-2 text-sm font-medium text-[#5b21b6]">{voiceMessage}</p>}
+            {voiceError && <p className="mt-2 text-sm text-[#b45309]">{voiceError}</p>}
           </div>
           <div className="grid gap-3 sm:grid-cols-2">
             {sections.map((section) => (
