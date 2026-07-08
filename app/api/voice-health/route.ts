@@ -54,7 +54,7 @@ export async function GET() {
 
   const ok = sttOk;
   const hints: string[] = [];
-  if (sttOk) hints.push("Deepgram transcription ready");
+  if (sttOk) hints.push("Deepgram live + batch transcription ready");
   else if (sttHint) hints.push(`Transcription: ${sttHint}`);
   if (ttsOk) hints.push("OpenAI read-aloud ready");
   else hints.push("Read-aloud uses browser voice (no OpenAI billing needed)");

@@ -1,4 +1,4 @@
-export type VoiceInputMode = "web-speech" | "server-stt";
+export type VoiceInputMode = "web-speech" | "deepgram-live" | "server-stt";
 
 export type VoiceEnvironment = {
   mode: VoiceInputMode;
@@ -21,19 +21,17 @@ function detectBrave(): boolean {
   return detectBraveFromUa();
 }
 
-function braveInstruction(isPrivate: boolean): string {
-  return isPrivate
-    ? "Tap the mic, speak your question, then tap Done. (Private window — words appear after Done.)"
-    : "Tap the mic, speak your question, then tap Done.";
+function braveInstruction(): string {
+  return "Tap the mic — words appear as you speak. Tap Done when finished.";
 }
 
 function environmentForBrave(isPrivate: boolean): VoiceEnvironment {
   return {
-    mode: "server-stt",
+    mode: "deepgram-live",
     browserLabel: "Brave",
     isBrave: true,
     isLikelyPrivate: isPrivate,
-    instruction: braveInstruction(isPrivate),
+    instruction: braveInstruction(),
   };
 }
 
@@ -82,11 +80,11 @@ export function getVoiceEnvironment(): VoiceEnvironment {
   if (braveBlocked) {
     if (isBrave) return environmentForBrave(isLikelyPrivate);
     return {
-      mode: "server-stt",
+      mode: "deepgram-live",
       browserLabel,
       isBrave,
       isLikelyPrivate,
-      instruction: "Tap the mic, speak, then tap Done — or type your question above.",
+      instruction: braveInstruction(),
     };
   }
 

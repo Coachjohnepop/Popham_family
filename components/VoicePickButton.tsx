@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
+import { DeepgramLiveSession } from "@/lib/deepgram-live";
 import {
   AudioChunkRecorder,
   openMicrophone,
@@ -69,6 +70,7 @@ export default function VoicePickButton({
   const streamRef = useRef<MediaStream | null>(null);
   const mimeTypeRef = useRef("");
   const recorderRef = useRef(new AudioChunkRecorder());
+  const deepgramLiveRef = useRef<DeepgramLiveSession | null>(null);
   const recognitionRef = useRef<SpeechRecognition | null>(null);
   const liveTranscriptRef = useRef("");
   const wantSessionRef = useRef(false);
@@ -120,6 +122,8 @@ export default function VoicePickButton({
     wantSessionRef.current = false;
     sessionRef.current += 1;
     abortRecognition();
+    deepgramLiveRef.current?.cancel();
+    deepgramLiveRef.current = null;
     releaseMicrophone(streamRef.current);
     streamRef.current = null;
     setSessionActive(false);
@@ -142,19 +146,54 @@ export default function VoicePickButton({
     [updateTranscript],
   );
 
-  const switchToServerMode = useCallback(
+  const startDeepgramLive = useCallback(
+    async (session: number) => {
+      const stream = streamRef.current;
+      if (!stream || session !== sessionRef.current || !wantSessionRef.current) return;
+
+      updateTranscript("");
+      const live = new DeepgramLiveSession();
+      deepgramLiveRef.current = live;
+
+      try {
+        await live.start(stream, mimeTypeRef.current, {
+          onTranscript: (text) => {
+            if (session !== sessionRef.current || !wantSessionRef.current) return;
+            updateTranscript(text);
+          },
+          onConnected: () => {
+            if (session !== sessionRef.current || !wantSessionRef.current) return;
+            setStarting(false);
+            setSessionActive(true);
+            setStatusLine(null);
+          },
+          onError: (message) => {
+            if (session !== sessionRef.current) return;
+            onErrorRef.current?.(message);
+          },
+        });
+      } catch (err) {
+        if (session !== sessionRef.current || !wantSessionRef.current) return;
+        live.cancel();
+        deepgramLiveRef.current = null;
+        setMode("server-stt");
+        setStatusLine("Live captions unavailable — recording instead. Tap Done to transcribe.");
+        await startServerRecording(session);
+      }
+    },
+    [startServerRecording, updateTranscript],
+  );
+
+  const switchToDeepgramLive = useCallback(
     async (session: number, reason?: string) => {
       if (session !== sessionRef.current || !wantSessionRef.current) return;
 
-      setMode("server-stt");
+      setMode("deepgram-live");
       abortRecognition();
-      setStatusLine(
-        reason ??
-          "Browser blocked live captions — recording audio instead. Tap Done to transcribe.",
-      );
-      await startServerRecording(session);
+      if (reason) setStatusLine(reason);
+      await startDeepgramLive(session);
     },
-    [abortRecognition, startServerRecording],
+    [abortRecognition, startDeepgramLive],
   );
 
   const bindRecognition = useCallback(
@@ -173,10 +212,7 @@ export default function VoicePickButton({
 
         if (shouldFallbackToServerStt(event.error) && streamRef.current) {
           const message = describeSpeechRecognitionError(event.error);
-          void switchToServerMode(
-            session,
-            `${message} Switched to record-and-transcribe — keep speaking, then tap Done.`,
-          );
+          void switchToDeepgramLive(session, `${message} Switched to Deepgram live captions.`);
           return;
         }
 
@@ -205,7 +241,7 @@ export default function VoicePickButton({
 
           const Ctor = getSpeechRecognitionCtor();
           if (!Ctor) {
-            await switchToServerMode(session);
+            await switchToDeepgramLive(session);
             return;
           }
 
@@ -219,19 +255,19 @@ export default function VoicePickButton({
             recognitionRef.current = next;
             next.start();
           } catch {
-            await switchToServerMode(session);
+            await switchToDeepgramLive(session);
           }
         })();
       };
     },
-    [switchToServerMode, teardownSession, updateTranscript],
+    [switchToDeepgramLive, teardownSession, updateTranscript],
   );
 
   const startWebSpeech = useCallback(
     async (session: number) => {
       const Ctor = getSpeechRecognitionCtor();
       if (!Ctor) {
-        await switchToServerMode(session);
+        await switchToDeepgramLive(session);
         return;
       }
 
@@ -246,10 +282,10 @@ export default function VoicePickButton({
       try {
         recognition.start();
       } catch {
-        await switchToServerMode(session);
+        await switchToDeepgramLive(session);
       }
     },
-    [bindRecognition, switchToServerMode],
+    [bindRecognition, switchToDeepgramLive],
   );
 
   const start = useCallback(async () => {
@@ -276,6 +312,11 @@ export default function VoicePickButton({
       streamRef.current = capture.stream;
       mimeTypeRef.current = capture.mimeType;
 
+      if (activeMode === "deepgram-live") {
+        await startDeepgramLive(session);
+        return;
+      }
+
       if (activeMode === "server-stt") {
         await startServerRecording(session);
         return;
@@ -289,10 +330,39 @@ export default function VoicePickButton({
         "Microphone access is needed. Allow the mic for this site, or type your question instead.",
       );
     }
-  }, [mode, startServerRecording, startWebSpeech, teardownSession, updateTranscript]);
+  }, [mode, startDeepgramLive, startServerRecording, startWebSpeech, teardownSession, updateTranscript]);
 
   const handleDone = useCallback(async () => {
     wantSessionRef.current = false;
+
+    if (mode === "deepgram-live" && deepgramLiveRef.current) {
+      setSessionActive(false);
+      setStatusLine("Finishing…");
+
+      try {
+        const text = await deepgramLiveRef.current.stop();
+        deepgramLiveRef.current = null;
+        releaseMicrophone(streamRef.current);
+        streamRef.current = null;
+
+        if (!text) {
+          throw new Error("Couldn't make out words. Try again or type your question.");
+        }
+
+        updateTranscript(text);
+        setCompleted(true);
+        setStatusLine("Got it — your answer is below (reading aloud now).");
+        onTranscriptRef.current(text);
+      } catch (err) {
+        const message = err instanceof Error ? err.message : "Live transcription failed.";
+        onErrorRef.current?.(message);
+        setStatusLine(message);
+        setCompleted(false);
+      } finally {
+        setStarting(false);
+      }
+      return;
+    }
 
     if (mode === "server-stt" || recorderRef.current.isRecording()) {
       setTranscribing(true);
@@ -349,15 +419,16 @@ export default function VoicePickButton({
     return () => teardownSession();
   }, [teardownSession]);
 
-  const serverMode = mode === "server-stt";
+  const liveMode = mode === "deepgram-live";
+  const batchMode = mode === "server-stt";
 
   useEffect(() => {
-    if (!sessionActive || !serverMode) return;
+    if (!sessionActive || !batchMode) return;
     const tick = window.setInterval(() => {
       setRecordingSeconds((s) => s + 1);
     }, 1000);
     return () => window.clearInterval(tick);
-  }, [sessionActive, serverMode]);
+  }, [sessionActive, batchMode]);
 
   const busy = sessionActive || starting || transcribing;
 
@@ -391,7 +462,7 @@ export default function VoicePickButton({
             : starting
               ? "Starting…"
               : sessionActive
-                ? serverMode
+                ? batchMode
                   ? "Recording…"
                   : activeLabel
                 : label}
@@ -430,7 +501,7 @@ export default function VoicePickButton({
             {transcribing
               ? "Transcribing…"
               : sessionActive
-                ? serverMode
+                ? batchMode
                   ? "Recording your voice"
                   : "Hearing you say…"
                 : "Last heard"}
@@ -443,15 +514,15 @@ export default function VoicePickButton({
                 )}
                 {liveTranscript}
               </>
-            ) : sessionActive && serverMode ? (
+            ) : sessionActive && batchMode ? (
               <span className="text-[#a8a29e]">
                 Recording{recordingSeconds > 0 ? ` (${recordingSeconds}s)` : ""} — tap Done when
                 finished; your words appear here.
               </span>
             ) : (
               <span className="text-[#a8a29e]">
-                {serverMode
-                  ? "Tap the mic, speak, then Done."
+                {liveMode || batchMode
+                  ? "Tap the mic and start speaking — words appear here."
                   : "Start speaking — words will appear here."}
               </span>
             )}
@@ -459,7 +530,9 @@ export default function VoicePickButton({
           {statusLine && <p className="mt-2 text-xs font-medium text-[#5b21b6]">{statusLine}</p>}
           {sessionActive && (
             <p className="mt-2 text-xs text-[#6f5c49]">
-              {serverMode ? transcriptHint || "Speak, then tap Done." : transcriptHint}
+              {batchMode
+                ? transcriptHint || "Speak, then tap Done."
+                : transcriptHint || "Words appear as you speak. Tap Done when finished."}
             </p>
           )}
         </div>
