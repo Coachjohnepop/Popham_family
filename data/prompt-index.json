@@ -242,7 +242,17 @@
             {
               "id": "depth-deep",
               "label": "Tell me more",
-              "say": ["tell me more", "more detail", "go deeper", "full story"],
+              "say": [
+                "tell me more",
+                "more detail",
+                "more details",
+                "even more detail",
+                "hear more detail",
+                "go deeper",
+                "full story",
+                "this is fascinating",
+                "keep going"
+              ],
               "action": "answer-depth",
               "target": "deep"
             }

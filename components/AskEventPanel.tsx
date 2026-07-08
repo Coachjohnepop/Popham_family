@@ -77,6 +77,7 @@ export default function AskEventPanel({ chapterBriefs }: AskEventPanelProps) {
     }
 
     if (outcome.type === "depth") {
+      spokenKeyRef.current = null;
       handleDepth(outcome.depth);
       if (!activeBriefId && chapterBriefs[0]) {
         revealBrief(chapterBriefs[0].id);
@@ -273,7 +274,14 @@ export default function AskEventPanel({ chapterBriefs }: AskEventPanelProps) {
       )}
 
       {inDialogue && activeBrief && (
-        <div className="flex flex-wrap gap-2">
+        <div className="rounded-2xl border border-[#c4b5fd] bg-[#faf5ff] p-4">
+          <p className="text-sm font-semibold text-[#5b21b6]">Keep the conversation going</p>
+          <p className="mt-1 text-xs leading-relaxed text-[#6f5c49]">
+            Tap <strong>Or say your follow-up</strong> below, speak, then <strong>Done</strong>.
+            Try: &ldquo;Tell me more&rdquo;, &ldquo;Even more detail&rdquo;, &ldquo;Keep it short&rdquo;,
+            or a new question about Salem.
+          </p>
+          <div className="mt-3 flex flex-wrap gap-2">
           <button
             type="button"
             onClick={() => handleDepth("deep")}
@@ -295,6 +303,7 @@ export default function AskEventPanel({ chapterBriefs }: AskEventPanelProps) {
           >
             Ask another question
           </button>
+          </div>
         </div>
       )}
 
