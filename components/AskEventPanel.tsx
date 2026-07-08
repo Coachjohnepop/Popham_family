@@ -19,6 +19,11 @@ import {
   isDeeperDepth,
   type AnswerDepth,
 } from "@/lib/event-briefs";
+import {
+  buildBriefNarrationScript,
+  buildChapterNarrationScript,
+  buildSearchNarrationScript,
+} from "@/lib/narration-script";
 import { getStorySection } from "@/lib/storybook";
 import { speakText, type SpeakController, type SpeakState } from "@/lib/speak-text";
 
@@ -79,16 +84,29 @@ export default function AskEventPanel({ className = "" }: AskEventPanelProps) {
         : getEventBriefBody(activeBrief, answerDepth)
       : "";
 
-  const readAloudScript =
-    responseKind === "search" && searchAnswer && confirmedQuestion
-      ? buildSearchReadAloud(searchAnswer, confirmedQuestion)
-      : responseKind === "chapter" && chapterNarrationText
-        ? `Continuing the story. ${chapterNarrationText}`
-        : activeBrief && confirmedQuestion && answerBody
-          ? isAddendum
-            ? `Here is more detail. ${answerBody}`
-            : `You asked: ${confirmedQuestion}. Here is the answer. ${answerBody}`
-          : "";
+  const readAloudScript = useMemo(() => {
+    if (responseKind === "search" && searchAnswer && confirmedQuestion) {
+      return buildSearchNarrationScript(searchAnswer, confirmedQuestion, answerDepth);
+    }
+    if (responseKind === "chapter" && chapterNarrationText) {
+      return buildChapterNarrationScript(chapterNarrationText);
+    }
+    if (activeBrief && confirmedQuestion) {
+      return buildBriefNarrationScript(activeBrief, confirmedQuestion, answerDepth, {
+        addendumFrom: isAddendum ? addendumFromDepth! : undefined,
+      });
+    }
+    return "";
+  }, [
+    responseKind,
+    searchAnswer,
+    confirmedQuestion,
+    answerDepth,
+    chapterNarrationText,
+    activeBrief,
+    isAddendum,
+    addendumFromDepth,
+  ]);
 
   function resetNarrationState() {
     setPanelDepth(null);
@@ -118,13 +136,6 @@ export default function AskEventPanel({ className = "" }: AskEventPanelProps) {
     setSearchShownCount(answer.entries.length);
     setResponseKind("search");
     setInDialogue(true);
-  }
-
-  function buildSearchReadAloud(answer: AskSearchResult, question: string): string {
-    const entryText = answer.entries
-      .map((entry) => `${entry.label}. ${entry.summary.join(" ")}`)
-      .join(" ");
-    return `You asked: ${question}. ${answer.intro} ${entryText}`;
   }
 
   function handleDepth(depth: AnswerDepth, opts?: { fromDepth?: AnswerDepth; label?: string }) {
