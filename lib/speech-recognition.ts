@@ -15,7 +15,7 @@ export function isSpeechRecognitionSupported(): boolean {
 
 export async function requestMicrophoneAccess(): Promise<string | null> {
   if (typeof navigator === "undefined" || !navigator.mediaDevices?.getUserMedia) {
-    return null;
+    return "Microphone not available in this browser.";
   }
 
   try {
@@ -23,7 +23,7 @@ export async function requestMicrophoneAccess(): Promise<string | null> {
     stream.getTracks().forEach((track) => track.stop());
     return null;
   } catch {
-    return "Microphone access is needed. On Mac: System Settings → Privacy & Security → Microphone → allow your browser. Then refresh and try again.";
+    return "Microphone access is needed. On Mac: System Settings → Privacy & Security → Microphone → allow Brave. Then refresh and try again.";
   }
 }
 
@@ -33,7 +33,7 @@ export function describeSpeechRecognitionError(error: string): string {
     case "service-not-allowed":
       return "Microphone blocked. Allow the mic for this site in your browser, or type your question below.";
     case "network":
-      return "Voice needs an internet connection (browser sends audio for transcription). Type your question below, or check Wi‑Fi and try again.";
+      return "Browser blocked speech-to-text (common in Brave Private — it blocks Google’s speech service).";
     case "no-speech":
       return "Didn't catch speech. Hold the button, speak clearly, then release — or type your question below.";
     case "audio-capture":

@@ -139,7 +139,11 @@ async function runCycle(page, spec, mode) {
     .waitForFunction(
       (node) => {
         const text = node?.textContent?.toLowerCase() ?? "";
-        return text.includes("listening") || text.includes("starting");
+        return (
+          text.includes("listening") ||
+          text.includes("starting") ||
+          text.includes("recording")
+        );
       },
       handle,
       { timeout: 5000 },

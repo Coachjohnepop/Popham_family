@@ -2,11 +2,21 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import {
+  AudioChunkRecorder,
+  openMicrophone,
+  releaseMicrophone,
+  transcribeAudioBlob,
+} from "@/lib/media-recorder-capture";
+import {
   describeSpeechRecognitionError,
   getSpeechRecognitionCtor,
-  isSpeechRecognitionSupported,
-  requestMicrophoneAccess,
 } from "@/lib/speech-recognition";
+import {
+  getVoiceEnvironment,
+  shouldFallbackToServerStt,
+  type VoiceEnvironment,
+  type VoiceInputMode,
+} from "@/lib/voice-environment";
 
 type VoicePickButtonProps = {
   onTranscript: (text: string) => void;
@@ -46,15 +56,20 @@ export default function VoicePickButton({
   activeLabel = "Listening…",
   transcriptHint = "Speak, then tap Done when you finish.",
 }: VoicePickButtonProps) {
-  const [supported, setSupported] = useState(false);
-  const [listening, setListening] = useState(false);
+  const [env, setEnv] = useState<VoiceEnvironment | null>(null);
+  const [mode, setMode] = useState<VoiceInputMode>("web-speech");
+  const [sessionActive, setSessionActive] = useState(false);
   const [starting, setStarting] = useState(false);
+  const [transcribing, setTranscribing] = useState(false);
   const [liveTranscript, setLiveTranscript] = useState("");
+  const [statusLine, setStatusLine] = useState<string | null>(null);
 
+  const streamRef = useRef<MediaStream | null>(null);
+  const mimeTypeRef = useRef("");
+  const recorderRef = useRef(new AudioChunkRecorder());
   const recognitionRef = useRef<SpeechRecognition | null>(null);
   const liveTranscriptRef = useRef("");
-  const wantListeningRef = useRef(false);
-  const errorReportedRef = useRef(false);
+  const wantSessionRef = useRef(false);
   const sessionRef = useRef(0);
   const onTranscriptRef = useRef(onTranscript);
   const onErrorRef = useRef(onError);
@@ -67,20 +82,9 @@ export default function VoicePickButton({
   }, [onTranscript, onError, onTranscriptChange]);
 
   useEffect(() => {
-    setSupported(isSpeechRecognitionSupported());
-    return () => {
-      wantListeningRef.current = false;
-      sessionRef.current += 1;
-      const previous = recognitionRef.current;
-      if (previous) {
-        previous.onend = null;
-        previous.onerror = null;
-        previous.onresult = null;
-        previous.onstart = null;
-        previous.abort();
-        recognitionRef.current = null;
-      }
-    };
+    const detected = getVoiceEnvironment();
+    setEnv(detected);
+    setMode(detected.mode);
   }, []);
 
   const updateTranscript = useCallback((text: string) => {
@@ -96,7 +100,7 @@ export default function VoicePickButton({
     recognition.onstart = null;
   }, []);
 
-  const abortEngine = useCallback(() => {
+  const abortRecognition = useCallback(() => {
     const previous = recognitionRef.current;
     if (!previous) return;
     detachRecognition(previous);
@@ -104,76 +108,97 @@ export default function VoicePickButton({
     recognitionRef.current = null;
   }, [detachRecognition]);
 
-  const endSession = useCallback(
-    (opts?: { submit?: boolean; cancel?: boolean }) => {
-      wantListeningRef.current = false;
-      sessionRef.current += 1;
-      abortEngine();
-      setListening(false);
-      setStarting(false);
+  const teardownSession = useCallback(() => {
+    wantSessionRef.current = false;
+    sessionRef.current += 1;
+    abortRecognition();
+    releaseMicrophone(streamRef.current);
+    streamRef.current = null;
+    setSessionActive(false);
+    setStarting(false);
+    setTranscribing(false);
+  }, [abortRecognition]);
 
-      const text = liveTranscriptRef.current.trim();
-      if (opts?.submit) {
-        if (text) {
-          onTranscriptRef.current(text);
-        } else {
-          onErrorRef.current?.("No speech captured. Tap the mic and try again.");
-        }
-      } else if (opts?.cancel) {
-        updateTranscript("");
-      }
+  const startServerRecording = useCallback(
+    async (session: number) => {
+      const stream = streamRef.current;
+      if (!stream || session !== sessionRef.current || !wantSessionRef.current) return;
+
+      recorderRef.current.start(stream, mimeTypeRef.current);
+      setSessionActive(true);
+      setStarting(false);
+      setStatusLine("Recording your voice — tap Done when finished.");
+      updateTranscript("");
     },
-    [abortEngine, updateTranscript],
+    [updateTranscript],
+  );
+
+  const switchToServerMode = useCallback(
+    async (session: number, reason?: string) => {
+      if (session !== sessionRef.current || !wantSessionRef.current) return;
+
+      setMode("server-stt");
+      abortRecognition();
+      setStatusLine(
+        reason ??
+          "Browser blocked live captions — recording audio instead. Tap Done to transcribe.",
+      );
+      await startServerRecording(session);
+    },
+    [abortRecognition, startServerRecording],
   );
 
   const bindRecognition = useCallback(
     (recognition: SpeechRecognition, session: number) => {
       recognition.onstart = () => {
-        if (session !== sessionRef.current || !wantListeningRef.current) return;
+        if (session !== sessionRef.current || !wantSessionRef.current) return;
         setStarting(false);
-        setListening(true);
+        setSessionActive(true);
+        setStatusLine(null);
       };
 
       recognition.onerror = (event) => {
-        if (session !== sessionRef.current || !wantListeningRef.current) return;
+        if (session !== sessionRef.current || !wantSessionRef.current) return;
         if (event.error === "aborted") return;
         if (event.error === "no-speech") return;
 
-        errorReportedRef.current = true;
-        wantListeningRef.current = false;
-        sessionRef.current += 1;
-        detachRecognition(recognition);
-        recognitionRef.current = null;
-        setListening(false);
-        setStarting(false);
+        if (shouldFallbackToServerStt(event.error) && streamRef.current) {
+          const message = describeSpeechRecognitionError(event.error);
+          void switchToServerMode(
+            session,
+            `${message} Switched to record-and-transcribe — keep speaking, then tap Done.`,
+          );
+          return;
+        }
 
+        teardownSession();
         const message = describeSpeechRecognitionError(event.error);
         if (message) onErrorRef.current?.(message);
       };
 
       recognition.onresult = (event) => {
-        if (session !== sessionRef.current || !wantListeningRef.current) return;
-        const text = composeTranscript(event.results);
-        updateTranscript(text);
+        if (session !== sessionRef.current || !wantSessionRef.current) return;
+        updateTranscript(composeTranscript(event.results));
       };
 
       recognition.onend = () => {
         if (session !== sessionRef.current) return;
         recognitionRef.current = null;
-
-        if (!wantListeningRef.current) {
-          setListening(false);
+        if (!wantSessionRef.current) {
+          setSessionActive(false);
           setStarting(false);
           return;
         }
 
-        // Browsers end the session after ~1s of silence — restart while user hasn't tapped Done.
         void (async () => {
           await delay(200);
-          if (!wantListeningRef.current || session !== sessionRef.current) return;
+          if (!wantSessionRef.current || session !== sessionRef.current) return;
 
           const Ctor = getSpeechRecognitionCtor();
-          if (!Ctor) return;
+          if (!Ctor) {
+            await switchToServerMode(session);
+            return;
+          }
 
           try {
             const next = new Ctor();
@@ -185,23 +210,21 @@ export default function VoicePickButton({
             recognitionRef.current = next;
             next.start();
           } catch {
-            if (!wantListeningRef.current || session !== sessionRef.current) return;
-            errorReportedRef.current = true;
-            wantListeningRef.current = false;
-            setListening(false);
-            setStarting(false);
-            onErrorRef.current?.("Listening paused. Tap Done with what we heard, or try again.");
+            await switchToServerMode(session);
           }
         })();
       };
     },
-    [detachRecognition, updateTranscript],
+    [switchToServerMode, teardownSession, updateTranscript],
   );
 
-  const startEngine = useCallback(
+  const startWebSpeech = useCallback(
     async (session: number) => {
       const Ctor = getSpeechRecognitionCtor();
-      if (!Ctor) return;
+      if (!Ctor) {
+        await switchToServerMode(session);
+        return;
+      }
 
       const recognition = new Ctor();
       recognition.lang = "en-US";
@@ -214,73 +237,127 @@ export default function VoicePickButton({
       try {
         recognition.start();
       } catch {
-        if (session !== sessionRef.current) return;
-        wantListeningRef.current = false;
-        setStarting(false);
-        setListening(false);
-        onErrorRef.current?.("Could not start listening. Wait a second and tap again.");
+        await switchToServerMode(session);
       }
     },
-    [bindRecognition],
+    [bindRecognition, switchToServerMode],
   );
 
   const start = useCallback(async () => {
-    const Ctor = getSpeechRecognitionCtor();
-    if (!Ctor) {
-      onErrorRef.current?.("Voice is not supported in this browser. Type your question instead.");
-      return;
-    }
-
     const session = sessionRef.current + 1;
     sessionRef.current = session;
-    wantListeningRef.current = true;
-    errorReportedRef.current = false;
+    wantSessionRef.current = true;
     updateTranscript("");
+    setStatusLine(null);
     setStarting(true);
-    setListening(false);
+    setSessionActive(false);
+    setTranscribing(false);
 
-    const micError = await requestMicrophoneAccess();
-    if (session !== sessionRef.current || !wantListeningRef.current) return;
-    if (micError) {
-      wantListeningRef.current = false;
-      setStarting(false);
-      onErrorRef.current?.(micError);
+    const activeMode = mode;
+
+    try {
+      const capture = await openMicrophone();
+      if (session !== sessionRef.current || !wantSessionRef.current) {
+        releaseMicrophone(capture.stream);
+        return;
+      }
+
+      streamRef.current = capture.stream;
+      mimeTypeRef.current = capture.mimeType;
+
+      if (activeMode === "server-stt") {
+        await startServerRecording(session);
+        return;
+      }
+
+      await startWebSpeech(session);
+    } catch {
+      if (session !== sessionRef.current) return;
+      teardownSession();
+      onErrorRef.current?.(
+        "Microphone access is needed. Allow the mic for this site, or type your question instead.",
+      );
+    }
+  }, [mode, startServerRecording, startWebSpeech, teardownSession, updateTranscript]);
+
+  const handleDone = useCallback(async () => {
+    const session = sessionRef.current;
+    wantSessionRef.current = false;
+
+    if (mode === "server-stt" || recorderRef.current.isRecording()) {
+      setTranscribing(true);
+      setSessionActive(false);
+      setStatusLine("Transcribing…");
+
+      try {
+        const blob = await recorderRef.current.stop();
+        abortRecognition();
+        releaseMicrophone(streamRef.current);
+        streamRef.current = null;
+
+        if (blob.size < 800) {
+          throw new Error("No speech captured. Speak longer, then tap Done again.");
+        }
+
+        const text = await transcribeAudioBlob(blob);
+        if (!text) throw new Error("Couldn't make out words. Try again or type your question.");
+
+        updateTranscript(text);
+        onTranscriptRef.current(text);
+        setStatusLine(null);
+      } catch (err) {
+        const message = err instanceof Error ? err.message : "Transcription failed.";
+        onErrorRef.current?.(message);
+        setStatusLine(null);
+      } finally {
+        if (session === sessionRef.current) {
+          setTranscribing(false);
+          setStarting(false);
+        }
+      }
       return;
     }
 
-    abortEngine();
-    await delay(200);
-    if (session !== sessionRef.current || !wantListeningRef.current) return;
-
-    await startEngine(session);
-  }, [abortEngine, startEngine, updateTranscript]);
-
-  const handleDone = useCallback(() => {
-    endSession({ submit: true });
-  }, [endSession]);
+    const text = liveTranscriptRef.current.trim();
+    teardownSession();
+    if (text) {
+      onTranscriptRef.current(text);
+    } else {
+      onErrorRef.current?.("No speech captured. Tap the mic and try again.");
+    }
+  }, [abortRecognition, mode, teardownSession, updateTranscript]);
 
   const handleCancel = useCallback(() => {
-    endSession({ cancel: true });
-  }, [endSession]);
+    teardownSession();
+    updateTranscript("");
+    setStatusLine(null);
+  }, [teardownSession, updateTranscript]);
 
-  if (!supported) {
-    return (
-      <p className="text-sm text-[#6f5c49]">
-        Voice needs Chrome or Safari. Type your question below — it works the same.
-      </p>
-    );
+  useEffect(() => {
+    return () => teardownSession();
+  }, [teardownSession]);
+
+  const busy = sessionActive || starting || transcribing;
+  const serverMode = mode === "server-stt";
+
+  if (env && env.mode === "server-stt" && !getSpeechRecognitionCtor()) {
+    // still show server mode UI
   }
-
-  const busy = listening || starting;
 
   return (
     <div className="space-y-3">
+      {env?.warning && (
+        <p className="rounded-xl border border-[#fdba74] bg-[#fff7ed] px-4 py-3 text-sm text-[#9a3412]">
+          {env.warning}
+        </p>
+      )}
+
       <div className="flex flex-wrap items-center gap-2">
         <button
           type="button"
           data-testid="voice-pick-button"
           onClick={busy ? handleCancel : start}
-          disabled={starting}
+          disabled={starting || transcribing}
           className={`inline-flex items-center gap-2 rounded-full px-5 py-3 text-sm font-semibold transition ${
             busy
               ? "bg-[#7c3aed] text-white ring-2 ring-[#c4b5fd]"
@@ -288,21 +365,29 @@ export default function VoicePickButton({
           } disabled:opacity-70`}
         >
           <span aria-hidden>{busy ? "🎙️" : "🎤"}</span>
-          {starting ? "Starting…" : listening ? activeLabel : label}
+          {transcribing
+            ? "Transcribing…"
+            : starting
+              ? "Starting…"
+              : sessionActive
+                ? serverMode
+                  ? "Recording…"
+                  : activeLabel
+                : label}
         </button>
 
-        {listening && (
+        {sessionActive && (
           <button
             type="button"
             data-testid="voice-done-button"
-            onClick={handleDone}
+            onClick={() => void handleDone()}
             className="rounded-full bg-[#8b5e34] px-5 py-3 text-sm font-semibold text-white hover:bg-[#744b2b]"
           >
             Done
           </button>
         )}
 
-        {listening && (
+        {sessionActive && (
           <button
             type="button"
             onClick={handleCancel}
@@ -313,7 +398,7 @@ export default function VoicePickButton({
         )}
       </div>
 
-      {(listening || liveTranscript) && (
+      {(sessionActive || transcribing || liveTranscript || statusLine) && (
         <div
           className="rounded-2xl border border-[#ddd6fe] bg-white p-4"
           role="status"
@@ -321,14 +406,27 @@ export default function VoicePickButton({
           data-testid="voice-transcript-panel"
         >
           <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-[#7c3aed]">
-            {listening ? "Hearing you say…" : "Last heard"}
+            {transcribing
+              ? "Transcribing…"
+              : sessionActive
+                ? serverMode
+                  ? "Recording your voice"
+                  : "Hearing you say…"
+                : "Last heard"}
           </p>
           <p className="mt-2 min-h-[2.5rem] text-sm leading-relaxed text-[#2b2118]">
-            {liveTranscript || (
-              <span className="text-[#a8a29e]">Start speaking — words will appear here.</span>
-            )}
+            {liveTranscript ||
+              (sessionActive && serverMode ? (
+                <span className="text-[#a8a29e]">
+                  Live captions aren&apos;t available in Brave Private — speak your question, then
+                  tap Done.
+                </span>
+              ) : (
+                <span className="text-[#a8a29e]">Start speaking — words will appear here.</span>
+              ))}
           </p>
-          {listening && (
+          {statusLine && <p className="mt-2 text-xs font-medium text-[#5b21b6]">{statusLine}</p>}
+          {sessionActive && !serverMode && (
             <p className="mt-2 text-xs text-[#6f5c49]">{transcriptHint}</p>
           )}
         </div>
