@@ -82,22 +82,40 @@ function filenameForBlob(blob: Blob): string {
   return "speech.webm";
 }
 
+const TRANSCRIBE_TIMEOUT_MS = 45_000;
+
 export async function transcribeAudioBlob(blob: Blob): Promise<string> {
   const form = new FormData();
   form.append("audio", blob, filenameForBlob(blob));
 
-  const res = await fetch("/api/transcribe", { method: "POST", body: form });
-  const data = (await res.json()) as { text?: string; error?: string; hint?: string };
+  const controller = new AbortController();
+  const timeout = window.setTimeout(() => controller.abort(), TRANSCRIBE_TIMEOUT_MS);
 
-  if (!res.ok) {
-    throw new Error(
-      data.hint ??
-        data.error ??
-        (res.status === 503
-          ? "Speech-to-text is not configured. Add OPENAI_API_KEY on Vercel and redeploy."
-          : "Transcription failed"),
-    );
+  try {
+    const res = await fetch("/api/transcribe", {
+      method: "POST",
+      body: form,
+      signal: controller.signal,
+    });
+    const data = (await res.json()) as { text?: string; error?: string; hint?: string };
+
+    if (!res.ok) {
+      throw new Error(
+        data.hint ??
+          data.error ??
+          (res.status === 503
+            ? "Speech-to-text is not configured. Add OPENAI_API_KEY on Vercel and redeploy."
+            : "Transcription failed"),
+      );
+    }
+
+    return data.text?.trim() ?? "";
+  } catch (err) {
+    if (err instanceof Error && err.name === "AbortError") {
+      throw new Error("Transcription timed out. Try again or type your question above.");
+    }
+    throw err;
+  } finally {
+    window.clearTimeout(timeout);
   }
-
-  return data.text?.trim() ?? "";
 }

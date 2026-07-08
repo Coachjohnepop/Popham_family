@@ -38,6 +38,7 @@ export default function AskEventPanel({ chapterBriefs }: AskEventPanelProps) {
   const [voiceError, setVoiceError] = useState<string | null>(null);
   const [autoSpeaking, setAutoSpeaking] = useState(false);
   const [voiceHealthHint, setVoiceHealthHint] = useState<string | null>(null);
+  const [inDialogue, setInDialogue] = useState(false);
 
   const activeBrief =
     (activeBriefId ? getEventBrief(activeBriefId) : undefined) ??
@@ -51,19 +52,21 @@ export default function AskEventPanel({ chapterBriefs }: AskEventPanelProps) {
 
   function revealBrief(eventId: string) {
     setActiveBriefId(eventId);
-    setVoiceError(null);
+    setInDialogue(true);
   }
 
   function handleDepth(depth: AnswerDepth) {
     reader?.setAnswerDepth(depth);
     setVoiceMessage(`Showing ${depth === "deep" ? "more detail" : depth} answer.`);
     setVoiceError(null);
+    setInDialogue(true);
   }
 
   function applyAskResult(transcript: string) {
     const heard = transcript.trim() || DEFAULT_QUESTION;
     setConfirmedQuestion(heard);
     setQuestionInput(heard);
+    setVoiceError(null);
 
     const outcome = processAskEventTranscript(heard, chapterBriefs);
 
@@ -88,6 +91,21 @@ export default function AskEventPanel({ chapterBriefs }: AskEventPanelProps) {
     }
 
     setVoiceMessage(outcome.message);
+  }
+
+  function showFallbackAnswer(errorMessage: string) {
+    const fallbackQuestion = questionInput.trim() || DEFAULT_QUESTION;
+    spokenKeyRef.current = null;
+    setConfirmedQuestion(fallbackQuestion);
+    if (chapterBriefs[0]) {
+      revealBrief(chapterBriefs[0].id);
+    }
+    const billing = /billing|quota|payment/i.test(errorMessage);
+    setVoiceMessage(
+      billing
+        ? "Couldn't transcribe (OpenAI billing) — showing the Salem answer anyway. Browser voice will read it."
+        : "Couldn't catch every word — showing an answer below. Type or tap the mic to try again.",
+    );
   }
 
   function handleChoice(choice: PromptChoice) {
@@ -115,6 +133,16 @@ export default function AskEventPanel({ chapterBriefs }: AskEventPanelProps) {
   function handleSubmitQuestion(e: React.FormEvent) {
     e.preventDefault();
     applyAskResult(questionInput.trim() || DEFAULT_QUESTION);
+  }
+
+  function handleAskAnother() {
+    setQuestionInput("");
+    setConfirmedQuestion(null);
+    setVoiceMessage(null);
+    setVoiceError(null);
+    spokenKeyRef.current = null;
+    speakStopRef.current?.();
+    setAutoSpeaking(false);
   }
 
   useEffect(() => {
@@ -161,10 +189,10 @@ export default function AskEventPanel({ chapterBriefs }: AskEventPanelProps) {
         className="rounded-2xl border border-[#c4b5fd] bg-[#f5f3ff] p-4"
       >
         <label htmlFor="ask-event-input" className="text-sm font-semibold text-[#5b21b6]">
-          Ask your question
+          {inDialogue ? "Ask a follow-up" : "Ask your question"}
         </label>
         <p className="mt-1 text-xs text-[#6f5c49]">
-          Type or speak — then we show and read the answer aloud.
+          Type or speak — we show and read the answer aloud.
         </p>
         <div className="mt-3 flex flex-col gap-2 sm:flex-row">
           <input
@@ -184,12 +212,14 @@ export default function AskEventPanel({ chapterBriefs }: AskEventPanelProps) {
         </div>
       </form>
 
-      <PromptChoicesPanel
-        promptId="ask-event"
-        onPick={handleChoice}
-        compact
-        interactiveActions={["event-brief", "answer-depth", "ask-ai"]}
-      />
+      {!inDialogue && (
+        <PromptChoicesPanel
+          promptId="ask-event"
+          onPick={handleChoice}
+          compact
+          interactiveActions={["event-brief", "answer-depth", "ask-ai"]}
+        />
+      )}
 
       {voiceHealthHint && (
         <p className="rounded-xl border border-[#fdba74] bg-[#fff7ed] px-4 py-3 text-sm text-[#9a3412]">
@@ -206,25 +236,16 @@ export default function AskEventPanel({ chapterBriefs }: AskEventPanelProps) {
       )}
 
       <VoicePickButton
-        label="Or say your question"
+        label={inDialogue ? "Or say your follow-up" : "Or say your question"}
         activeLabel="Listening…"
         transcriptHint="In Brave: speak, tap Done — your words and the answer appear below."
         onTranscriptChange={setQuestionInput}
         onTranscript={(text) => {
-          setVoiceError(null);
           applyAskResult(text);
         }}
         onError={(msg) => {
           setVoiceError(msg);
-          setVoiceMessage(null);
-          if (/billing|quota|payment/i.test(msg)) {
-            setConfirmedQuestion(DEFAULT_QUESTION);
-            setQuestionInput(DEFAULT_QUESTION);
-            revealBrief(chapterBriefs[0]?.id ?? "salem-witch-trials");
-            setVoiceMessage(
-              "Transcription needs OpenAI billing — showing the Salem answer anyway. Browser voice will read it.",
-            );
-          }
+          showFallbackAnswer(msg);
         }}
       />
 
@@ -234,7 +255,7 @@ export default function AskEventPanel({ chapterBriefs }: AskEventPanelProps) {
         </p>
       )}
 
-      {confirmedQuestion && !voiceError && (
+      {confirmedQuestion && (
         <div className="rounded-2xl border-2 border-[#86efac] bg-[#f0fdf4] p-4">
           <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-[#15803d]">
             We heard you ask
@@ -248,10 +269,36 @@ export default function AskEventPanel({ chapterBriefs }: AskEventPanelProps) {
         </div>
       )}
 
-      {voiceMessage && !voiceError && (
+      {voiceMessage && (
         <p className="text-sm font-medium text-[#5b21b6]" role="status">
           {voiceMessage}
         </p>
+      )}
+
+      {inDialogue && activeBrief && (
+        <div className="flex flex-wrap gap-2">
+          <button
+            type="button"
+            onClick={() => handleDepth("deep")}
+            className="rounded-full bg-[#ede9fe] px-4 py-2 text-sm font-semibold text-[#5b21b6] hover:bg-[#ddd6fe]"
+          >
+            Tell me more
+          </button>
+          <button
+            type="button"
+            onClick={() => handleDepth("brief")}
+            className="rounded-full bg-[#ede9fe] px-4 py-2 text-sm font-semibold text-[#5b21b6] hover:bg-[#ddd6fe]"
+          >
+            Shorter version
+          </button>
+          <button
+            type="button"
+            onClick={handleAskAnother}
+            className="rounded-full bg-white px-4 py-2 text-sm font-semibold text-[#6f5c49] ring-1 ring-[#e2d4bf] hover:bg-[#fffaf2]"
+          >
+            Ask another question
+          </button>
+        </div>
       )}
 
       {activeBrief && (

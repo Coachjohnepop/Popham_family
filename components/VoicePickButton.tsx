@@ -286,7 +286,6 @@ export default function VoicePickButton({
   }, [mode, startServerRecording, startWebSpeech, teardownSession, updateTranscript]);
 
   const handleDone = useCallback(async () => {
-    const session = sessionRef.current;
     wantSessionRef.current = false;
 
     if (mode === "server-stt" || recorderRef.current.isRecording()) {
@@ -311,7 +310,7 @@ export default function VoicePickButton({
 
         updateTranscript(text);
         setCompleted(true);
-        setStatusLine("Got it — scroll down for your answer (reading aloud now).");
+        setStatusLine("Got it — your answer is below (reading aloud now).");
         onTranscriptRef.current(text);
       } catch (err) {
         const message = err instanceof Error ? err.message : "Transcription failed.";
@@ -319,10 +318,8 @@ export default function VoicePickButton({
         setStatusLine(message);
         setCompleted(false);
       } finally {
-        if (session === sessionRef.current) {
-          setTranscribing(false);
-          setStarting(false);
-        }
+        setTranscribing(false);
+        setStarting(false);
       }
       return;
     }
@@ -375,7 +372,7 @@ export default function VoicePickButton({
           type="button"
           data-testid="voice-pick-button"
           onClick={busy ? handleCancel : start}
-          disabled={starting || transcribing}
+          disabled={starting}
           className={`inline-flex items-center gap-2 rounded-full px-5 py-3 text-sm font-semibold transition ${
             busy
               ? "bg-[#7c3aed] text-white ring-2 ring-[#c4b5fd]"
@@ -405,7 +402,7 @@ export default function VoicePickButton({
           </button>
         )}
 
-        {sessionActive && (
+        {(sessionActive || transcribing) && (
           <button
             type="button"
             onClick={handleCancel}
