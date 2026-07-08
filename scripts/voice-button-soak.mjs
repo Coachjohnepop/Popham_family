@@ -100,7 +100,7 @@ const PAGES = [
       });
     },
     buttonLabel: "Or say your question",
-    activeLabel: "Listening… speak now",
+    activeLabel: "Listening…",
   },
   {
     name: "guided-intro",
@@ -149,24 +149,36 @@ async function runCycle(page, spec, mode) {
       throw new Error(`Expected listening state, got "${midText}"`);
     });
 
-  await page.waitForTimeout(500);
+  const doneButton = page.getByTestId("voice-done-button").first();
+  const transcriptPanel = page.getByTestId("voice-transcript-panel").first();
 
-  const endText = await button.innerText();
   if (mode === "success") {
+    await transcriptPanel.waitFor({ state: "visible", timeout: 5000 });
+    await page.waitForFunction(
+      () => {
+        const panel = document.querySelector('[data-testid="voice-transcript-panel"]');
+        return panel?.textContent?.toLowerCase().includes("salem");
+      },
+      { timeout: 5000 },
+    );
+    await doneButton.click();
+    await page.waitForTimeout(300);
+    const endText = await button.innerText();
     if (endText.toLowerCase().includes("listening")) {
-      throw new Error(`Stuck in listening state: "${endText}"`);
-    }
-    if (!endText.toLowerCase().includes(spec.buttonLabel.toLowerCase().split(" ")[0])) {
-      throw new Error(`Unexpected resting label: "${endText}"`);
+      throw new Error(`Stuck in listening state after Done: "${endText}"`);
     }
     return "success-restored";
   }
 
   if (mode === "instant-end") {
-    if (endText.toLowerCase().includes("listening")) {
-      throw new Error(`Instant-end mode still listening: "${endText}"`);
+    await page.waitForTimeout(700);
+    await doneButton.waitFor({ state: "visible", timeout: 5000 });
+    const stillListening = await button.innerText();
+    if (!stillListening.toLowerCase().includes("listening")) {
+      throw new Error(`Session ended early after browser onend: "${stillListening}"`);
     }
-    return "instant-end-handled";
+    await page.getByRole("button", { name: "Cancel" }).first().click();
+    return "instant-end-stayed-listening";
   }
 
   if (mode === "network-error") {

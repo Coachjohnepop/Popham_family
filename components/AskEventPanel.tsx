@@ -133,7 +133,9 @@ export default function AskEventPanel({ chapterBriefs }: AskEventPanelProps) {
 
       <VoicePickButton
         label="Or say your question"
-        activeLabel="Listening… speak now"
+        activeLabel="Listening…"
+        transcriptHint="Speak your question, then tap Done when finished."
+        onTranscriptChange={setQuestionInput}
         onTranscript={(text) => {
           setVoiceError(null);
           setQuestionInput(text);
