@@ -1,3 +1,4 @@
+import HomeLink from "@/components/HomeLink";
 import Link from "next/link";
 import StoryFormatGuide from "@/components/StoryFormatGuide";
 import { getStorybook } from "@/lib/storybook";
@@ -22,9 +23,9 @@ export default function StoryIndexView() {
             {book.sectionCount} tightened chapters drawn from the original document, with{" "}
             {book.imageCountInDocument} photographs and illustrations — open slideshows when you
             want them. For a spoken overview of the whole paper, start from{" "}
-            <a href="/" className="font-semibold text-[#8b5e34] hover:underline">
+            <HomeLink className="font-semibold text-[#8b5e34] hover:underline">
               Home
-            </a>
+            </HomeLink>
             .
           </p>
         </div>
