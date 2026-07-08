@@ -1,0 +1,78 @@
+{
+  "title": "Format of the Story",
+  "rules": [
+    {
+      "text": "The format of the story of Winifred Eloise Coss\u2019 Family Tree merges important historical events and notes within the family history of Winifred Coss\u2019 relatives. Winifred\u2019s family tree is separated into two branches. The people covered in the first branch of Winifred Coss\u2019 Family are from England starting with George Alcock who was born in 1581 in Cambridge, Cambridgeshire, England. The first branch ends with the marriage of Warren Coss and Edith Powers. The early members of the Power\u2019s family arrive in the ships of the Winthrop Fleet in 1630 in the new Massachusetts Bay Colony. A second branch of Winifred Eloise Coss\u2019 Family Tree begin in 1575 when Louis H\u00e9bert was born in Paris, \u00cele-de-France and ends when Joseph Warren Coss marries Mary Goodwater. The early members of the Goodwater family help establish the Qu\u00e9bec settlement in Canada, New France. Many other direct family members will be covered as other marriages occur."
+    },
+    {
+      "text": "The early members of the family tree generally only include individuals who traveled to or were born in North America."
+    },
+    {
+      "text": "All starting tree individuals were born in England, Scotland, Ireland, France or Native North America."
+    },
+    {
+      "text": "Female members in the family tree are identified by their maiden name until their marriage. After marriage their maiden name is include in parenthesis ( )."
+    },
+    {
+      "text": "Names of the direct family members are presented in Bold Type in the story."
+    },
+    {
+      "text": "Most locations in family story are identified with their current location names so they can be easily found on an Internet map applications."
+    },
+    {
+      "text": "Information on individuals\u2019 birth, marriage and death are not always available and a number have separate documents with conflicting dates and locations on official records. Typed official records before 1874 have to be retyped records from handwritten records since the typewriter was not available before that date. Some surviving hand written records are hard to read and list many individuals under different spelling of their names. When records are not available for known events, the dates are estimated. When this occurs, the events are listed as \u201cabout\u201d, or \u201cbefore\u201d, \u201cafter\u201d and \u201clate\u201d."
+    },
+    {
+      "text": "Information on a family members\u2019 death is only included when their death is unusual and adds to the family history. The dates of individual deaths are included in the Index where birth and death are shown for each family tree member."
+    },
+    {
+      "text": "Fires in building, churches and towns, wars and Native American attacks have all destroyed family historical records that in many cases cannot found or replaced."
+    },
+    {
+      "text": "Information on each family tree member varies. Many are barely known by a single even or fact. Others are famous and have had books written about them and the historical events they impacted. Some are so famous they now have their own Internet Web Pages written about them and their life exploits. Most, individuals however, are somewhere in between."
+    },
+    {
+      "text": "Many of early books on family histories are available that were written closer to the time the events occurred, when memories were fresh and legible hand written records were more available. When their information is available it is used."
+    },
+    {
+      "text": "Footnotes have not been used to keep the document uncluttered. Information on sources is available in the Family Tree information in Family Tree Maker. A list of the important historical references is included at the end of this document."
+    }
+  ],
+  "conventions": [
+    {
+      "id": "branches",
+      "label": "Two branches",
+      "detail": "Edith Powers (England) and Mary Ann Goodwater (Qu\u00e9bec/France) converge when Joseph Warren Coss marries Mary Ann Goodwater in 1853."
+    },
+    {
+      "id": "bold-names",
+      "label": "Bold direct family",
+      "detail": "Names of direct family members appear in bold in the narrative. Purple names can be clicked for more detail."
+    },
+    {
+      "id": "maiden-names",
+      "label": "Maiden names",
+      "detail": "Women are listed by maiden name until marriage; after marriage the maiden name appears in parentheses."
+    },
+    {
+      "id": "locations",
+      "label": "Modern place names",
+      "detail": "Locations use current names so they can be found on Internet map applications."
+    },
+    {
+      "id": "date-estimates",
+      "label": "Estimated dates",
+      "detail": "When records are missing, dates are listed as about, before, after, or late."
+    },
+    {
+      "id": "famous-vs-family",
+      "label": "Famous vs. family",
+      "detail": "Some figures are world-famous; most ancestors are known by a single fact. Both appear in the story where history touches the family."
+    },
+    {
+      "id": "sources",
+      "label": "Sources",
+      "detail": "Footnotes are omitted to keep the story readable. Source detail lives in Family Tree Maker; historical references are listed separately."
+    }
+  ]
+}

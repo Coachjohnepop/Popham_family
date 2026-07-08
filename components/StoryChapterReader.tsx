@@ -128,26 +128,22 @@ export default function StoryChapterReader({ section, prev, next }: StoryChapter
         </Link>
       </div>
 
-      {(section.famousPeople.length > 0 || section.familyNames.length > 0) && (
-        <div className="mt-4 flex flex-wrap gap-2">
-          {section.famousPeople.map((name) => (
-            <span
-              key={name}
-              className="rounded-full bg-[#efe4d2] px-3 py-1 text-xs font-medium text-[#5c4a38]"
-            >
-              Famous: {name}
-            </span>
-          ))}
-          {section.familyNames.map((name) => (
-            <span
-              key={name}
-              className="rounded-full bg-[#f3e8ff] px-3 py-1 text-xs font-medium text-[#5b3c88]"
-            >
-              Family: {name}
-            </span>
-          ))}
-        </div>
-      )}
+      <div className="mt-4 flex flex-wrap items-center gap-2 text-xs text-[#6f5c49]">
+        <span>
+          <strong className="text-[#2b2118]">Bold</strong> = direct family
+        </span>
+        <span>
+          <strong className="text-[#7c3aed]">Purple</strong> = clickable
+        </span>
+        <span>
+          <em>(Parentheses)</em> = maiden name
+        </span>
+        {section.famousPeople.length > 0 && (
+          <span className="rounded-full bg-[#efe4d2] px-3 py-1 font-medium text-[#5c4a38]">
+            Famous in chapter: {section.famousPeople.join(", ")}
+          </span>
+        )}
+      </div>
 
       <div className="prose-story mt-6 space-y-5">
         {currentPage.map((block, i) => renderBlock(block, `${section.id}-p${pageIndex}-${i}`))}
