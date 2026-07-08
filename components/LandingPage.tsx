@@ -2,6 +2,7 @@ import Link from "next/link";
 import { Suspense } from "react";
 import AskEventPanel from "@/components/AskEventPanel";
 import EventSearch from "@/components/EventSearch";
+import LandingEntry from "@/components/LandingEntry";
 import LandingPhotoCollage from "@/components/LandingPhotoCollage";
 import { getLandingImages } from "@/lib/landing-images";
 import { APP_TABS } from "@/lib/tabs";
@@ -25,52 +26,54 @@ export default function LandingPage() {
           </p>
         </div>
 
-        <div className="mx-auto mt-8 flex w-full max-w-2xl flex-col items-center gap-4">
-          <Link
-            href="/read"
-            className="w-full rounded-full bg-[#8b5e34] px-8 py-4 text-center text-base font-semibold text-white shadow-md transition hover:bg-[#6f4a28] sm:w-auto"
-          >
-            Start guided reading →
-          </Link>
-          <p className="text-center text-sm text-[#6f5c49]">
-            Personalized welcome, read-aloud, and clickable family names
-          </p>
-          <div className="w-full space-y-3">
-            <Suspense fallback={null}>
-              <EventSearch placeholder="Search Winifred’s story — events, people, places…" />
-            </Suspense>
-            <AskEventPanel />
-          </div>
-        </div>
-
-        <LandingPhotoCollage images={images} totalInDocument={totalInDocument} />
-
-        <div className="mt-10 grid gap-5 sm:mt-12 sm:grid-cols-3">
-          {APP_TABS.map((tab) => (
+        <LandingEntry>
+          <div className="mx-auto mt-8 flex w-full max-w-2xl flex-col items-center gap-4">
             <Link
-              key={tab.id}
-              href={tab.href}
-              className={`group flex flex-col rounded-3xl border-2 p-6 transition hover:-translate-y-0.5 hover:shadow-lg ${tab.accent}`}
+              href="/read"
+              className="w-full rounded-full bg-[#8b5e34] px-8 py-4 text-center text-base font-semibold text-white shadow-md transition hover:bg-[#6f4a28] sm:w-auto"
             >
-              <p className="text-[10px] font-semibold uppercase tracking-[0.25em] opacity-80">
-                {tab.tagline}
-              </p>
-              <h2 className="mt-2 font-serif text-2xl font-semibold">{tab.label}</h2>
-              <p className="mt-3 flex-1 text-sm leading-relaxed opacity-90">{tab.description}</p>
-              <div className="mt-6 flex items-center justify-between gap-3">
-                <span className="rounded-full bg-white/60 px-3 py-1 text-[10px] font-semibold uppercase tracking-wider">
-                  {tab.badge}
-                </span>
-                <span className="text-sm font-semibold group-hover:underline">Open →</span>
-              </div>
+              Start guided reading →
             </Link>
-          ))}
-        </div>
+            <p className="text-center text-sm text-[#6f5c49]">
+              Personalized welcome, read-aloud, and clickable family names
+            </p>
+            <div className="w-full space-y-3">
+              <Suspense fallback={null}>
+                <EventSearch placeholder="Search Winifred’s story — events, people, places…" />
+              </Suspense>
+              <AskEventPanel />
+            </div>
+          </div>
 
-        <p className="mx-auto mt-10 max-w-xl text-center text-sm text-[#6f5c49]">
-          You can switch between Interactive Storybook, Family Tree, and Map &amp; Timeline anytime from the
-          header once you&apos;re inside.
-        </p>
+          <LandingPhotoCollage images={images} totalInDocument={totalInDocument} />
+
+          <div className="mt-10 grid gap-5 sm:mt-12 sm:grid-cols-3">
+            {APP_TABS.map((tab) => (
+              <Link
+                key={tab.id}
+                href={tab.href}
+                className={`group flex flex-col rounded-3xl border-2 p-6 transition hover:-translate-y-0.5 hover:shadow-lg ${tab.accent}`}
+              >
+                <p className="text-[10px] font-semibold uppercase tracking-[0.25em] opacity-80">
+                  {tab.tagline}
+                </p>
+                <h2 className="mt-2 font-serif text-2xl font-semibold">{tab.label}</h2>
+                <p className="mt-3 flex-1 text-sm leading-relaxed opacity-90">{tab.description}</p>
+                <div className="mt-6 flex items-center justify-between gap-3">
+                  <span className="rounded-full bg-white/60 px-3 py-1 text-[10px] font-semibold uppercase tracking-wider">
+                    {tab.badge}
+                  </span>
+                  <span className="text-sm font-semibold group-hover:underline">Open →</span>
+                </div>
+              </Link>
+            ))}
+          </div>
+
+          <p className="mx-auto mt-10 max-w-xl text-center text-sm text-[#6f5c49]">
+            You can switch between Interactive Storybook, Family Tree, and Map &amp; Timeline anytime
+            from the header once you&apos;re inside.
+          </p>
+        </LandingEntry>
       </main>
 
       <SiteFooter />

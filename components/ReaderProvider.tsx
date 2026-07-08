@@ -36,6 +36,8 @@ type ReaderContextValue = {
     chapter: StorySection | null,
     next?: StorySection | null,
   ) => void;
+  homeEntryKey: number;
+  resetToLanding: () => void;
 };
 
 const ReaderContext = createContext<ReaderContextValue | null>(null);
@@ -45,6 +47,7 @@ export function ReaderProvider({ children }: { children: ReactNode }) {
   const [pinnedPerson, setPinnedPerson] = useState<TreePerson | null>(null);
   const [storyChapter, setStoryChapter] = useState<StorySection | null>(null);
   const [nextStoryChapter, setNextStoryChapter] = useState<StorySection | null>(null);
+  const [homeEntryKey, setHomeEntryKey] = useState(0);
 
   const setStoryChapterContext = useCallback(
     (chapter: StorySection | null, next: StorySection | null = null) => {
@@ -85,6 +88,13 @@ export function ReaderProvider({ children }: { children: ReactNode }) {
     setSession(next);
   }, []);
 
+  const resetToLanding = useCallback(() => {
+    setStoryChapter(null);
+    setNextStoryChapter(null);
+    setPinnedPerson(null);
+    setHomeEntryKey((key) => key + 1);
+  }, []);
+
   const value = useMemo(
     () => ({
       session,
@@ -100,6 +110,8 @@ export function ReaderProvider({ children }: { children: ReactNode }) {
       storyChapter,
       nextStoryChapter,
       setStoryChapterContext,
+      homeEntryKey,
+      resetToLanding,
     }),
     [
       session,
@@ -111,6 +123,8 @@ export function ReaderProvider({ children }: { children: ReactNode }) {
       storyChapter,
       nextStoryChapter,
       setStoryChapterContext,
+      homeEntryKey,
+      resetToLanding,
     ],
   );
 

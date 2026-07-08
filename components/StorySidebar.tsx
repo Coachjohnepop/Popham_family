@@ -1,3 +1,4 @@
+import HomeLink from "@/components/HomeLink";
 import Link from "next/link";
 import { getStorySections } from "@/lib/storybook";
 
@@ -14,9 +15,12 @@ export default function StorySidebar({ activeId }: StorySidebarProps) {
         <p className="text-xs font-semibold uppercase tracking-[0.25em] text-[#8b5e34]">
           Chapters
         </p>
-        <Link href="/story" className="text-xs font-medium text-[#8b5e34] hover:underline">
-          All
-        </Link>
+        <div className="flex gap-2 text-xs font-medium">
+          <HomeLink className="text-[#8b5e34] hover:underline">Home</HomeLink>
+          <Link href="/story" className="text-[#8b5e34] hover:underline">
+            All
+          </Link>
+        </div>
       </div>
       <div className="space-y-2 rounded-2xl border border-[#e2d4bf] bg-[#fffaf2] p-3">
         <p className="text-[10px] font-semibold uppercase tracking-wider text-[#8b5e34]">
