@@ -191,8 +191,11 @@
           "choices": [
             {
               "id": "salem-family",
-              "label": "Salem Witch Trials — how does our family tie in?",
+              "label": "How is our family tied to the Salem Witch Trials?",
               "say": [
+                "how is our family tied to the salem witch trials",
+                "tell me how our family is tied to the salem witch trials",
+                "how are we tied to the salem witch trials",
                 "salem witch trials",
                 "witch trials family",
                 "martha sparks",
