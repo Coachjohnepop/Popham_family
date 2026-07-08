@@ -100,11 +100,8 @@ export default function AskEventPanel({ chapterBriefs }: AskEventPanelProps) {
     if (chapterBriefs[0]) {
       revealBrief(chapterBriefs[0].id);
     }
-    const billing = /billing|quota|payment/i.test(errorMessage);
     setVoiceMessage(
-      billing
-        ? "Couldn't transcribe (OpenAI billing) — showing the Salem answer anyway. Browser voice will read it."
-        : "Couldn't catch every word — showing an answer below. Type or tap the mic to try again.",
+      "Couldn't catch every word — showing an answer below. Type or tap the mic to try again.",
     );
   }
 

@@ -104,7 +104,7 @@ export async function transcribeAudioBlob(blob: Blob): Promise<string> {
         data.hint ??
           data.error ??
           (res.status === 503
-            ? "Speech-to-text is not configured. Add OPENAI_API_KEY on Vercel and redeploy."
+            ? "Speech-to-text is not configured. Add DEEPGRAM_API_KEY on Vercel and redeploy."
             : "Transcription failed"),
       );
     }

@@ -1,13 +1,17 @@
 import { NextResponse } from "next/server";
-import { extensionForAudioMime, getOpenAiApiKey, parseOpenAiError } from "@/lib/openai-server";
+import {
+  getDeepgramApiKey,
+  parseDeepgramError,
+  transcribeAudioWithDeepgram,
+} from "@/lib/deepgram-server";
 
 export async function POST(request: Request) {
-  const apiKey = getOpenAiApiKey();
+  const apiKey = getDeepgramApiKey();
   if (!apiKey) {
     return NextResponse.json(
       {
         error: "Transcription not configured",
-        hint: "Add OPENAI_API_KEY on Vercel (Production), then redeploy.",
+        hint: "Add DEEPGRAM_API_KEY on Vercel (Production + Preview), then redeploy.",
       },
       { status: 503 },
     );
@@ -29,37 +33,8 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "audio too large" }, { status: 413 });
   }
 
-  const ext = extensionForAudioMime(audio.type || "audio/webm");
-  const upstream = new FormData();
-  upstream.append("file", audio, `speech.${ext}`);
-  upstream.append("model", "whisper-1");
-  upstream.append("language", "en");
-  upstream.append(
-    "prompt",
-    "Family history question about Salem Witch Trials, Québec, or the Winifred Coss family tree.",
-  );
-
   try {
-    const res = await fetch("https://api.openai.com/v1/audio/transcriptions", {
-      method: "POST",
-      headers: { Authorization: `Bearer ${apiKey}` },
-      body: upstream,
-    });
-
-    if (!res.ok) {
-      const detail = await res.text();
-      console.error("Whisper failed:", res.status, detail);
-      return NextResponse.json(
-        {
-          error: "Transcription failed",
-          hint: parseOpenAiError(detail),
-        },
-        { status: 502 },
-      );
-    }
-
-    const data = (await res.json()) as { text?: string };
-    const text = data.text?.trim() ?? "";
+    const text = await transcribeAudioWithDeepgram(audio);
     if (!text) {
       return NextResponse.json(
         { error: "Empty transcript", hint: "Speak a little longer, then tap Done again." },
@@ -68,7 +43,14 @@ export async function POST(request: Request) {
     }
     return NextResponse.json({ text });
   } catch (err) {
-    console.error("transcribe route:", err);
-    return NextResponse.json({ error: "Transcription error" }, { status: 500 });
+    const message = err instanceof Error ? err.message : "Transcription failed";
+    console.error("Deepgram transcribe failed:", message);
+    return NextResponse.json(
+      {
+        error: "Transcription failed",
+        hint: message.includes("DEEPGRAM") ? message : parseDeepgramError(message),
+      },
+      { status: 502 },
+    );
   }
 }
