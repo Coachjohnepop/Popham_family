@@ -18,6 +18,30 @@ export default function StorySidebar({ activeId }: StorySidebarProps) {
           All
         </Link>
       </div>
+      <div className="space-y-2 rounded-2xl border border-[#e2d4bf] bg-[#fffaf2] p-3">
+        <p className="text-[10px] font-semibold uppercase tracking-wider text-[#8b5e34]">
+          Document
+        </p>
+        <Link
+          href="/story#format"
+          className="block rounded-xl px-3 py-2 text-sm font-medium text-[#5c4a38] hover:bg-white"
+        >
+          Format of the Story
+        </Link>
+        <Link
+          href="/story/family-index"
+          className="block rounded-xl px-3 py-2 text-sm font-medium text-[#5c4a38] hover:bg-white"
+        >
+          Family index
+        </Link>
+        <Link
+          href="/story/references"
+          className="block rounded-xl px-3 py-2 text-sm font-medium text-[#5c4a38] hover:bg-white"
+        >
+          References
+        </Link>
+      </div>
+
       {sections.map((section) => {
         const active = section.id === activeId;
         return (

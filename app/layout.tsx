@@ -18,12 +18,12 @@ export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: "The Story of Winifred Coss",
   description:
-    "A family history storybook, family tree, and interactive map — where the Coss family tree meets famous moments in history.",
+    "An interactive family history storybook, family tree, and map — where the Coss family tree meets famous moments in history.",
   alternates: { canonical: "/" },
   openGraph: {
     title: "The Story of Winifred Coss",
     description:
-      "Family history storybook, family tree chart, and map & timeline — Powers and Goodwater branches to Winifred Eloise Coss.",
+      "Interactive family history storybook, family tree chart, and map & timeline — Powers and Goodwater branches to Winifred Eloise Coss.",
     url: SITE_URL,
     siteName: "The Story of Winifred Coss",
     type: "website",

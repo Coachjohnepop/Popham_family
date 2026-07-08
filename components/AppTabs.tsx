@@ -5,8 +5,11 @@ import { usePathname, useRouter } from "next/navigation";
 import { Suspense } from "react";
 import AskEventPanel from "@/components/AskEventPanel";
 import EventSearch from "@/components/EventSearch";
+import FamilyIndexView from "@/components/FamilyIndexView";
 import StoryChapterView from "@/components/StoryChapterView";
 import StoryIndexView from "@/components/StoryIndexView";
+import StoryReferencesView from "@/components/StoryReferencesView";
+import StorySidebar from "@/components/StorySidebar";
 import MapTimelineView from "@/components/MapTimelineView";
 import FamilyTreeView from "@/components/FamilyTreeView";
 import { APP_TABS, type TabId } from "@/lib/tabs";
@@ -14,6 +17,22 @@ import SiteFooter from "@/components/SiteFooter";
 
 function StoryRouter() {
   const pathname = usePathname();
+  if (pathname === "/story/family-index") {
+    return (
+      <div className="grid gap-6 lg:grid-cols-[280px_1fr]">
+        <StorySidebar />
+        <FamilyIndexView />
+      </div>
+    );
+  }
+  if (pathname === "/story/references") {
+    return (
+      <div className="grid gap-6 lg:grid-cols-[280px_1fr]">
+        <StorySidebar />
+        <StoryReferencesView />
+      </div>
+    );
+  }
   const match = pathname.match(/^\/story\/([^/]+)$/);
   if (match?.[1]) {
     return <StoryChapterView sectionId={match[1]} />;

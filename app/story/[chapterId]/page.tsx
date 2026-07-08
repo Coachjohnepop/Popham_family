@@ -17,7 +17,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     return { title: "Story section" };
   }
   return {
-    title: `${section.title} · Storybook`,
+    title: `${section.title} · Interactive Storybook`,
     description: section.teaser,
   };
 }

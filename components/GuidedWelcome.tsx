@@ -19,7 +19,7 @@ This story is organized into two large branches. The Edith Powers branch begins 
 
 In 1853, Joseph Warren Coss marries Mary Ann Goodwater — and the two branches join.
 
-Throughout the story, dates mark when events happened. Famous people appear where world history touches the family. Family names in purple can be clicked to learn more about a person.
+Throughout the story, direct family names appear in bold — purple names can be clicked for more detail. Maiden names appear in parentheses after marriage. Famous historical figures are highlighted where world history touches the family. Estimated dates are marked as about, before, after, or late when records are incomplete.
 
 Where would you like to begin?`;
 
@@ -293,7 +293,7 @@ export default function GuidedWelcome() {
             <Link href="/story" className="font-semibold text-[#8b5e34] hover:underline">
               all tabs
             </Link>{" "}
-            — storybook, tree, and map.
+            — interactive storybook, tree, and map.
           </p>
         </section>
       )}

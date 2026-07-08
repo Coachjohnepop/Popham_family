@@ -1,3 +1,4 @@
+import { getDirectFamilyNames } from "@/lib/direct-family-names";
 import { getFamilyTree, getTreePerson, type TreePerson } from "@/lib/family-tree";
 
 export type PersonMatch = {
@@ -34,6 +35,13 @@ function buildNameEntries(): NameEntry[] {
     }
     if (person.id === "joseph-warren-coss") {
       entries.push({ person, pattern: "Joseph Warren Coss" });
+    }
+  }
+
+  for (const name of getDirectFamilyNames()) {
+    const person = people.find((p) => normalizeForMatch(p.name) === normalizeForMatch(name));
+    if (person) {
+      entries.push({ person, pattern: name });
     }
   }
 

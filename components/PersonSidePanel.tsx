@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { getFamilyIndexEntry } from "@/lib/story-format";
 import { getPersonLineage } from "@/lib/person-match";
 import type { TreePerson } from "@/lib/family-tree";
 
@@ -11,6 +12,7 @@ type PersonSidePanelProps = {
 
 export default function PersonSidePanel({ person, onClose }: PersonSidePanelProps) {
   const { parents, spouse, children } = getPersonLineage(person.id);
+  const indexEntry = getFamilyIndexEntry(person.name);
 
   return (
     <aside className="sticky top-4 rounded-2xl border-2 border-[#7c3aed] bg-[#faf5ff] p-5 shadow-md">
@@ -83,10 +85,22 @@ export default function PersonSidePanel({ person, onClose }: PersonSidePanelProp
             <dd className="leading-relaxed">{person.note}</dd>
           </div>
         )}
+        {indexEntry && (
+          <div>
+            <dt className="text-[10px] font-semibold uppercase tracking-wider text-[#8b5e34]">
+              From the family index
+            </dt>
+            <dd className="leading-relaxed text-[#6f5c49]">{indexEntry.snippet}</dd>
+          </div>
+        )}
       </dl>
 
       <p className="mt-4 text-xs leading-relaxed text-[#6f5c49]">
-        Ancestry Leaf facts and photos can be added here in a later phase.
+        Birth and marriage sources are in Family Tree Maker.{" "}
+        <Link href="/story/references" className="font-semibold text-[#7c3aed] hover:underline">
+          See references
+        </Link>
+        .
       </p>
 
       <Link

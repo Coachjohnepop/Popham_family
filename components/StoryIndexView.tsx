@@ -1,4 +1,6 @@
 import Link from "next/link";
+import StoryFormatGuide from "@/components/StoryFormatGuide";
+import StoryOverviewSummaries from "@/components/StoryOverviewSummaries";
 import { getStorybook } from "@/lib/storybook";
 import StorySidebar from "@/components/StorySidebar";
 
@@ -12,7 +14,7 @@ export default function StoryIndexView() {
       <div className="space-y-6">
         <div className="rounded-3xl border border-[#e2d4bf] bg-white p-6 shadow-sm sm:p-8">
           <p className="text-xs font-semibold uppercase tracking-[0.25em] text-[#8b5e34]">
-            Storybook
+            Interactive Storybook
           </p>
           <h2 className="mt-2 font-serif text-3xl font-semibold tracking-tight">
             The full family story
@@ -22,6 +24,11 @@ export default function StoryIndexView() {
             {book.imageCountInDocument} photographs and illustrations — open slideshows when you
             want them.
           </p>
+          <StoryOverviewSummaries />
+        </div>
+
+        <div id="format">
+          <StoryFormatGuide compact />
         </div>
 
         <div className="grid gap-4 sm:grid-cols-2">

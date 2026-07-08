@@ -1,7 +1,7 @@
 export const APP_TABS = [
   {
     id: "story",
-    label: "Storybook",
+    label: "Interactive Storybook",
     href: "/story",
     tagline: "Read the chapters",
     description:
