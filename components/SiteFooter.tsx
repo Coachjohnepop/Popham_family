@@ -1,4 +1,4 @@
-import Link from "next/link";
+import HomeLink from "@/components/HomeLink";
 import { LEMONVOICE_URL } from "@/lib/site";
 
 export default function SiteFooter() {
@@ -7,9 +7,9 @@ export default function SiteFooter() {
       <div className="mx-auto flex max-w-6xl flex-col gap-2 px-4 py-4 text-sm text-[#6f5c49] sm:flex-row sm:items-center sm:justify-between">
         <p>The Story of Winifred Coss — family history for Dad</p>
         <div className="flex flex-col gap-1 sm:items-end">
-          <Link href="/" className="font-medium text-[#8b5e34] hover:text-[#6f4a28]">
+          <HomeLink className="font-medium text-[#8b5e34] hover:text-[#6f4a28]">
             coss-family-story.vercel.app
-          </Link>
+          </HomeLink>
           <p>
             Powered by{" "}
             <a
