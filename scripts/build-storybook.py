@@ -577,6 +577,45 @@ def extract_images(docx: Path) -> int:
     return count
 
 
+ENRICHED_SECTIONS_PATH = DATA / "enriched-sections.json"
+
+
+def load_enriched_overrides() -> dict[str, dict]:
+    if not ENRICHED_SECTIONS_PATH.exists():
+        return {}
+    payload = json.loads(ENRICHED_SECTIONS_PATH.read_text(encoding="utf-8"))
+    return payload.get("sections", {})
+
+
+def apply_enriched_sections(sections: list[dict]) -> list[dict]:
+    """Replace auto-built sections with hand-enriched content when preserve=true."""
+    overrides = load_enriched_overrides()
+    if not overrides:
+        return sections
+
+    out: list[dict] = []
+    applied = 0
+    for section in sections:
+        override = overrides.get(section["id"])
+        if override and override.get("preserve"):
+            merged = {**section, **{k: v for k, v in override.items() if k != "preserve"}}
+            image_count = 0
+            for block in merged.get("blocks", []):
+                if block.get("type") == "image":
+                    image_count += 1
+                elif block.get("type") == "slideshow":
+                    image_count += len(block.get("images", []))
+            merged["imageCount"] = image_count
+            out.append(merged)
+            applied += 1
+        else:
+            out.append(section)
+
+    if applied:
+        print(f"applied {applied} enriched section override(s)")
+    return out
+
+
 def main() -> int:
     docx = Path(sys.argv[1]) if len(sys.argv) > 1 else DEFAULT_DOCX
     if not docx.exists():
@@ -589,6 +628,7 @@ def main() -> int:
     for section in consolidated:
         section["blocks"] = tighten_blocks(section["blocks"])
     sections = [enrich_section(s) for s in consolidated]
+    sections = apply_enriched_sections(sections)
 
     total_images_mapped = sum(s["imageCount"] for s in sections)
     payload = {

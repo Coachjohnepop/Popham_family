@@ -97,9 +97,9 @@ const TOPIC_ALIASES: TopicAlias[] = [
   {
     id: "salem-witch-trials",
     label: "Salem Witch Trials",
-    phrases: ["salem witch", "witch trials", "witchcraft", "martha sparks"],
-    directTerms: ["witch", "witchcraft", "salem", "martha sparks", "barrett sparks"],
-    relatedQueries: ["martha barrett sparks", "chelmsford", "1691"],
+    phrases: ["salem witch", "witch trials", "witchcraft", "martha sparks", "spectral evidence", "governor phips"],
+    directTerms: ["witch", "witchcraft", "salem", "martha sparks", "barrett sparks", "phips", "chelmsford", "daemonologie"],
+    relatedQueries: ["martha barrett sparks", "chelmsford", "1691", "thomas barrett petition", "martha carrier", "ralph farnham"],
     notInDocumentNote: "",
   },
 ];
