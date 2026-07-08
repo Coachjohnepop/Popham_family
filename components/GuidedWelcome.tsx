@@ -92,7 +92,19 @@ export default function GuidedWelcome() {
       return;
     }
 
-    setVoiceMessage(`Heard “${result.heard}” — ${describeVoiceHints(voiceContext)}`);
+    if (result.action === "event-brief") {
+      setVoiceMessage(`Open a story chapter to explore: ${result.label}`);
+      return;
+    }
+
+    if (result.action === "answer-depth") {
+      setVoiceMessage(`Detail preference set to ${result.label}. Open a chapter to use it.`);
+      return;
+    }
+
+    if (result.action === "unknown") {
+      setVoiceMessage(`Heard “${result.heard}” — ${describeVoiceHints(voiceContext)}`);
+    }
   }
 
   const voiceContext =

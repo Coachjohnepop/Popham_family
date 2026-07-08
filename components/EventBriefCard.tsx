@@ -2,14 +2,38 @@
 
 import { useState } from "react";
 import ReadAloudButton from "@/components/ReadAloudButton";
-import type { EventBrief } from "@/lib/event-briefs";
+import { useOptionalReader } from "@/components/ReaderProvider";
+import {
+  ANSWER_DEPTH_LABELS,
+  getEventBriefBody,
+  type AnswerDepth,
+  type EventBrief,
+} from "@/lib/event-briefs";
 
 type EventBriefCardProps = {
   brief: EventBrief;
+  depth?: AnswerDepth;
+  onDepthChange?: (depth: AnswerDepth) => void;
+  question?: string;
 };
 
-export default function EventBriefCard({ brief }: EventBriefCardProps) {
+export default function EventBriefCard({
+  brief,
+  depth: depthProp,
+  onDepthChange,
+  question,
+}: EventBriefCardProps) {
+  const reader = useOptionalReader();
+  const sessionDepth = reader?.answerDepth ?? "standard";
+  const depth = depthProp ?? sessionDepth;
   const [pinned, setPinned] = useState(true);
+
+  const body = getEventBriefBody(brief, depth);
+
+  function handleDepthChange(next: AnswerDepth) {
+    reader?.setAnswerDepth(next);
+    onDepthChange?.(next);
+  }
 
   if (!pinned) {
     return (
@@ -32,10 +56,13 @@ export default function EventBriefCard({ brief }: EventBriefCardProps) {
             {brief.yearEnd ? `–${brief.yearEnd}` : ""}
           </p>
           <h3 className="mt-1 font-serif text-lg font-semibold text-[#2b2118]">{brief.title}</h3>
+          {question && (
+            <p className="mt-2 text-sm font-medium text-[#9a3412]">{question}</p>
+          )}
           <p className="mt-1 text-sm text-[#6f5c49]">{brief.summary}</p>
         </div>
         <div className="flex flex-wrap gap-2">
-          <ReadAloudButton text={brief.body.replace(/\n\n/g, " ")} label="Listen" />
+          <ReadAloudButton text={body.replace(/\n\n/g, " ")} label="Listen" />
           <button
             type="button"
             onClick={() => setPinned(false)}
@@ -45,8 +72,26 @@ export default function EventBriefCard({ brief }: EventBriefCardProps) {
           </button>
         </div>
       </div>
+
+      <div className="mt-4 flex flex-wrap gap-2">
+        {(["brief", "standard", "deep"] as const).map((tier) => (
+          <button
+            key={tier}
+            type="button"
+            onClick={() => handleDepthChange(tier)}
+            className={`rounded-full px-3 py-1.5 text-xs font-semibold transition ${
+              depth === tier
+                ? "bg-[#c2410c] text-white"
+                : "bg-white text-[#9a3412] ring-1 ring-[#fdba74] hover:bg-[#ffedd5]"
+            }`}
+          >
+            {ANSWER_DEPTH_LABELS[tier]}
+          </button>
+        ))}
+      </div>
+
       <div className="mt-4 space-y-3 text-sm leading-relaxed text-[#3f342c]">
-        {brief.body.split("\n\n").map((para, i) => (
+        {body.split("\n\n").map((para, i) => (
           <p key={i}>{para}</p>
         ))}
       </div>

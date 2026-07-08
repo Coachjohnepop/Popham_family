@@ -6,12 +6,15 @@ type PromptChoicesPanelProps = {
   promptId: string;
   onPick?: (choice: PromptChoice) => void;
   compact?: boolean;
+  /** Actions that render as clickable buttons when onPick is set */
+  interactiveActions?: string[];
 };
 
 export default function PromptChoicesPanel({
   promptId,
   onPick,
   compact = false,
+  interactiveActions,
 }: PromptChoicesPanelProps) {
   const prompt = getPromptById(promptId);
   if (!prompt) return null;
@@ -28,7 +31,13 @@ export default function PromptChoicesPanel({
 
       <div className="mt-4 space-y-4">
         {prompt.choiceGroups.map((group) => (
-          <ChoiceGroup key={group.id} group={group} onPick={onPick} compact={compact} />
+          <ChoiceGroup
+            key={group.id}
+            group={group}
+            onPick={onPick}
+            compact={compact}
+            interactiveActions={interactiveActions}
+          />
         ))}
       </div>
     </div>
@@ -39,10 +48,12 @@ function ChoiceGroup({
   group,
   onPick,
   compact,
+  interactiveActions,
 }: {
   group: PromptChoiceGroup;
   onPick?: (choice: PromptChoice) => void;
   compact?: boolean;
+  interactiveActions?: string[];
 }) {
   return (
     <div>
@@ -52,7 +63,11 @@ function ChoiceGroup({
       <ul className={`mt-2 ${compact ? "space-y-1" : "space-y-2"}`}>
         {group.choices.map((choice) => (
           <li key={choice.id}>
-            {onPick && (choice.action === "chapter" || choice.action === "resume" || choice.action === "open-toc") ? (
+            {onPick &&
+            (choice.action === "chapter" ||
+              choice.action === "resume" ||
+              choice.action === "open-toc" ||
+              interactiveActions?.includes(choice.action)) ? (
               <button
                 type="button"
                 onClick={() => onPick(choice)}

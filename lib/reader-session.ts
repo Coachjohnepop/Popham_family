@@ -1,10 +1,16 @@
+import type { AnswerDepth } from "@/lib/event-briefs";
+
 export type ReaderSession = {
   readerName: string;
   onboardingComplete: boolean;
   lastChapterId?: string;
   lastPath?: string;
   lastVisitedAt?: string;
+  answerDepth?: AnswerDepth;
+  preferShortAnswers?: boolean;
 };
+
+export const DEFAULT_ANSWER_DEPTH: AnswerDepth = "standard";
 
 const STORAGE_KEY = "wcft-reader-session";
 

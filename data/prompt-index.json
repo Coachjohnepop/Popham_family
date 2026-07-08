@@ -186,22 +186,62 @@
       "contexts": ["chapter", "map"],
       "choiceGroups": [
         {
-          "id": "event-followups",
-          "label": "Historical events (future AI)",
+          "id": "event-topics",
+          "label": "Family ties to historical events",
           "choices": [
             {
+              "id": "salem-family",
+              "label": "Salem Witch Trials — how does our family tie in?",
+              "say": [
+                "salem witch trials",
+                "witch trials family",
+                "martha sparks",
+                "how does our family tie to salem",
+                "family tie to witch trials"
+              ],
+              "action": "event-brief",
+              "target": "salem-witch-trials"
+            },
+            {
               "id": "quebec",
-              "label": "Québec settlement",
-              "say": ["quebec settlement", "jacques cartier", "stadacona", "why quebec"],
+              "label": "Québec settlement — Goodwater branch",
+              "say": ["quebec settlement", "jacques cartier", "stadacona", "why quebec", "goodwater quebec"],
               "action": "event-brief",
               "target": "quebec-settlement"
             },
             {
               "id": "why-matters",
               "label": "Why does this matter to our family?",
-              "say": ["why does this matter", "why is this important", "impact on our family"],
+              "say": ["why does this matter", "why is this important", "impact on our family", "family impact"],
               "action": "ask-ai",
               "topic": "family-impact"
+            }
+          ]
+        },
+        {
+          "id": "answer-depth",
+          "label": "How much detail?",
+          "choices": [
+            {
+              "id": "depth-brief",
+              "label": "Short version",
+              "say": ["short version", "brief answer", "keep it short", "quick answer"],
+              "action": "answer-depth",
+              "target": "brief"
+            },
+            {
+              "id": "depth-standard",
+              "label": "Standard detail",
+              "say": ["standard", "normal detail", "that's enough"],
+              "action": "answer-depth",
+              "target": "standard"
+            },
+            {
+              "id": "depth-deep",
+              "label": "Tell me more",
+              "say": ["tell me more", "more detail", "go deeper", "full story"],
+              "action": "answer-depth",
+              "target": "deep"
             }
           ]
         }

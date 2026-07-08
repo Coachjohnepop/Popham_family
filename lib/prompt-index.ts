@@ -1,10 +1,13 @@
 import promptIndexData from "@/data/prompt-index.json";
+import { isAnswerDepth, type AnswerDepth } from "@/lib/event-briefs";
 import type { StorySection } from "@/lib/types";
 
 export type VoiceNavResult =
   | { action: "chapter"; sectionId: string; label: string }
   | { action: "resume" }
   | { action: "open-toc" }
+  | { action: "event-brief"; eventId: string; label: string }
+  | { action: "answer-depth"; depth: AnswerDepth; label: string }
   | { action: "unknown"; heard: string };
 
 export type PromptChoice = {
@@ -135,6 +138,12 @@ export function executePromptChoice(
 ): VoiceNavResult | null {
   if (choice.action === "resume") return { action: "resume" };
   if (choice.action === "open-toc") return { action: "open-toc" };
+  if (choice.action === "event-brief" && choice.target) {
+    return { action: "event-brief", eventId: choice.target, label: choice.label };
+  }
+  if (choice.action === "answer-depth" && choice.target && isAnswerDepth(choice.target)) {
+    return { action: "answer-depth", depth: choice.target, label: choice.label };
+  }
   if (choice.action === "chapter") {
     const section = resolveChapterTarget(choice.target, sections);
     if (section) {
@@ -159,6 +168,14 @@ export function matchPromptIndex(
 
         if (choice.action === "resume") return { action: "resume" };
         if (choice.action === "open-toc") return { action: "open-toc" };
+
+        if (choice.action === "event-brief" && choice.target) {
+          return { action: "event-brief", eventId: choice.target, label: choice.label };
+        }
+
+        if (choice.action === "answer-depth" && choice.target && isAnswerDepth(choice.target)) {
+          return { action: "answer-depth", depth: choice.target, label: choice.label };
+        }
 
         if (choice.action === "chapter") {
           const section = resolveChapterTarget(choice.target, sections);

@@ -9,7 +9,9 @@ import {
   useState,
   type ReactNode,
 } from "react";
+import type { AnswerDepth } from "@/lib/event-briefs";
 import {
+  DEFAULT_ANSWER_DEPTH,
   loadReaderSession,
   updateReaderSession,
   type ReaderSession,
@@ -22,6 +24,8 @@ type ReaderContextValue = {
   setReaderName: (name: string) => void;
   completeOnboarding: () => void;
   saveProgress: (chapterId: string, path?: string) => void;
+  answerDepth: AnswerDepth;
+  setAnswerDepth: (depth: AnswerDepth) => void;
   pinnedPerson: TreePerson | null;
   setPinnedPerson: (person: TreePerson | null) => void;
   speakEnabled: boolean;
@@ -56,6 +60,14 @@ export function ReaderProvider({ children }: { children: ReactNode }) {
     setSession(next);
   }, []);
 
+  const setAnswerDepth = useCallback((depth: AnswerDepth) => {
+    const next = updateReaderSession({
+      answerDepth: depth,
+      preferShortAnswers: depth === "brief",
+    });
+    setSession(next);
+  }, []);
+
   const value = useMemo(
     () => ({
       session,
@@ -63,11 +75,13 @@ export function ReaderProvider({ children }: { children: ReactNode }) {
       setReaderName,
       completeOnboarding,
       saveProgress,
+      answerDepth: session?.answerDepth ?? DEFAULT_ANSWER_DEPTH,
+      setAnswerDepth,
       pinnedPerson,
       setPinnedPerson,
       speakEnabled: true,
     }),
-    [session, setReaderName, completeOnboarding, saveProgress, pinnedPerson],
+    [session, setReaderName, completeOnboarding, saveProgress, setAnswerDepth, pinnedPerson],
   );
 
   return <ReaderContext.Provider value={value}>{children}</ReaderContext.Provider>;

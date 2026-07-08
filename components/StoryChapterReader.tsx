@@ -4,13 +4,17 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 import ClickableStoryText from "@/components/ClickableStoryText";
+import AskEventPanel from "@/components/AskEventPanel";
 import EventBriefCard from "@/components/EventBriefCard";
 import PersonSidePanel from "@/components/PersonSidePanel";
 import ReadAloudButton from "@/components/ReadAloudButton";
 import { useOptionalReader } from "@/components/ReaderProvider";
 import StoryPhotoGallery from "@/components/StoryPhotoGallery";
 import StorySlideshowModal from "@/components/StorySlideshowModal";
-import { getBriefsForChapter } from "@/lib/event-briefs";
+import {
+  getAskBriefsForChapter,
+  getAutoShowBriefsForChapter,
+} from "@/lib/event-briefs";
 import { paginateChapterBlocks } from "@/lib/storybook-pages";
 import type { StoryBlock, StoryImage, StorySection } from "@/lib/types";
 
@@ -86,7 +90,8 @@ export default function StoryChapterReader({ section, prev, next }: StoryChapter
   const pages = paginateChapterBlocks(section.blocks);
   const [pageIndex, setPageIndex] = useState(0);
   const currentPage = pages[pageIndex] ?? [];
-  const eventBriefs = useMemo(() => getBriefsForChapter(section.id), [section.id]);
+  const autoBriefs = useMemo(() => getAutoShowBriefsForChapter(section.id), [section.id]);
+  const askBriefs = useMemo(() => getAskBriefsForChapter(section.id), [section.id]);
 
   const pageText = useMemo(
     () =>
@@ -127,11 +132,17 @@ export default function StoryChapterReader({ section, prev, next }: StoryChapter
         </Link>
       </div>
 
-      {eventBriefs.length > 0 && (
+      {autoBriefs.length > 0 && (
         <div className="mt-4 space-y-3">
-          {eventBriefs.map((brief) => (
+          {autoBriefs.map((brief) => (
             <EventBriefCard key={brief.id} brief={brief} />
           ))}
+        </div>
+      )}
+
+      {askBriefs.length > 0 && (
+        <div className="mt-4">
+          <AskEventPanel chapterBriefs={askBriefs} />
         </div>
       )}
 
