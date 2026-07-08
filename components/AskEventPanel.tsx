@@ -1,12 +1,16 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import EventBriefCard from "@/components/EventBriefCard";
 import PromptChoicesPanel from "@/components/PromptChoicesPanel";
 import ReadAloudButton from "@/components/ReadAloudButton";
 import VoicePickButton from "@/components/VoicePickButton";
 import { useOptionalReader } from "@/components/ReaderProvider";
 import { processAskEventTranscript } from "@/lib/ask-event";
+import {
+  getChapterParagraphs,
+  getNextChapterNarration,
+} from "@/lib/chapter-narration";
 import {
   getEventBrief,
   getEventBriefBody,
@@ -18,20 +22,35 @@ import {
 } from "@/lib/event-briefs";
 import { getPromptById, type PromptChoice } from "@/lib/prompt-index";
 import { speakText, type SpeakController, type SpeakState } from "@/lib/speak-text";
+import type { StorySection } from "@/lib/types";
 
 type AskEventPanelProps = {
   chapterBriefs: EventBrief[];
+  section: StorySection;
+  nextSection?: StorySection | null;
 };
+
+type ResponseKind = "brief" | "addendum" | "chapter";
 
 const DEFAULT_QUESTION =
   "How is our family tied to the Salem Witch Trials?";
 
-export default function AskEventPanel({ chapterBriefs }: AskEventPanelProps) {
+export default function AskEventPanel({
+  chapterBriefs,
+  section,
+  nextSection,
+}: AskEventPanelProps) {
   const reader = useOptionalReader();
   const prompt = getPromptById("ask-event");
   const answerRef = useRef<HTMLDivElement>(null);
   const speakControllerRef = useRef<SpeakController | null>(null);
   const spokenKeyRef = useRef<string | null>(null);
+  const spokenCorpusRef = useRef("");
+
+  const chapterParagraphs = useMemo(
+    () => getChapterParagraphs(section.blocks),
+    [section.blocks],
+  );
 
   const [activeBriefId, setActiveBriefId] = useState<string | null>(null);
   const [questionInput, setQuestionInput] = useState("");
@@ -43,46 +62,127 @@ export default function AskEventPanel({ chapterBriefs }: AskEventPanelProps) {
   const [inDialogue, setInDialogue] = useState(false);
   const [addendumFromDepth, setAddendumFromDepth] = useState<AnswerDepth | null>(null);
   const [speechState, setSpeechState] = useState<SpeakState>("idle");
+  const [panelDepth, setPanelDepth] = useState<AnswerDepth | null>(null);
+  const [responseKind, setResponseKind] = useState<ResponseKind>("brief");
+  const [chapterNarrationText, setChapterNarrationText] = useState<string | null>(null);
+  const [chapterCursor, setChapterCursor] = useState(0);
+  const [briefAddendumUsed, setBriefAddendumUsed] = useState(false);
+  const [narrationEpoch, setNarrationEpoch] = useState(0);
 
   const activeBrief =
     (activeBriefId ? getEventBrief(activeBriefId) : undefined) ??
     chapterBriefs.find((b) => b.id === activeBriefId);
 
-  const answerDepth = reader?.answerDepth ?? "standard";
+  const answerDepth = panelDepth ?? reader?.answerDepth ?? "standard";
+
   const isAddendum =
+    responseKind === "addendum" &&
     Boolean(activeBrief && addendumFromDepth && isDeeperDepth(addendumFromDepth, answerDepth));
-  const answerBody = activeBrief
-    ? isAddendum
-      ? getEventBriefDelta(activeBrief, addendumFromDepth!, answerDepth)
-      : getEventBriefBody(activeBrief, answerDepth)
-    : "";
-  const answerScript =
-    activeBrief && confirmedQuestion && answerBody
+
+  const answerBody =
+    activeBrief && responseKind !== "chapter"
       ? isAddendum
-        ? `Here is more detail. ${answerBody}`
-        : `You asked: ${confirmedQuestion}. Here is the answer. ${answerBody}`
+        ? getEventBriefDelta(activeBrief, addendumFromDepth!, answerDepth)
+        : getEventBriefBody(activeBrief, answerDepth)
       : "";
+
+  const readAloudScript =
+    responseKind === "chapter" && chapterNarrationText
+      ? `Continuing the story. ${chapterNarrationText}`
+      : activeBrief && confirmedQuestion && answerBody
+        ? isAddendum
+          ? `Here is more detail. ${answerBody}`
+          : `You asked: ${confirmedQuestion}. Here is the answer. ${answerBody}`
+        : "";
+
+  function resetNarrationState() {
+    setPanelDepth(null);
+    setAddendumFromDepth(null);
+    setResponseKind("brief");
+    setChapterNarrationText(null);
+    setChapterCursor(0);
+    setBriefAddendumUsed(false);
+    spokenCorpusRef.current = "";
+    spokenKeyRef.current = null;
+  }
 
   function revealBrief(eventId: string) {
     setActiveBriefId(eventId);
     setInDialogue(true);
   }
 
-  function handleDepth(depth: AnswerDepth, opts?: { fromDepth?: AnswerDepth }) {
+  function handleDepth(depth: AnswerDepth, opts?: { fromDepth?: AnswerDepth; label?: string }) {
     const fromDepth = opts?.fromDepth ?? answerDepth;
+    if (opts?.label) setConfirmedQuestion(opts.label);
+
+    setPanelDepth(depth);
+    reader?.setAnswerDepth(depth);
+    setResponseKind(isDeeperDepth(fromDepth, depth) ? "addendum" : "brief");
+    setChapterNarrationText(null);
+
     if (activeBriefId && isDeeperDepth(fromDepth, depth)) {
       setAddendumFromDepth(fromDepth);
+      setBriefAddendumUsed(true);
     } else if (!isDeeperDepth(fromDepth, depth)) {
       setAddendumFromDepth(null);
     }
+
     spokenKeyRef.current = null;
-    reader?.setAnswerDepth(depth);
+    setNarrationEpoch((n) => n + 1);
     setVoiceMessage(
       isDeeperDepth(fromDepth, depth)
         ? "Reading only the new detail you haven't heard yet."
         : `Showing ${depth === "deep" ? "more detail" : depth} answer.`,
     );
     setVoiceError(null);
+    setInDialogue(true);
+  }
+
+  function advanceNarration(label = "Tell me more") {
+    if (!activeBrief) return;
+
+    setConfirmedQuestion(label);
+    setQuestionInput(label);
+    setVoiceError(null);
+    spokenKeyRef.current = null;
+
+    const depth = answerDepth;
+
+    if (!briefAddendumUsed && depth !== "deep") {
+      const delta = getEventBriefDelta(activeBrief, depth, "deep");
+      if (delta.trim()) {
+        handleDepth("deep", { fromDepth: depth, label });
+        return;
+      }
+      setBriefAddendumUsed(true);
+    }
+
+    const chunk = getNextChapterNarration(
+      chapterParagraphs,
+      chapterCursor,
+      spokenCorpusRef.current,
+    );
+
+    if (!chunk) {
+      setVoiceMessage(
+        nextSection
+          ? `End of this chapter. Next chronologically: ${nextSection.title}.`
+          : "You've reached the end of this chapter.",
+      );
+      return;
+    }
+
+    setPanelDepth("deep");
+    setResponseKind("chapter");
+    setAddendumFromDepth(null);
+    setChapterNarrationText(chunk.text);
+    setChapterCursor(chunk.nextCursor);
+    setNarrationEpoch((n) => n + 1);
+    setVoiceMessage(
+      chunk.done
+        ? "Last passage in this chapter."
+        : "Continuing the story — next passage from the family narrative.",
+    );
     setInDialogue(true);
   }
 
@@ -96,14 +196,21 @@ export default function AskEventPanel({ chapterBriefs }: AskEventPanelProps) {
     const depthBeforeAsk = answerDepth;
 
     if (outcome.type === "reveal") {
-      setAddendumFromDepth(null);
+      resetNarrationState();
+      setPanelDepth("standard");
+      reader?.setAnswerDepth("standard");
       revealBrief(outcome.eventId);
+      setNarrationEpoch((n) => n + 1);
       setVoiceMessage(outcome.message);
       return;
     }
 
     if (outcome.type === "depth") {
-      handleDepth(outcome.depth, { fromDepth: depthBeforeAsk });
+      if (outcome.depth === "deep" && activeBriefId) {
+        advanceNarration(heard);
+        return;
+      }
+      handleDepth(outcome.depth, { fromDepth: depthBeforeAsk, label: heard });
       if (!activeBriefId && chapterBriefs[0]) {
         revealBrief(chapterBriefs[0].id);
       }
@@ -111,8 +218,11 @@ export default function AskEventPanel({ chapterBriefs }: AskEventPanelProps) {
     }
 
     if (chapterBriefs[0]) {
-      setAddendumFromDepth(null);
+      resetNarrationState();
+      setPanelDepth("standard");
+      reader?.setAnswerDepth("standard");
       revealBrief(chapterBriefs[0].id);
+      setNarrationEpoch((n) => n + 1);
       setVoiceMessage(`Showing answer for: “${heard}”`);
       return;
     }
@@ -120,7 +230,7 @@ export default function AskEventPanel({ chapterBriefs }: AskEventPanelProps) {
     setVoiceMessage(outcome.message);
   }
 
-  function showFallbackAnswer(errorMessage: string) {
+  function showFallbackAnswer(_errorMessage: string) {
     const fallbackQuestion = questionInput.trim() || DEFAULT_QUESTION;
     spokenKeyRef.current = null;
     setConfirmedQuestion(fallbackQuestion);
@@ -135,21 +245,29 @@ export default function AskEventPanel({ chapterBriefs }: AskEventPanelProps) {
   function handleChoice(choice: PromptChoice) {
     setVoiceError(null);
     if (choice.action === "event-brief" && choice.target) {
+      resetNarrationState();
+      setPanelDepth("standard");
+      reader?.setAnswerDepth("standard");
       setConfirmedQuestion(choice.label);
       revealBrief(choice.target);
+      setNarrationEpoch((n) => n + 1);
       setVoiceMessage(`Showing: ${choice.label}`);
       return;
     }
     if (choice.action === "answer-depth" && choice.target && isAnswerDepth(choice.target)) {
-      handleDepth(choice.target);
+      handleDepth(choice.target, { label: choice.label });
       if (!activeBriefId && chapterBriefs[0]) {
         revealBrief(chapterBriefs[0].id);
       }
       return;
     }
     if (choice.action === "ask-ai" && chapterBriefs[0]) {
+      resetNarrationState();
       revealBrief(chapterBriefs[0].id);
+      setPanelDepth("deep");
       reader?.setAnswerDepth("deep");
+      setBriefAddendumUsed(true);
+      setNarrationEpoch((n) => n + 1);
       setVoiceMessage("Showing why this matters to our family.");
     }
   }
@@ -164,8 +282,7 @@ export default function AskEventPanel({ chapterBriefs }: AskEventPanelProps) {
     setConfirmedQuestion(null);
     setVoiceMessage(null);
     setVoiceError(null);
-    setAddendumFromDepth(null);
-    spokenKeyRef.current = null;
+    resetNarrationState();
     speakControllerRef.current?.stop();
     speakControllerRef.current = null;
     setAutoSpeaking(false);
@@ -203,11 +320,13 @@ export default function AskEventPanel({ chapterBriefs }: AskEventPanelProps) {
   }, []);
 
   useEffect(() => {
-    if (!activeBrief || !confirmedQuestion || !answerScript) return;
+    if (!confirmedQuestion || !readAloudScript) return;
 
-    const speakKey = `${activeBrief.id}:${confirmedQuestion}:${answerDepth}:${addendumFromDepth ?? "full"}`;
+    const speakKey = `${activeBrief?.id ?? "none"}:${confirmedQuestion}:${responseKind}:${answerDepth}:${addendumFromDepth ?? "full"}:${chapterCursor}:${narrationEpoch}`;
     if (spokenKeyRef.current === speakKey) return;
     spokenKeyRef.current = speakKey;
+
+    spokenCorpusRef.current = `${spokenCorpusRef.current} ${readAloudScript}`.trim();
 
     answerRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
 
@@ -215,7 +334,7 @@ export default function AskEventPanel({ chapterBriefs }: AskEventPanelProps) {
     setAutoSpeaking(true);
     setSpeechState("loading");
 
-    void speakText(answerScript, {
+    void speakText(readAloudScript, {
       onLoading: () => {
         setAutoSpeaking(true);
         setSpeechState("loading");
@@ -242,7 +361,7 @@ export default function AskEventPanel({ chapterBriefs }: AskEventPanelProps) {
       setAutoSpeaking(false);
       setSpeechState("idle");
     };
-  }, [activeBrief, confirmedQuestion, answerScript, answerDepth, addendumFromDepth]);
+  }, [confirmedQuestion, readAloudScript, responseKind, answerDepth, addendumFromDepth, chapterCursor, narrationEpoch, activeBrief?.id]);
 
   if (!prompt) return null;
 
@@ -370,14 +489,14 @@ export default function AskEventPanel({ chapterBriefs }: AskEventPanelProps) {
           <span className="text-xs font-semibold text-[#5b21b6]">Follow-up:</span>
           <button
             type="button"
-            onClick={() => handleDepth("deep")}
+            onClick={() => advanceNarration("Tell me more")}
             className="rounded-full bg-[#ede9fe] px-3 py-1.5 text-xs font-semibold text-[#5b21b6] hover:bg-[#ddd6fe]"
           >
             Tell me more
           </button>
           <button
             type="button"
-            onClick={() => handleDepth("brief")}
+            onClick={() => handleDepth("brief", { label: "Shorter version" })}
             className="rounded-full bg-[#ede9fe] px-3 py-1.5 text-xs font-semibold text-[#5b21b6] hover:bg-[#ddd6fe]"
           >
             Shorter
@@ -396,19 +515,34 @@ export default function AskEventPanel({ chapterBriefs }: AskEventPanelProps) {
         <div ref={answerRef} id="event-answer" className="scroll-mt-6 space-y-3">
           <div className="flex flex-wrap items-center justify-between gap-3">
             <h3 className="font-serif text-xl font-semibold text-[#2b2118]">
-              Here&apos;s the answer
+              {responseKind === "chapter" ? "Continuing the story" : "Here's the answer"}
             </h3>
-            {answerScript && (
-              <ReadAloudButton text={answerScript} label="Hear answer again" />
+            {readAloudScript && (
+              <ReadAloudButton text={readAloudScript} label="Hear again" />
             )}
           </div>
-          <EventBriefCard
-            brief={activeBrief}
-            question={isAddendum ? undefined : prompt.question}
-            depth={answerDepth}
-            bodyOverride={isAddendum ? answerBody : undefined}
-            bodyHeading={isAddendum ? "Additional detail" : undefined}
-          />
+
+          {responseKind === "chapter" && chapterNarrationText ? (
+            <aside className="rounded-2xl border-2 border-[#e2d4bf] bg-[#fffaf2] p-5">
+              <p className="text-[10px] font-semibold uppercase tracking-[0.25em] text-[#8b5e34]">
+                From the family narrative · {section.yearStart}
+                {section.yearEnd ? `–${section.yearEnd}` : ""}
+              </p>
+              <div className="mt-3 space-y-3 text-sm leading-relaxed text-[#3f342c]">
+                {chapterNarrationText.split("\n\n").map((para, i) => (
+                  <p key={i}>{para}</p>
+                ))}
+              </div>
+            </aside>
+          ) : (
+            <EventBriefCard
+              brief={activeBrief}
+              question={isAddendum ? undefined : prompt.question}
+              depth={answerDepth}
+              bodyOverride={isAddendum ? answerBody : undefined}
+              bodyHeading={isAddendum ? "Additional detail" : undefined}
+            />
+          )}
         </div>
       )}
     </div>

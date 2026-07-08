@@ -142,7 +142,11 @@ export default function StoryChapterReader({ section, prev, next }: StoryChapter
 
       {askBriefs.length > 0 && (
         <div className="mt-4">
-          <AskEventPanel chapterBriefs={askBriefs} />
+          <AskEventPanel
+            chapterBriefs={askBriefs}
+            section={section}
+            nextSection={next}
+          />
         </div>
       )}
 
