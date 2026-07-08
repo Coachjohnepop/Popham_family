@@ -1,17 +1,12 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
-
-type SpeechRecognitionCtor = new () => SpeechRecognition;
-
-function getSpeechRecognition(): SpeechRecognitionCtor | null {
-  if (typeof window === "undefined") return null;
-  const w = window as Window & {
-    SpeechRecognition?: SpeechRecognitionCtor;
-    webkitSpeechRecognition?: SpeechRecognitionCtor;
-  };
-  return w.SpeechRecognition ?? w.webkitSpeechRecognition ?? null;
-}
+import {
+  describeSpeechRecognitionError,
+  getSpeechRecognitionCtor,
+  isSpeechRecognitionSupported,
+  requestMicrophoneAccess,
+} from "@/lib/speech-recognition";
 
 type VoicePickButtonProps = {
   onTranscript: (text: string) => void;
@@ -28,10 +23,12 @@ export default function VoicePickButton({
 }: VoicePickButtonProps) {
   const [supported, setSupported] = useState(false);
   const [listening, setListening] = useState(false);
+  const [starting, setStarting] = useState(false);
   const recognitionRef = useRef<SpeechRecognition | null>(null);
+  const gotResultRef = useRef(false);
 
   useEffect(() => {
-    setSupported(Boolean(getSpeechRecognition()));
+    setSupported(isSpeechRecognitionSupported());
     return () => recognitionRef.current?.abort();
   }, []);
 
@@ -39,63 +36,95 @@ export default function VoicePickButton({
     recognitionRef.current?.abort();
     recognitionRef.current = null;
     setListening(false);
+    setStarting(false);
   }, []);
 
-  const start = useCallback(() => {
-    const Ctor = getSpeechRecognition();
+  const start = useCallback(async () => {
+    const Ctor = getSpeechRecognitionCtor();
     if (!Ctor) {
-      onError?.("Voice input is not supported in this browser. Click a chapter instead.");
+      onError?.("Voice is not supported in this browser. Type your question instead.");
+      return;
+    }
+
+    setStarting(true);
+    gotResultRef.current = false;
+
+    const micError = await requestMicrophoneAccess();
+    if (micError) {
+      setStarting(false);
+      onError?.(micError);
       return;
     }
 
     stop();
+
     const recognition = new Ctor();
-    recognition.lang = "en-GB";
+    recognition.lang = "en-US";
     recognition.interimResults = false;
     recognition.maxAlternatives = 1;
     recognition.continuous = false;
 
-    recognition.onstart = () => setListening(true);
-    recognition.onend = () => setListening(false);
+    recognition.onstart = () => {
+      setStarting(false);
+      setListening(true);
+    };
+
+    recognition.onend = () => {
+      setListening(false);
+      setStarting(false);
+      if (!gotResultRef.current) {
+        onError?.("Didn't catch that. Speak right after tapping, or type your question below.");
+      }
+    };
+
     recognition.onerror = (event) => {
       setListening(false);
-      if (event.error === "aborted") return;
-      onError?.(
-        event.error === "not-allowed"
-          ? "Microphone permission denied. Allow the mic in browser settings, or click a chapter."
-          : `Could not hear you (${event.error}). Try again or click a chapter.`,
-      );
+      setStarting(false);
+      const message = describeSpeechRecognitionError(event.error);
+      if (message) onError?.(message);
     };
+
     recognition.onresult = (event) => {
       const text = event.results[0]?.[0]?.transcript?.trim();
-      if (text) onTranscript(text);
+      if (text) {
+        gotResultRef.current = true;
+        onTranscript(text);
+      }
     };
 
     recognitionRef.current = recognition;
-    recognition.start();
+
+    try {
+      recognition.start();
+    } catch {
+      setStarting(false);
+      onError?.("Could not start listening. Wait a second and tap again, or type below.");
+    }
   }, [onError, onTranscript, stop]);
 
   if (!supported) {
     return (
       <p className="text-sm text-[#6f5c49]">
-        Voice pick needs Chrome or Safari. Click a chapter below, or type in search from the story
-        tab.
+        Voice needs Chrome or Safari. Type your question below — it works the same.
       </p>
     );
   }
 
+  const busy = listening || starting;
+
   return (
     <button
       type="button"
-      onClick={listening ? stop : start}
+      onClick={busy ? stop : start}
+      disabled={starting}
       className={`inline-flex items-center gap-2 rounded-full px-5 py-3 text-sm font-semibold transition ${
-        listening
+        busy
           ? "bg-[#7c3aed] text-white ring-2 ring-[#c4b5fd]"
           : "bg-[#f5f3ff] text-[#5b21b6] ring-1 ring-[#c4b5fd] hover:bg-[#ede9fe]"
-      }`}
+      } disabled:opacity-70`}
     >
-      <span aria-hidden>{listening ? "🎙️" : "🎤"}</span>
-      {listening ? activeLabel : label}
+      <span aria-hidden>{busy ? "🎙️" : "🎤"}</span>
+      {starting ? "Starting…" : listening ? activeLabel : label}
     </button>
   );
 }
