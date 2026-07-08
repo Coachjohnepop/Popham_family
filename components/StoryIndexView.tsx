@@ -1,6 +1,5 @@
 import Link from "next/link";
 import StoryFormatGuide from "@/components/StoryFormatGuide";
-import StoryOverviewSummaries from "@/components/StoryOverviewSummaries";
 import { getStorybook } from "@/lib/storybook";
 import StorySidebar from "@/components/StorySidebar";
 
@@ -22,9 +21,12 @@ export default function StoryIndexView() {
           <p className="mt-3 text-sm leading-relaxed text-[#6f5c49]">
             {book.sectionCount} tightened chapters drawn from the original document, with{" "}
             {book.imageCountInDocument} photographs and illustrations — open slideshows when you
-            want them.
+            want them. For a spoken overview of the whole paper, start from{" "}
+            <a href="/" className="font-semibold text-[#8b5e34] hover:underline">
+              Home
+            </a>
+            .
           </p>
-          <StoryOverviewSummaries />
         </div>
 
         <div id="format">

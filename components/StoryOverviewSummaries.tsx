@@ -21,7 +21,13 @@ const ACTIVE_STYLES: Record<OverviewDepth, string> = {
   full: "bg-[#166534] text-white ring-[#166534]",
 };
 
-export default function StoryOverviewSummaries() {
+type StoryOverviewSummariesProps = {
+  variant?: "landing" | "compact";
+};
+
+export default function StoryOverviewSummaries({
+  variant = "compact",
+}: StoryOverviewSummariesProps) {
   const [activeDepth, setActiveDepth] = useState<OverviewDepth | null>(null);
   const [speechState, setSpeechState] = useState<SpeakState>("idle");
   const controllerRef = useRef<SpeakController | null>(null);
@@ -61,12 +67,41 @@ export default function StoryOverviewSummaries() {
 
   useEffect(() => () => stopReading(), []);
 
+  const isLanding = variant === "landing";
+
   return (
-    <div className="mt-4">
-      <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-[#8b5e34]">
-        Hear the overview
-      </p>
-      <div className="mt-2 flex flex-wrap gap-2">
+    <section
+      className={
+        isLanding
+          ? "w-full rounded-3xl border border-[#e2d4bf] bg-white px-5 py-6 shadow-sm sm:px-8"
+          : "mt-4"
+      }
+      aria-labelledby={isLanding ? "document-overview-heading" : undefined}
+    >
+      {isLanding ? (
+        <>
+          <p className="text-[10px] font-semibold uppercase tracking-[0.25em] text-[#8b5e34]">
+            Full document overview
+          </p>
+          <h2
+            id="document-overview-heading"
+            className="mt-2 text-center font-serif text-xl font-semibold text-[#2b2118] sm:text-2xl"
+          >
+            Hear the whole family story
+          </h2>
+          <p className="mx-auto mt-2 max-w-lg text-center text-sm leading-relaxed text-[#6f5c49]">
+            Three spoken summaries from Dad&apos;s paper — short, medium, or full — before you
+            explore chapter by chapter.
+          </p>
+        </>
+      ) : (
+        <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-[#8b5e34]">
+          Hear the overview
+        </p>
+      )}
+      <div
+        className={`flex flex-wrap justify-center gap-2 ${isLanding ? "mt-5" : "mt-2"}`}
+      >
         {OVERVIEW_DEPTHS.map((depth) => {
           const summary = getOverviewSummary(depth);
           const isActive = activeDepth === depth;
@@ -92,17 +127,19 @@ export default function StoryOverviewSummaries() {
         })}
       </div>
       {activeDepth && speechState === "paused" && (
-        <button
-          type="button"
-          onClick={() => {
-            controllerRef.current?.resume();
-            setSpeechState("speaking");
-          }}
-          className="mt-2 rounded-full bg-[#efe4d2] px-3 py-1.5 text-xs font-semibold text-[#5c4a38] hover:bg-[#e4d4bc]"
-        >
-          Resume
-        </button>
+        <div className={isLanding ? "mt-3 text-center" : "mt-2"}>
+          <button
+            type="button"
+            onClick={() => {
+              controllerRef.current?.resume();
+              setSpeechState("speaking");
+            }}
+            className="rounded-full bg-[#efe4d2] px-3 py-1.5 text-xs font-semibold text-[#5c4a38] hover:bg-[#e4d4bc]"
+          >
+            Resume
+          </button>
+        </div>
       )}
-    </div>
+    </section>
   );
 }

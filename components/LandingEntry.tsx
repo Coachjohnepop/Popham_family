@@ -5,6 +5,7 @@ import { Suspense } from "react";
 import AskEventPanel from "@/components/AskEventPanel";
 import EventSearch from "@/components/EventSearch";
 import ExplorationPaths from "@/components/ExplorationPaths";
+import StoryOverviewSummaries from "@/components/StoryOverviewSummaries";
 import { useOptionalReader } from "@/components/ReaderProvider";
 
 export default function LandingEntry() {
@@ -13,6 +14,8 @@ export default function LandingEntry() {
 
   return (
     <div className="mx-auto mt-8 flex w-full max-w-2xl flex-col items-center gap-6">
+      <StoryOverviewSummaries key={`home-overview-${entryKey}`} variant="landing" />
+
       <ExplorationPaths key={`home-paths-${entryKey}`} />
 
       <div className="w-full border-t border-[#e2d4bf] pt-6">
