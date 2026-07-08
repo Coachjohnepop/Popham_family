@@ -24,10 +24,21 @@ export default function LandingPage() {
           </p>
         </div>
 
-        <div className="mx-auto mt-8 w-full max-w-2xl">
-          <Suspense fallback={null}>
-            <EventSearch placeholder="Search Winifred’s story — events, people, places…" />
-          </Suspense>
+        <div className="mx-auto mt-8 flex w-full max-w-2xl flex-col items-center gap-4">
+          <Link
+            href="/read"
+            className="w-full rounded-full bg-[#8b5e34] px-8 py-4 text-center text-base font-semibold text-white shadow-md transition hover:bg-[#6f4a28] sm:w-auto"
+          >
+            Start guided reading →
+          </Link>
+          <p className="text-center text-sm text-[#6f5c49]">
+            Personalized welcome, read-aloud, and clickable family names
+          </p>
+          <div className="w-full">
+            <Suspense fallback={null}>
+              <EventSearch placeholder="Search Winifred’s story — events, people, places…" />
+            </Suspense>
+          </div>
         </div>
 
         <LandingPhotoCollage images={images} totalInDocument={totalInDocument} />

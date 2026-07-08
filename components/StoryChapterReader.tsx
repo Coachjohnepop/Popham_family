@@ -2,9 +2,15 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+import ClickableStoryText from "@/components/ClickableStoryText";
+import EventBriefCard from "@/components/EventBriefCard";
+import PersonSidePanel from "@/components/PersonSidePanel";
+import ReadAloudButton from "@/components/ReadAloudButton";
+import { useOptionalReader } from "@/components/ReaderProvider";
 import StoryPhotoGallery from "@/components/StoryPhotoGallery";
 import StorySlideshowModal from "@/components/StorySlideshowModal";
+import { getBriefsForChapter } from "@/lib/event-briefs";
 import { paginateChapterBlocks } from "@/lib/storybook-pages";
 import type { StoryBlock, StoryImage, StorySection } from "@/lib/types";
 
@@ -17,9 +23,11 @@ type StoryChapterReaderProps = {
 function renderBlock(block: StoryBlock, key: string) {
   if (block.type === "paragraph") {
     return (
-      <p key={key} className="text-[17px] leading-8 text-[#3f342c]">
-        {block.text}
-      </p>
+      <ClickableStoryText
+        key={key}
+        text={block.text}
+        className="text-[17px] leading-8 text-[#3f342c]"
+      />
     );
   }
 
@@ -74,11 +82,27 @@ function StoryInlineImage({ image }: { image: StoryImage }) {
 }
 
 export default function StoryChapterReader({ section, prev, next }: StoryChapterReaderProps) {
+  const reader = useOptionalReader();
   const pages = paginateChapterBlocks(section.blocks);
   const [pageIndex, setPageIndex] = useState(0);
   const currentPage = pages[pageIndex] ?? [];
+  const eventBriefs = useMemo(() => getBriefsForChapter(section.id), [section.id]);
+
+  const pageText = useMemo(
+    () =>
+      currentPage
+        .filter((b): b is Extract<StoryBlock, { type: "paragraph" }> => b.type === "paragraph")
+        .map((b) => b.text)
+        .join(" "),
+    [currentPage],
+  );
+
+  useEffect(() => {
+    reader?.saveProgress(section.id);
+  }, [reader, section.id]);
 
   return (
+    <div className="grid gap-6 xl:grid-cols-[1fr_280px]">
     <article className="rounded-3xl border border-[#e2d4bf] bg-white p-6 shadow-sm sm:p-8">
       <div className="text-[10px] font-semibold uppercase tracking-[0.25em] text-[#8b5e34]">
         {section.yearStart}
@@ -87,6 +111,29 @@ export default function StoryChapterReader({ section, prev, next }: StoryChapter
         {pages.length > 1 ? ` · page ${pageIndex + 1} of ${pages.length}` : ""}
       </div>
       <h2 className="mt-2 font-serif text-3xl font-semibold tracking-tight">{section.title}</h2>
+
+      <div className="mt-4 flex flex-wrap items-center gap-3">
+        {reader?.readerName && (
+          <span className="text-sm text-[#6f5c49]">
+            Reading as <strong>{reader.readerName}</strong>
+          </span>
+        )}
+        {pageText && <ReadAloudButton text={pageText} />}
+        <Link
+          href="/read"
+          className="text-sm font-semibold text-[#8b5e34] hover:underline"
+        >
+          Guided TOC
+        </Link>
+      </div>
+
+      {eventBriefs.length > 0 && (
+        <div className="mt-4 space-y-3">
+          {eventBriefs.map((brief) => (
+            <EventBriefCard key={brief.id} brief={brief} />
+          ))}
+        </div>
+      )}
 
       {(section.famousPeople.length > 0 || section.familyNames.length > 0) && (
         <div className="mt-4 flex flex-wrap gap-2">
@@ -187,5 +234,13 @@ export default function StoryChapterReader({ section, prev, next }: StoryChapter
         )}
       </nav>
     </article>
+
+    {reader?.pinnedPerson && (
+      <PersonSidePanel
+        person={reader.pinnedPerson}
+        onClose={() => reader.setPinnedPerson(null)}
+      />
+    )}
+    </div>
   );
 }
