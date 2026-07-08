@@ -26,6 +26,8 @@ type VoicePickButtonProps = {
   label?: string;
   activeLabel?: string;
   transcriptHint?: string;
+  /** Inside Ask panel — no duplicate instruction banner */
+  embedded?: boolean;
 };
 
 function delay(ms: number): Promise<void> {
@@ -56,6 +58,7 @@ export default function VoicePickButton({
   label = "Say where to begin",
   activeLabel = "Listening…",
   transcriptHint = "Speak, then tap Done when you finish.",
+  embedded = false,
 }: VoicePickButtonProps) {
   const [env, setEnv] = useState<VoiceEnvironment | null>(null);
   const [mode, setMode] = useState<VoiceInputMode>("web-speech");
@@ -436,9 +439,11 @@ export default function VoicePickButton({
     // still show server mode UI
   }
 
+  const buttonPad = embedded ? "px-4 py-2" : "px-5 py-3";
+
   return (
-    <div className="space-y-3">
-      {env?.instruction && !sessionActive && !transcribing && (
+    <div className={embedded ? "space-y-2" : "space-y-3"}>
+      {!embedded && env?.instruction && !sessionActive && !transcribing && (
         <p className="rounded-xl border border-[#ddd6fe] bg-[#f5f3ff] px-4 py-3 text-sm text-[#5b21b6]">
           {env.instruction}
         </p>
@@ -450,7 +455,7 @@ export default function VoicePickButton({
           data-testid="voice-pick-button"
           onClick={busy ? handleCancel : start}
           disabled={starting}
-          className={`inline-flex items-center gap-2 rounded-full px-5 py-3 text-sm font-semibold transition ${
+          className={`inline-flex items-center gap-2 rounded-full ${buttonPad} text-sm font-semibold transition ${
             busy
               ? "bg-[#7c3aed] text-white ring-2 ring-[#c4b5fd]"
               : "bg-[#f5f3ff] text-[#5b21b6] ring-1 ring-[#c4b5fd] hover:bg-[#ede9fe]"
@@ -473,7 +478,7 @@ export default function VoicePickButton({
             type="button"
             data-testid="voice-done-button"
             onClick={() => void handleDone()}
-            className="rounded-full bg-[#8b5e34] px-5 py-3 text-sm font-semibold text-white hover:bg-[#744b2b]"
+            className={`rounded-full bg-[#8b5e34] ${buttonPad} text-sm font-semibold text-white hover:bg-[#744b2b]`}
           >
             Done
           </button>
@@ -483,7 +488,7 @@ export default function VoicePickButton({
           <button
             type="button"
             onClick={handleCancel}
-            className="rounded-full bg-white px-4 py-3 text-sm font-semibold text-[#6f5c49] ring-1 ring-[#e2d4bf] hover:bg-[#fffaf2]"
+            className={`rounded-full bg-white ${embedded ? "px-3 py-2" : "px-4 py-3"} text-sm font-semibold text-[#6f5c49] ring-1 ring-[#e2d4bf] hover:bg-[#fffaf2]`}
           >
             Cancel
           </button>
@@ -492,7 +497,7 @@ export default function VoicePickButton({
 
       {(sessionActive || transcribing || liveTranscript || statusLine) && (
         <div
-          className="rounded-2xl border border-[#ddd6fe] bg-white p-4"
+          className={`rounded-xl border border-[#ddd6fe] bg-white ${embedded ? "p-3" : "p-4"}`}
           role="status"
           aria-live="polite"
           data-testid="voice-transcript-panel"

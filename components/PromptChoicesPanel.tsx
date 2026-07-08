@@ -8,6 +8,8 @@ type PromptChoicesPanelProps = {
   compact?: boolean;
   /** Actions that render as clickable buttons when onPick is set */
   interactiveActions?: string[];
+  /** Choice group ids to omit (e.g. depth toggles live in the ask bar) */
+  hiddenGroupIds?: string[];
 };
 
 export default function PromptChoicesPanel({
@@ -15,22 +17,28 @@ export default function PromptChoicesPanel({
   onPick,
   compact = false,
   interactiveActions,
+  hiddenGroupIds,
 }: PromptChoicesPanelProps) {
   const prompt = getPromptById(promptId);
   if (!prompt) return null;
 
+  const groups = prompt.choiceGroups.filter((g) => !hiddenGroupIds?.includes(g.id));
+  if (!groups.length) return null;
+
   return (
-    <div className="rounded-2xl border border-[#e2d4bf] bg-[#fffaf2] p-4 sm:p-5">
+    <div className="rounded-2xl border border-[#e2d4bf] bg-[#fffaf2] p-3 sm:p-4">
       <p className="text-[10px] font-semibold uppercase tracking-[0.25em] text-[#8b5e34]">
-        Good choices
+        Good starting points
       </p>
-      <p className="mt-1 font-serif text-lg font-semibold text-[#2b2118]">{prompt.question}</p>
+      {!compact && (
+        <p className="mt-1 font-serif text-lg font-semibold text-[#2b2118]">{prompt.question}</p>
+      )}
       {!compact && prompt.dadDocRef && (
         <p className="mt-1 text-xs text-[#6f5c49]">{prompt.dadDocRef}</p>
       )}
 
-      <div className="mt-4 space-y-4">
-        {prompt.choiceGroups.map((group) => (
+      <div className={`${compact ? "mt-2" : "mt-4"} space-y-3`}>
+        {groups.map((group) => (
           <ChoiceGroup
             key={group.id}
             group={group}

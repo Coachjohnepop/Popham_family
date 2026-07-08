@@ -247,7 +247,7 @@ export default function AskEventPanel({ chapterBriefs }: AskEventPanelProps) {
   if (!prompt) return null;
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-3">
       <form
         onSubmit={handleSubmitQuestion}
         className="rounded-2xl border border-[#c4b5fd] bg-[#f5f3ff] p-4"
@@ -255,25 +255,52 @@ export default function AskEventPanel({ chapterBriefs }: AskEventPanelProps) {
         <label htmlFor="ask-event-input" className="text-sm font-semibold text-[#5b21b6]">
           {inDialogue ? "Ask a follow-up" : "Ask your question"}
         </label>
-        <p className="mt-1 text-xs text-[#6f5c49]">
-          Type and Ask, or tap 🎤 and speak — words appear live. Tap Done for the answer.
+        <p className="mt-0.5 text-xs text-[#6f5c49]">
+          Type and Ask, or use the mic — words appear as you speak, then tap Done.
         </p>
-        <div className="mt-3 flex flex-col gap-2 sm:flex-row">
+
+        <div className="mt-2 flex flex-col gap-2 sm:flex-row">
           <input
             id="ask-event-input"
             type="text"
             value={questionInput}
             onChange={(e) => setQuestionInput(e.target.value)}
             placeholder={DEFAULT_QUESTION}
-            className="min-w-0 flex-1 rounded-xl border border-[#ddd6fe] bg-white px-4 py-3 text-sm text-[#2b2118] placeholder:text-[#a8a29e] focus:border-[#7c3aed] focus:outline-none focus:ring-2 focus:ring-[#c4b5fd]"
+            className="min-w-0 flex-1 rounded-xl border border-[#ddd6fe] bg-white px-4 py-2.5 text-sm text-[#2b2118] placeholder:text-[#a8a29e] focus:border-[#7c3aed] focus:outline-none focus:ring-2 focus:ring-[#c4b5fd]"
           />
           <button
             type="submit"
-            className="shrink-0 rounded-xl bg-[#7c3aed] px-5 py-3 text-sm font-semibold text-white hover:bg-[#6d28d9]"
+            className="shrink-0 rounded-xl bg-[#7c3aed] px-5 py-2.5 text-sm font-semibold text-white hover:bg-[#6d28d9]"
           >
             Ask
           </button>
         </div>
+
+        <div className="mt-3 border-t border-[#ddd6fe] pt-3">
+          <VoicePickButton
+            embedded
+            label={inDialogue ? "Speak follow-up" : "Speak question"}
+            activeLabel="Listening…"
+            transcriptHint="Tap Done when finished."
+            onTranscriptChange={setQuestionInput}
+            onTranscript={(text) => {
+              applyAskResult(text);
+            }}
+            onError={(msg) => {
+              setVoiceError(msg);
+              showFallbackAnswer(msg);
+            }}
+          />
+        </div>
+
+        {voiceError && (
+          <p
+            className="mt-3 rounded-xl border border-[#fdba74] bg-[#fff7ed] px-3 py-2 text-sm font-medium text-[#b45309]"
+            role="alert"
+          >
+            {voiceError}
+          </p>
+        )}
       </form>
 
       {!inDialogue && (
@@ -281,12 +308,13 @@ export default function AskEventPanel({ chapterBriefs }: AskEventPanelProps) {
           promptId="ask-event"
           onPick={handleChoice}
           compact
+          hiddenGroupIds={["answer-depth"]}
           interactiveActions={["event-brief", "answer-depth", "ask-ai"]}
         />
       )}
 
       {voiceHealthHint && (
-        <p className="rounded-xl border border-[#fdba74] bg-[#fff7ed] px-4 py-3 text-sm text-[#9a3412]">
+        <p className="rounded-xl border border-[#fdba74] bg-[#fff7ed] px-3 py-2 text-sm text-[#9a3412]">
           Voice server: {voiceHealthHint}{" "}
           <a
             href="/api/voice-health"
@@ -296,26 +324,6 @@ export default function AskEventPanel({ chapterBriefs }: AskEventPanelProps) {
           >
             Check status
           </a>
-        </p>
-      )}
-
-      <VoicePickButton
-        label={inDialogue ? "Or say your follow-up" : "Or say your question"}
-        activeLabel="Listening…"
-        transcriptHint="Words appear as you speak. Tap Done when finished."
-        onTranscriptChange={setQuestionInput}
-        onTranscript={(text) => {
-          applyAskResult(text);
-        }}
-        onError={(msg) => {
-          setVoiceError(msg);
-          showFallbackAnswer(msg);
-        }}
-      />
-
-      {voiceError && (
-        <p className="rounded-xl border border-[#fdba74] bg-[#fff7ed] px-4 py-3 text-sm font-medium text-[#b45309]" role="alert">
-          {voiceError}
         </p>
       )}
 
@@ -358,36 +366,29 @@ export default function AskEventPanel({ chapterBriefs }: AskEventPanelProps) {
       )}
 
       {inDialogue && activeBrief && (
-        <div className="rounded-2xl border border-[#c4b5fd] bg-[#faf5ff] p-4">
-          <p className="text-sm font-semibold text-[#5b21b6]">Keep the conversation going</p>
-          <p className="mt-1 text-xs leading-relaxed text-[#6f5c49]">
-            Tap <strong>Or say your follow-up</strong> below, speak, then <strong>Done</strong>.
-            Try: &ldquo;Tell me more&rdquo;, &ldquo;Even more detail&rdquo;, &ldquo;Keep it short&rdquo;,
-            or a new question about Salem.
-          </p>
-          <div className="mt-3 flex flex-wrap gap-2">
+        <div className="flex flex-wrap items-center gap-2 rounded-xl border border-[#c4b5fd] bg-[#faf5ff] px-3 py-2">
+          <span className="text-xs font-semibold text-[#5b21b6]">Follow-up:</span>
           <button
             type="button"
             onClick={() => handleDepth("deep")}
-            className="rounded-full bg-[#ede9fe] px-4 py-2 text-sm font-semibold text-[#5b21b6] hover:bg-[#ddd6fe]"
+            className="rounded-full bg-[#ede9fe] px-3 py-1.5 text-xs font-semibold text-[#5b21b6] hover:bg-[#ddd6fe]"
           >
             Tell me more
           </button>
           <button
             type="button"
             onClick={() => handleDepth("brief")}
-            className="rounded-full bg-[#ede9fe] px-4 py-2 text-sm font-semibold text-[#5b21b6] hover:bg-[#ddd6fe]"
+            className="rounded-full bg-[#ede9fe] px-3 py-1.5 text-xs font-semibold text-[#5b21b6] hover:bg-[#ddd6fe]"
           >
-            Shorter version
+            Shorter
           </button>
           <button
             type="button"
             onClick={handleAskAnother}
-            className="rounded-full bg-white px-4 py-2 text-sm font-semibold text-[#6f5c49] ring-1 ring-[#e2d4bf] hover:bg-[#fffaf2]"
+            className="rounded-full bg-white px-3 py-1.5 text-xs font-semibold text-[#6f5c49] ring-1 ring-[#e2d4bf] hover:bg-[#fffaf2]"
           >
-            Ask another question
+            New question
           </button>
-          </div>
         </div>
       )}
 
