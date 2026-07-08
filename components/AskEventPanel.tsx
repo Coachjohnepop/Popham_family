@@ -217,6 +217,14 @@ export default function AskEventPanel({ chapterBriefs }: AskEventPanelProps) {
         onError={(msg) => {
           setVoiceError(msg);
           setVoiceMessage(null);
+          if (/billing|quota|payment/i.test(msg)) {
+            setConfirmedQuestion(DEFAULT_QUESTION);
+            setQuestionInput(DEFAULT_QUESTION);
+            revealBrief(chapterBriefs[0]?.id ?? "salem-witch-trials");
+            setVoiceMessage(
+              "Transcription needs OpenAI billing — showing the Salem answer anyway. Browser voice will read it.",
+            );
+          }
         }}
       />
 
