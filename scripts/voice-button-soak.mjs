@@ -15,6 +15,10 @@ const DURATION_SEC = Number(process.env.DURATION_SEC ?? 3600);
 const INTERVAL_MS = Number(process.env.INTERVAL_MS ?? 12000);
 
 const MOCK_SCRIPT = () => {
+  navigator.mediaDevices.getUserMedia = async () => ({
+    getTracks: () => [{ stop() {} }],
+  });
+
   class MockSpeechRecognition extends EventTarget {
     constructor() {
       super();
@@ -125,18 +129,27 @@ async function runCycle(page, spec, mode) {
     window.__voiceSoakMode = m;
   }, mode);
 
-  const button = page.getByRole("button", { name: new RegExp(spec.buttonLabel, "i") }).first();
+  const button = page.getByTestId("voice-pick-button").first();
   await button.waitFor({ state: "visible", timeout: 15000 });
 
   await button.click();
 
-  await page.waitForTimeout(80);
-  const midText = await button.innerText();
-  if (!midText.toLowerCase().includes("listening") && !midText.toLowerCase().includes("starting")) {
-    throw new Error(`Expected listening state, got "${midText}"`);
-  }
+  const handle = await button.elementHandle();
+  await page
+    .waitForFunction(
+      (node) => {
+        const text = node?.textContent?.toLowerCase() ?? "";
+        return text.includes("listening") || text.includes("starting");
+      },
+      handle,
+      { timeout: 5000 },
+    )
+    .catch(async () => {
+      const midText = await button.innerText();
+      throw new Error(`Expected listening state, got "${midText}"`);
+    });
 
-  await page.waitForTimeout(400);
+  await page.waitForTimeout(500);
 
   const endText = await button.innerText();
   if (mode === "success") {
@@ -174,7 +187,10 @@ async function main() {
 
   console.log(`Voice soak: ${BASE_URL} for ${DURATION_SEC}s (every ${INTERVAL_MS}ms)`);
 
-  const browser = await chromium.launch({ headless: true });
+  const browser = await chromium.launch({
+    headless: true,
+    channel: process.env.PLAYWRIGHT_CHANNEL ?? "chrome",
+  });
   const context = await browser.newContext({
     permissions: ["microphone"],
   });

@@ -183,6 +183,7 @@ export default function VoicePickButton({
   return (
     <button
       type="button"
+      data-testid="voice-pick-button"
       onClick={busy ? stop : start}
       disabled={starting}
       className={`inline-flex items-center gap-2 rounded-full px-5 py-3 text-sm font-semibold transition ${
