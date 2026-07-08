@@ -15,6 +15,10 @@ type VoicePickButtonProps = {
   activeLabel?: string;
 };
 
+function delay(ms: number): Promise<void> {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
 export default function VoicePickButton({
   onTranscript,
   onError,
@@ -26,70 +30,132 @@ export default function VoicePickButton({
   const [starting, setStarting] = useState(false);
   const recognitionRef = useRef<SpeechRecognition | null>(null);
   const gotResultRef = useRef(false);
+  const errorReportedRef = useRef(false);
+  const sessionRef = useRef(0);
+  const onTranscriptRef = useRef(onTranscript);
+  const onErrorRef = useRef(onError);
+
+  useEffect(() => {
+    onTranscriptRef.current = onTranscript;
+    onErrorRef.current = onError;
+  }, [onTranscript, onError]);
 
   useEffect(() => {
     setSupported(isSpeechRecognitionSupported());
-    return () => recognitionRef.current?.abort();
+    return () => {
+      sessionRef.current += 1;
+      if (recognitionRef.current) {
+        recognitionRef.current.onend = null;
+        recognitionRef.current.onerror = null;
+        recognitionRef.current.onresult = null;
+        recognitionRef.current.abort();
+        recognitionRef.current = null;
+      }
+    };
+  }, []);
+
+  const abortPrevious = useCallback(() => {
+    const previous = recognitionRef.current;
+    if (!previous) return;
+    previous.onend = null;
+    previous.onerror = null;
+    previous.onresult = null;
+    previous.onstart = null;
+    previous.abort();
+    recognitionRef.current = null;
   }, []);
 
   const stop = useCallback(() => {
-    recognitionRef.current?.abort();
-    recognitionRef.current = null;
+    sessionRef.current += 1;
+    abortPrevious();
     setListening(false);
     setStarting(false);
-  }, []);
+  }, [abortPrevious]);
 
   const start = useCallback(async () => {
     const Ctor = getSpeechRecognitionCtor();
     if (!Ctor) {
-      onError?.("Voice is not supported in this browser. Type your question instead.");
+      onErrorRef.current?.("Voice is not supported in this browser. Type your question instead.");
       return;
     }
 
-    setStarting(true);
+    const session = sessionRef.current + 1;
+    sessionRef.current = session;
     gotResultRef.current = false;
+    errorReportedRef.current = false;
+    setStarting(true);
+    setListening(false);
 
     const micError = await requestMicrophoneAccess();
+    if (session !== sessionRef.current) return;
     if (micError) {
       setStarting(false);
-      onError?.(micError);
+      onErrorRef.current?.(micError);
       return;
     }
 
-    stop();
+    abortPrevious();
+    await delay(250);
+    if (session !== sessionRef.current) return;
 
     const recognition = new Ctor();
     recognition.lang = "en-US";
-    recognition.interimResults = false;
+    recognition.interimResults = true;
     recognition.maxAlternatives = 1;
-    recognition.continuous = false;
+    recognition.continuous = true;
 
     recognition.onstart = () => {
+      if (session !== sessionRef.current) return;
       setStarting(false);
       setListening(true);
     };
 
-    recognition.onend = () => {
-      setListening(false);
-      setStarting(false);
-      if (!gotResultRef.current) {
-        onError?.("Didn't catch that. Speak right after tapping, or type your question below.");
-      }
-    };
-
     recognition.onerror = (event) => {
+      if (session !== sessionRef.current) return;
+      if (event.error === "aborted") return;
+      errorReportedRef.current = true;
       setListening(false);
       setStarting(false);
       const message = describeSpeechRecognitionError(event.error);
-      if (message) onError?.(message);
+      if (message) onErrorRef.current?.(message);
+    };
+
+    recognition.onend = () => {
+      if (session !== sessionRef.current) return;
+      recognitionRef.current = null;
+      setListening(false);
+      setStarting(false);
+      if (!gotResultRef.current && !errorReportedRef.current) {
+        onErrorRef.current?.(
+          "Didn't catch that. Tap again and speak right away, or type your question below.",
+        );
+      }
     };
 
     recognition.onresult = (event) => {
-      const text = event.results[0]?.[0]?.transcript?.trim();
-      if (text) {
-        gotResultRef.current = true;
-        onTranscript(text);
+      if (session !== sessionRef.current) return;
+
+      let finalText = "";
+      for (let i = event.resultIndex; i < event.results.length; i += 1) {
+        const chunk = event.results[i];
+        if (chunk.isFinal) {
+          finalText = chunk[0]?.transcript ?? "";
+        }
       }
+
+      const text = finalText.trim();
+      if (!text) return;
+
+      gotResultRef.current = true;
+      errorReportedRef.current = true;
+      setListening(false);
+      setStarting(false);
+      try {
+        recognition.stop();
+      } catch {
+        /* session may already be closed */
+      }
+      onTranscriptRef.current(text);
     };
 
     recognitionRef.current = recognition;
@@ -97,10 +163,12 @@ export default function VoicePickButton({
     try {
       recognition.start();
     } catch {
+      if (session !== sessionRef.current) return;
       setStarting(false);
-      onError?.("Could not start listening. Wait a second and tap again, or type below.");
+      setListening(false);
+      onErrorRef.current?.("Could not start listening. Wait a second and tap again, or type below.");
     }
-  }, [onError, onTranscript, stop]);
+  }, [abortPrevious]);
 
   if (!supported) {
     return (

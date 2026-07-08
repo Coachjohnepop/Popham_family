@@ -1,4 +1,5 @@
 interface SpeechRecognitionEvent extends Event {
+  readonly resultIndex: number;
   readonly results: SpeechRecognitionResultList;
 }
 
@@ -26,6 +27,7 @@ interface SpeechRecognitionResultList {
 }
 
 interface SpeechRecognitionResult {
+  readonly isFinal: boolean;
   readonly length: number;
   [index: number]: SpeechRecognitionAlternative;
 }
