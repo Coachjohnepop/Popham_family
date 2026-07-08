@@ -44,6 +44,15 @@ export function processAskEventTranscript(
     };
   }
 
+  if (chapterBriefs.length === 1 && heard.length >= 8) {
+    const brief = chapterBriefs[0];
+    return {
+      type: "reveal",
+      eventId: brief.id,
+      message: `Answering: ${brief.title}`,
+    };
+  }
+
   if (result?.action === "unknown") {
     return {
       type: "message",

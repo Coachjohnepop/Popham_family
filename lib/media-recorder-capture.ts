@@ -73,7 +73,12 @@ export async function transcribeAudioBlob(blob: Blob): Promise<string> {
   const data = (await res.json()) as { text?: string; error?: string; hint?: string };
 
   if (!res.ok) {
-    throw new Error(data.hint ?? data.error ?? "Transcription failed");
+    const hint =
+      data.hint ??
+      (res.status === 503
+        ? "Speech-to-text is not configured on the server. Add OPENAI_API_KEY on Vercel, or type your question above."
+        : data.error ?? "Transcription failed");
+    throw new Error(hint);
   }
 
   return data.text?.trim() ?? "";

@@ -63,6 +63,8 @@ export default function VoicePickButton({
   const [transcribing, setTranscribing] = useState(false);
   const [liveTranscript, setLiveTranscript] = useState("");
   const [statusLine, setStatusLine] = useState<string | null>(null);
+  const [recordingSeconds, setRecordingSeconds] = useState(0);
+  const [completed, setCompleted] = useState(false);
 
   const streamRef = useRef<MediaStream | null>(null);
   const mimeTypeRef = useRef("");
@@ -117,6 +119,7 @@ export default function VoicePickButton({
     setSessionActive(false);
     setStarting(false);
     setTranscribing(false);
+    setRecordingSeconds(0);
   }, [abortRecognition]);
 
   const startServerRecording = useCallback(
@@ -252,6 +255,8 @@ export default function VoicePickButton({
     setStarting(true);
     setSessionActive(false);
     setTranscribing(false);
+    setCompleted(false);
+    setRecordingSeconds(0);
 
     const activeMode = mode;
 
@@ -303,8 +308,9 @@ export default function VoicePickButton({
         if (!text) throw new Error("Couldn't make out words. Try again or type your question.");
 
         updateTranscript(text);
+        setCompleted(true);
+        setStatusLine("Got it — scroll down for your answer (reading aloud now).");
         onTranscriptRef.current(text);
-        setStatusLine(null);
       } catch (err) {
         const message = err instanceof Error ? err.message : "Transcription failed.";
         onErrorRef.current?.(message);
@@ -337,8 +343,17 @@ export default function VoicePickButton({
     return () => teardownSession();
   }, [teardownSession]);
 
-  const busy = sessionActive || starting || transcribing;
   const serverMode = mode === "server-stt";
+
+  useEffect(() => {
+    if (!sessionActive || !serverMode) return;
+    const tick = window.setInterval(() => {
+      setRecordingSeconds((s) => s + 1);
+    }, 1000);
+    return () => window.clearInterval(tick);
+  }, [sessionActive, serverMode]);
+
+  const busy = sessionActive || starting || transcribing;
 
   if (env && env.mode === "server-stt" && !getSpeechRecognitionCtor()) {
     // still show server mode UI
@@ -415,15 +430,21 @@ export default function VoicePickButton({
                 : "Last heard"}
           </p>
           <p className="mt-2 min-h-[2.5rem] text-sm leading-relaxed text-[#2b2118]">
-            {liveTranscript ||
-              (sessionActive && serverMode ? (
-                <span className="text-[#a8a29e]">
-                  Live captions aren&apos;t available in Brave Private — speak your question, then
-                  tap Done.
-                </span>
-              ) : (
-                <span className="text-[#a8a29e]">Start speaking — words will appear here.</span>
-              ))}
+            {liveTranscript ? (
+              <>
+                {completed && (
+                  <span className="mr-1 font-semibold text-[#15803d]">You said: </span>
+                )}
+                {liveTranscript}
+              </>
+            ) : sessionActive && serverMode ? (
+              <span className="text-[#a8a29e]">
+                Recording{recordingSeconds > 0 ? ` (${recordingSeconds}s)` : ""} — words appear
+                after you tap Done (Brave can&apos;t show live captions).
+              </span>
+            ) : (
+              <span className="text-[#a8a29e]">Start speaking — words will appear here.</span>
+            )}
           </p>
           {statusLine && <p className="mt-2 text-xs font-medium text-[#5b21b6]">{statusLine}</p>}
           {sessionActive && !serverMode && (
