@@ -1,5 +1,6 @@
 "use client";
 
+import HomeLink from "@/components/HomeLink";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { Suspense } from "react";
@@ -42,16 +43,13 @@ export default function AppTabs({ initialTab }: AppTabsProps) {
       <header className="border-b border-[#d9cbb6] bg-[#fffaf2]">
         <div className="mx-auto flex max-w-6xl flex-col gap-4 px-4 py-5 sm:flex-row sm:items-end sm:justify-between">
           <div>
-            <Link
-              href="/"
-              className="text-[10px] font-semibold uppercase tracking-[0.35em] text-[#8b5e34] hover:text-[#6f4a28]"
-            >
+            <HomeLink className="text-[10px] font-semibold uppercase tracking-[0.35em] text-[#8b5e34] hover:text-[#6f4a28]">
               Home
-            </Link>
+            </HomeLink>
             <h1 className="font-serif text-2xl font-semibold tracking-tight sm:text-3xl">
-              <Link href="/" className="hover:text-[#6f4a28]">
+              <HomeLink className="hover:text-[#6f4a28]">
                 The Story of Winifred Coss
-              </Link>
+              </HomeLink>
             </h1>
             <p className="mt-1 max-w-2xl text-sm text-[#6f5c49]">
               Where the Coss family fits into history

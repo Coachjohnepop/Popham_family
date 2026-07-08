@@ -1,10 +1,8 @@
-import Link from "next/link";
-import { Suspense } from "react";
-import AskEventPanel from "@/components/AskEventPanel";
-import EventSearch from "@/components/EventSearch";
+import LandingEntry from "@/components/LandingEntry";
 import LandingPhotoCollage from "@/components/LandingPhotoCollage";
 import { getLandingImages } from "@/lib/landing-images";
 import { APP_TABS } from "@/lib/tabs";
+import Link from "next/link";
 import SiteFooter from "@/components/SiteFooter";
 
 export default function LandingPage() {
@@ -21,27 +19,11 @@ export default function LandingPage() {
             The Story of Winifred Coss
           </h1>
           <p className="mt-4 text-base leading-relaxed text-[#6f5c49] sm:text-lg">
-            Where the Coss family fits into history
+            Two branches of history — one family. Explore at your own pace.
           </p>
         </div>
 
-        <div className="mx-auto mt-8 flex w-full max-w-2xl flex-col items-center gap-4">
-          <Link
-            href="/read"
-            className="w-full rounded-full bg-[#8b5e34] px-8 py-4 text-center text-base font-semibold text-white shadow-md transition hover:bg-[#6f4a28] sm:w-auto"
-          >
-            Start guided reading →
-          </Link>
-          <p className="text-center text-sm text-[#6f5c49]">
-            Personalized welcome, read-aloud, and clickable family names
-          </p>
-          <div className="w-full space-y-3">
-            <Suspense fallback={null}>
-              <EventSearch placeholder="Search Winifred’s story — events, people, places…" />
-            </Suspense>
-            <AskEventPanel />
-          </div>
-        </div>
+        <LandingEntry />
 
         <LandingPhotoCollage images={images} totalInDocument={totalInDocument} />
 

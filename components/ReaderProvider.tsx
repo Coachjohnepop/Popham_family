@@ -1,5 +1,6 @@
 "use client";
 
+import { usePathname } from "next/navigation";
 import {
   createContext,
   useCallback,
@@ -36,6 +37,8 @@ type ReaderContextValue = {
     chapter: StorySection | null,
     next?: StorySection | null,
   ) => void;
+  homeEntryKey: number;
+  resetHomeEntry: () => void;
 };
 
 const ReaderContext = createContext<ReaderContextValue | null>(null);
@@ -45,6 +48,11 @@ export function ReaderProvider({ children }: { children: ReactNode }) {
   const [pinnedPerson, setPinnedPerson] = useState<TreePerson | null>(null);
   const [storyChapter, setStoryChapter] = useState<StorySection | null>(null);
   const [nextStoryChapter, setNextStoryChapter] = useState<StorySection | null>(null);
+  const [homeEntryKey, setHomeEntryKey] = useState(0);
+
+  const resetHomeEntry = useCallback(() => {
+    setHomeEntryKey((key) => key + 1);
+  }, []);
 
   const setStoryChapterContext = useCallback(
     (chapter: StorySection | null, next: StorySection | null = null) => {
@@ -100,6 +108,8 @@ export function ReaderProvider({ children }: { children: ReactNode }) {
       storyChapter,
       nextStoryChapter,
       setStoryChapterContext,
+      homeEntryKey,
+      resetHomeEntry,
     }),
     [
       session,
@@ -111,10 +121,30 @@ export function ReaderProvider({ children }: { children: ReactNode }) {
       storyChapter,
       nextStoryChapter,
       setStoryChapterContext,
+      homeEntryKey,
+      resetHomeEntry,
     ],
   );
 
-  return <ReaderContext.Provider value={value}>{children}</ReaderContext.Provider>;
+  return (
+    <ReaderContext.Provider value={value}>
+      <HomeEntryWatcher />
+      {children}
+    </ReaderContext.Provider>
+  );
+}
+
+function HomeEntryWatcher() {
+  const pathname = usePathname();
+  const ctx = useContext(ReaderContext);
+
+  useEffect(() => {
+    if (pathname !== "/" || !ctx) return;
+    ctx.resetHomeEntry();
+    ctx.setStoryChapterContext(null, null);
+  }, [pathname]);
+
+  return null;
 }
 
 export function useReader() {
