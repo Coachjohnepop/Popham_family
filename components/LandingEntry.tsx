@@ -13,7 +13,7 @@ export default function LandingEntry() {
 
   return (
     <div className="mx-auto mt-8 flex w-full max-w-2xl flex-col items-center gap-6">
-      <ExplorationPaths />
+      <ExplorationPaths key={`home-paths-${entryKey}`} />
 
       <div className="w-full border-t border-[#e2d4bf] pt-6">
         <p className="mb-3 text-center text-sm font-medium text-[#6f5c49]">

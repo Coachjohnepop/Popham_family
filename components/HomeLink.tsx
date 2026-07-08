@@ -10,19 +10,20 @@ type HomeLinkProps = {
   className?: string;
 };
 
+/** Always returns to the main landing page and clears in-app research state. */
 export default function HomeLink({ children, className }: HomeLinkProps) {
   const pathname = usePathname();
   const reader = useOptionalReader();
 
   function handleClick() {
-    if (pathname !== "/") return;
-    reader?.resetHomeEntry();
-    reader?.setStoryChapterContext(null, null);
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    reader?.resetToLanding();
+    if (pathname === "/") {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
   }
 
   return (
-    <Link href="/" onClick={handleClick} className={className}>
+    <Link href="/" className={className} scroll onClick={handleClick}>
       {children}
     </Link>
   );

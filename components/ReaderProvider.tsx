@@ -1,6 +1,5 @@
 "use client";
 
-import { usePathname } from "next/navigation";
 import {
   createContext,
   useCallback,
@@ -38,7 +37,7 @@ type ReaderContextValue = {
     next?: StorySection | null,
   ) => void;
   homeEntryKey: number;
-  resetHomeEntry: () => void;
+  resetToLanding: () => void;
 };
 
 const ReaderContext = createContext<ReaderContextValue | null>(null);
@@ -49,10 +48,6 @@ export function ReaderProvider({ children }: { children: ReactNode }) {
   const [storyChapter, setStoryChapter] = useState<StorySection | null>(null);
   const [nextStoryChapter, setNextStoryChapter] = useState<StorySection | null>(null);
   const [homeEntryKey, setHomeEntryKey] = useState(0);
-
-  const resetHomeEntry = useCallback(() => {
-    setHomeEntryKey((key) => key + 1);
-  }, []);
 
   const setStoryChapterContext = useCallback(
     (chapter: StorySection | null, next: StorySection | null = null) => {
@@ -93,6 +88,13 @@ export function ReaderProvider({ children }: { children: ReactNode }) {
     setSession(next);
   }, []);
 
+  const resetToLanding = useCallback(() => {
+    setStoryChapter(null);
+    setNextStoryChapter(null);
+    setPinnedPerson(null);
+    setHomeEntryKey((key) => key + 1);
+  }, []);
+
   const value = useMemo(
     () => ({
       session,
@@ -109,7 +111,7 @@ export function ReaderProvider({ children }: { children: ReactNode }) {
       nextStoryChapter,
       setStoryChapterContext,
       homeEntryKey,
-      resetHomeEntry,
+      resetToLanding,
     }),
     [
       session,
@@ -122,29 +124,11 @@ export function ReaderProvider({ children }: { children: ReactNode }) {
       nextStoryChapter,
       setStoryChapterContext,
       homeEntryKey,
-      resetHomeEntry,
+      resetToLanding,
     ],
   );
 
-  return (
-    <ReaderContext.Provider value={value}>
-      <HomeEntryWatcher />
-      {children}
-    </ReaderContext.Provider>
-  );
-}
-
-function HomeEntryWatcher() {
-  const pathname = usePathname();
-  const ctx = useContext(ReaderContext);
-
-  useEffect(() => {
-    if (pathname !== "/" || !ctx) return;
-    ctx.resetHomeEntry();
-    ctx.setStoryChapterContext(null, null);
-  }, [pathname]);
-
-  return null;
+  return <ReaderContext.Provider value={value}>{children}</ReaderContext.Provider>;
 }
 
 export function useReader() {

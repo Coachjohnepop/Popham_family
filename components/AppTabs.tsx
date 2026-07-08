@@ -66,9 +66,7 @@ export default function AppTabs({ initialTab }: AppTabsProps) {
               Home
             </HomeLink>
             <h1 className="font-serif text-2xl font-semibold tracking-tight sm:text-3xl">
-              <HomeLink className="hover:text-[#6f4a28]">
-                The Story of Winifred Coss
-              </HomeLink>
+              <HomeLink className="hover:text-[#6f4a28]">The Story of Winifred Coss</HomeLink>
             </h1>
             <p className="mt-1 max-w-2xl text-sm text-[#6f5c49]">
               Where the Coss family fits into history

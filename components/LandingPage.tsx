@@ -50,8 +50,8 @@ export default function LandingPage() {
         </div>
 
         <p className="mx-auto mt-10 max-w-xl text-center text-sm text-[#6f5c49]">
-          You can switch between Interactive Storybook, Family Tree, and Map &amp; Timeline anytime from the
-          header once you&apos;re inside.
+          You can switch between Interactive Storybook, Family Tree, and Map &amp; Timeline anytime
+          from the header once you&apos;re inside.
         </p>
       </main>
 
