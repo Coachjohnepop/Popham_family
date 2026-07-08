@@ -192,7 +192,7 @@ export default function AskEventPanel({ chapterBriefs }: AskEventPanelProps) {
           {inDialogue ? "Ask a follow-up" : "Ask your question"}
         </label>
         <p className="mt-1 text-xs text-[#6f5c49]">
-          Type or speak — we show and read the answer aloud.
+          Type and Ask, or tap 🎤 → speak → Done — we show and read the answer aloud.
         </p>
         <div className="mt-3 flex flex-col gap-2 sm:flex-row">
           <input
@@ -238,7 +238,7 @@ export default function AskEventPanel({ chapterBriefs }: AskEventPanelProps) {
       <VoicePickButton
         label={inDialogue ? "Or say your follow-up" : "Or say your question"}
         activeLabel="Listening…"
-        transcriptHint="In Brave: speak, tap Done — your words and the answer appear below."
+        transcriptHint="Speak your question, then tap Done."
         onTranscriptChange={setQuestionInput}
         onTranscript={(text) => {
           applyAskResult(text);

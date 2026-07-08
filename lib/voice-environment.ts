@@ -5,14 +5,36 @@ export type VoiceEnvironment = {
   browserLabel: string;
   isBrave: boolean;
   isLikelyPrivate: boolean;
-  warning?: string;
+  /** Short how-to shown above the mic (Brave uses record → Done, not live captions). */
+  instruction?: string;
 };
+
+function detectBraveFromUa(): boolean {
+  if (typeof navigator === "undefined") return false;
+  return /Brave/i.test(navigator.userAgent);
+}
 
 function detectBrave(): boolean {
   if (typeof navigator === "undefined") return false;
   const nav = navigator as Navigator & { brave?: { isBrave?: () => Promise<boolean> | boolean } };
   if (nav.brave?.isBrave) return true;
-  return /Brave/i.test(navigator.userAgent);
+  return detectBraveFromUa();
+}
+
+function braveInstruction(isPrivate: boolean): string {
+  return isPrivate
+    ? "Tap the mic, speak your question, then tap Done. (Private window — words appear after Done.)"
+    : "Tap the mic, speak your question, then tap Done.";
+}
+
+function environmentForBrave(isPrivate: boolean): VoiceEnvironment {
+  return {
+    mode: "server-stt",
+    browserLabel: "Brave",
+    isBrave: true,
+    isLikelyPrivate: isPrivate,
+    instruction: braveInstruction(isPrivate),
+  };
 }
 
 /** Best-effort private/incognito detection (not guaranteed in all browsers). */
@@ -58,17 +80,13 @@ export function getVoiceEnvironment(): VoiceEnvironment {
     (isLikelyPrivate && (browserLabel === "Brave" || browserLabel === "Chrome"));
 
   if (braveBlocked) {
+    if (isBrave) return environmentForBrave(isLikelyPrivate);
     return {
       mode: "server-stt",
       browserLabel,
       isBrave,
       isLikelyPrivate,
-      warning:
-        isBrave && isLikelyPrivate
-          ? "Brave Private blocks live speech-to-text. We record your voice and transcribe when you tap Done — or type your question above."
-          : isBrave
-            ? "Brave blocks browser speech-to-text. We record your voice and transcribe when you tap Done — or type above."
-            : "Private browsing may block live captions. We transcribe when you tap Done.",
+      instruction: "Tap the mic, speak, then tap Done — or type your question above.",
     };
   }
 
@@ -78,6 +96,29 @@ export function getVoiceEnvironment(): VoiceEnvironment {
     isBrave,
     isLikelyPrivate,
   };
+}
+
+/**
+ * Brave often omits "Brave" from the user agent. Confirm via navigator.brave before
+ * choosing live captions vs record-and-transcribe.
+ */
+export async function resolveVoiceEnvironment(): Promise<VoiceEnvironment> {
+  const sync = getVoiceEnvironment();
+  if (sync.isBrave) return sync;
+
+  if (typeof navigator === "undefined") return sync;
+
+  const nav = navigator as Navigator & { brave?: { isBrave?: () => Promise<boolean> | boolean } };
+  if (!nav.brave?.isBrave) return sync;
+
+  try {
+    const isBrave = await Promise.resolve(nav.brave.isBrave());
+    if (isBrave) return environmentForBrave(detectLikelyPrivate());
+  } catch {
+    /* fall through */
+  }
+
+  return sync;
 }
 
 export function shouldFallbackToServerStt(errorCode: string): boolean {

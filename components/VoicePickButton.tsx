@@ -12,7 +12,7 @@ import {
   getSpeechRecognitionCtor,
 } from "@/lib/speech-recognition";
 import {
-  getVoiceEnvironment,
+  resolveVoiceEnvironment,
   shouldFallbackToServerStt,
   type VoiceEnvironment,
   type VoiceInputMode,
@@ -84,9 +84,15 @@ export default function VoicePickButton({
   }, [onTranscript, onError, onTranscriptChange]);
 
   useEffect(() => {
-    const detected = getVoiceEnvironment();
-    setEnv(detected);
-    setMode(detected.mode);
+    let cancelled = false;
+    void resolveVoiceEnvironment().then((detected) => {
+      if (cancelled) return;
+      setEnv(detected);
+      setMode(detected.mode);
+    });
+    return () => {
+      cancelled = true;
+    };
   }, []);
 
   const updateTranscript = useCallback((text: string) => {
@@ -361,9 +367,9 @@ export default function VoicePickButton({
 
   return (
     <div className="space-y-3">
-      {env?.warning && (
-        <p className="rounded-xl border border-[#fdba74] bg-[#fff7ed] px-4 py-3 text-sm text-[#9a3412]">
-          {env.warning}
+      {env?.instruction && !sessionActive && !transcribing && (
+        <p className="rounded-xl border border-[#ddd6fe] bg-[#f5f3ff] px-4 py-3 text-sm text-[#5b21b6]">
+          {env.instruction}
         </p>
       )}
 
@@ -439,16 +445,22 @@ export default function VoicePickButton({
               </>
             ) : sessionActive && serverMode ? (
               <span className="text-[#a8a29e]">
-                Recording{recordingSeconds > 0 ? ` (${recordingSeconds}s)` : ""} — words appear
-                after you tap Done (Brave can&apos;t show live captions).
+                Recording{recordingSeconds > 0 ? ` (${recordingSeconds}s)` : ""} — tap Done when
+                finished; your words appear here.
               </span>
             ) : (
-              <span className="text-[#a8a29e]">Start speaking — words will appear here.</span>
+              <span className="text-[#a8a29e]">
+                {serverMode
+                  ? "Tap the mic, speak, then Done."
+                  : "Start speaking — words will appear here."}
+              </span>
             )}
           </p>
           {statusLine && <p className="mt-2 text-xs font-medium text-[#5b21b6]">{statusLine}</p>}
-          {sessionActive && !serverMode && (
-            <p className="mt-2 text-xs text-[#6f5c49]">{transcriptHint}</p>
+          {sessionActive && (
+            <p className="mt-2 text-xs text-[#6f5c49]">
+              {serverMode ? transcriptHint || "Speak, then tap Done." : transcriptHint}
+            </p>
           )}
         </div>
       )}
