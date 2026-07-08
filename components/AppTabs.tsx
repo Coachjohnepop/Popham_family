@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { Suspense } from "react";
+import AskEventPanel from "@/components/AskEventPanel";
 import EventSearch from "@/components/EventSearch";
 import StoryChapterView from "@/components/StoryChapterView";
 import StoryIndexView from "@/components/StoryIndexView";
@@ -73,10 +74,11 @@ export default function AppTabs({ initialTab }: AppTabsProps) {
             ))}
           </nav>
         </div>
-        <div className="mx-auto max-w-6xl px-4 pb-4">
+        <div className="mx-auto max-w-6xl space-y-3 px-4 pb-4">
           <Suspense fallback={null}>
             <EventSearch />
           </Suspense>
+          <AskEventPanel />
         </div>
       </header>
 

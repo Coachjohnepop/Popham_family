@@ -44,7 +44,10 @@ function scoreEntry(entry: SearchEntry, query: string): number {
   return 0;
 }
 
-export function searchEntries(query: string, limit = 8): SearchEntry[] {
+export function searchEntriesRanked(
+  query: string,
+  limit = 8,
+): Array<{ entry: SearchEntry; score: number }> {
   const trimmed = query.trim();
   if (!trimmed) return [];
 
@@ -52,8 +55,34 @@ export function searchEntries(query: string, limit = 8): SearchEntry[] {
     .map((entry) => ({ entry, score: scoreEntry(entry, trimmed) }))
     .filter((item) => item.score > 0)
     .sort((a, b) => b.score - a.score || (a.entry.year ?? 9999) - (b.entry.year ?? 9999))
-    .slice(0, limit)
-    .map((item) => item.entry);
+    .slice(0, limit);
+}
+
+export function searchEntries(query: string, limit = 8): SearchEntry[] {
+  return searchEntriesRanked(query, limit).map((item) => item.entry);
+}
+
+export function searchFromQueries(
+  queries: string[],
+  limit = 8,
+): Array<{ entry: SearchEntry; score: number }> {
+  const byId = new Map<string, { entry: SearchEntry; score: number }>();
+
+  for (const query of queries) {
+    const trimmed = query.trim();
+    if (!trimmed) continue;
+
+    for (const item of searchEntriesRanked(trimmed, limit * 2)) {
+      const prev = byId.get(item.entry.id);
+      if (!prev || item.score > prev.score) {
+        byId.set(item.entry.id, item);
+      }
+    }
+  }
+
+  return [...byId.values()]
+    .sort((a, b) => b.score - a.score || (a.entry.year ?? 9999) - (b.entry.year ?? 9999))
+    .slice(0, limit);
 }
 
 export function getKindLabel(kind: SearchKind): string {

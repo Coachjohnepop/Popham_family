@@ -1,10 +1,12 @@
-import { matchEventBriefByKeywords, type AnswerDepth, type EventBrief } from "@/lib/event-briefs";
+import { buildSearchAnswer, type AskSearchResult } from "@/lib/ask-search";
+import { matchEventBriefByKeywords, type AnswerDepth } from "@/lib/event-briefs";
 import { matchVoiceNavigation } from "@/lib/voice-navigation";
 import { getStorySections } from "@/lib/storybook";
 
 export type AskEventResult =
   | { type: "reveal"; eventId: string; message: string; depth?: AnswerDepth }
   | { type: "depth"; depth: AnswerDepth; message: string }
+  | { type: "search-answer"; answer: AskSearchResult; message: string }
   | { type: "message"; message: string };
 
 function detectFollowUpDepth(heard: string): AnswerDepth | null {
@@ -39,10 +41,7 @@ function detectFollowUpDepth(heard: string): AnswerDepth | null {
   return null;
 }
 
-export function processAskEventTranscript(
-  transcript: string,
-  chapterBriefs: EventBrief[],
-): AskEventResult {
+export function processAskEventTranscript(transcript: string): AskEventResult {
   const heard = transcript.trim();
   if (!heard) {
     return { type: "message", message: "Type or say your question." };
@@ -77,7 +76,7 @@ export function processAskEventTranscript(
   }
 
   const keywordMatch = matchEventBriefByKeywords(heard);
-  if (keywordMatch && chapterBriefs.some((b) => b.id === keywordMatch.id)) {
+  if (keywordMatch) {
     return {
       type: "reveal",
       eventId: keywordMatch.id,
@@ -85,24 +84,19 @@ export function processAskEventTranscript(
     };
   }
 
-  if (chapterBriefs.length === 1 && heard.length >= 8) {
-    const brief = chapterBriefs[0];
+  const searchAnswer = buildSearchAnswer(heard);
+  if (searchAnswer) {
     return {
-      type: "reveal",
-      eventId: brief.id,
-      message: `Answering: ${brief.title}`,
-    };
-  }
-
-  if (result?.action === "unknown") {
-    return {
-      type: "message",
-      message: `Heard “${heard}” — try the Salem button below or type the question.`,
+      type: "search-answer",
+      answer: searchAnswer,
+      message: searchAnswer.directMatch
+        ? `Found family records about ${searchAnswer.topicLabel}.`
+        : `No direct mention of ${searchAnswer.topicLabel} — showing closest ties in the tree.`,
     };
   }
 
   return {
     type: "message",
-    message: `Heard “${heard}” — pick a choice below or tap Ask.`,
+    message: `I couldn't find “${heard}” in the indexed family narrative. Try names, places, years, or events from the story.`,
   };
 }

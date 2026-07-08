@@ -17,6 +17,7 @@ import {
   type ReaderSession,
 } from "@/lib/reader-session";
 import type { TreePerson } from "@/lib/family-tree";
+import type { StorySection } from "@/lib/types";
 
 type ReaderContextValue = {
   session: ReaderSession | null;
@@ -29,6 +30,12 @@ type ReaderContextValue = {
   pinnedPerson: TreePerson | null;
   setPinnedPerson: (person: TreePerson | null) => void;
   speakEnabled: boolean;
+  storyChapter: StorySection | null;
+  nextStoryChapter: StorySection | null;
+  setStoryChapterContext: (
+    chapter: StorySection | null,
+    next?: StorySection | null,
+  ) => void;
 };
 
 const ReaderContext = createContext<ReaderContextValue | null>(null);
@@ -36,6 +43,16 @@ const ReaderContext = createContext<ReaderContextValue | null>(null);
 export function ReaderProvider({ children }: { children: ReactNode }) {
   const [session, setSession] = useState<ReaderSession | null>(null);
   const [pinnedPerson, setPinnedPerson] = useState<TreePerson | null>(null);
+  const [storyChapter, setStoryChapter] = useState<StorySection | null>(null);
+  const [nextStoryChapter, setNextStoryChapter] = useState<StorySection | null>(null);
+
+  const setStoryChapterContext = useCallback(
+    (chapter: StorySection | null, next: StorySection | null = null) => {
+      setStoryChapter(chapter);
+      setNextStoryChapter(next);
+    },
+    [],
+  );
 
   useEffect(() => {
     setSession(loadReaderSession());
@@ -80,8 +97,21 @@ export function ReaderProvider({ children }: { children: ReactNode }) {
       pinnedPerson,
       setPinnedPerson,
       speakEnabled: true,
+      storyChapter,
+      nextStoryChapter,
+      setStoryChapterContext,
     }),
-    [session, setReaderName, completeOnboarding, saveProgress, setAnswerDepth, pinnedPerson],
+    [
+      session,
+      setReaderName,
+      completeOnboarding,
+      saveProgress,
+      setAnswerDepth,
+      pinnedPerson,
+      storyChapter,
+      nextStoryChapter,
+      setStoryChapterContext,
+    ],
   );
 
   return <ReaderContext.Provider value={value}>{children}</ReaderContext.Provider>;

@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Suspense } from "react";
+import AskEventPanel from "@/components/AskEventPanel";
 import EventSearch from "@/components/EventSearch";
 import LandingPhotoCollage from "@/components/LandingPhotoCollage";
 import { getLandingImages } from "@/lib/landing-images";
@@ -34,10 +35,11 @@ export default function LandingPage() {
           <p className="text-center text-sm text-[#6f5c49]">
             Personalized welcome, read-aloud, and clickable family names
           </p>
-          <div className="w-full">
+          <div className="w-full space-y-3">
             <Suspense fallback={null}>
               <EventSearch placeholder="Search Winifred’s story — events, people, places…" />
             </Suspense>
+            <AskEventPanel />
           </div>
         </div>
 

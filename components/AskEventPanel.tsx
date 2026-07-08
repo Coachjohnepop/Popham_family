@@ -2,11 +2,12 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import EventBriefCard from "@/components/EventBriefCard";
-import PromptChoicesPanel from "@/components/PromptChoicesPanel";
 import ReadAloudButton from "@/components/ReadAloudButton";
 import VoicePickButton from "@/components/VoicePickButton";
 import { useOptionalReader } from "@/components/ReaderProvider";
+import SearchAnswerCard from "@/components/SearchAnswerCard";
 import { processAskEventTranscript } from "@/lib/ask-event";
+import { getMoreSearchEntries, type AskSearchResult } from "@/lib/ask-search";
 import {
   getChapterParagraphs,
   getNextChapterNarration,
@@ -15,44 +16,38 @@ import {
   getEventBrief,
   getEventBriefBody,
   getEventBriefDelta,
-  isAnswerDepth,
   isDeeperDepth,
   type AnswerDepth,
-  type EventBrief,
 } from "@/lib/event-briefs";
-import { getPromptById, type PromptChoice } from "@/lib/prompt-index";
+import { getStorySection } from "@/lib/storybook";
 import { speakText, type SpeakController, type SpeakState } from "@/lib/speak-text";
-import type { StorySection } from "@/lib/types";
 
 type AskEventPanelProps = {
-  chapterBriefs: EventBrief[];
-  section: StorySection;
-  nextSection?: StorySection | null;
+  className?: string;
 };
 
-type ResponseKind = "brief" | "addendum" | "chapter";
+type ResponseKind = "brief" | "addendum" | "chapter" | "search";
 
-const DEFAULT_QUESTION =
-  "How is our family tied to the Salem Witch Trials?";
+const PLACEHOLDER =
+  "Ask anything about the family tree — people, places, events, years…";
 
-export default function AskEventPanel({
-  chapterBriefs,
-  section,
-  nextSection,
-}: AskEventPanelProps) {
+export default function AskEventPanel({ className = "" }: AskEventPanelProps) {
   const reader = useOptionalReader();
-  const prompt = getPromptById("ask-event");
+  const section = reader?.storyChapter ?? null;
+  const nextSection = reader?.nextStoryChapter ?? null;
   const answerRef = useRef<HTMLDivElement>(null);
   const speakControllerRef = useRef<SpeakController | null>(null);
   const spokenKeyRef = useRef<string | null>(null);
   const spokenCorpusRef = useRef("");
 
   const chapterParagraphs = useMemo(
-    () => getChapterParagraphs(section.blocks),
-    [section.blocks],
+    () => (section ? getChapterParagraphs(section.blocks) : []),
+    [section],
   );
 
   const [activeBriefId, setActiveBriefId] = useState<string | null>(null);
+  const [searchAnswer, setSearchAnswer] = useState<AskSearchResult | null>(null);
+  const [searchShownCount, setSearchShownCount] = useState(0);
   const [questionInput, setQuestionInput] = useState("");
   const [confirmedQuestion, setConfirmedQuestion] = useState<string | null>(null);
   const [voiceMessage, setVoiceMessage] = useState<string | null>(null);
@@ -69,9 +64,7 @@ export default function AskEventPanel({
   const [briefAddendumUsed, setBriefAddendumUsed] = useState(false);
   const [narrationEpoch, setNarrationEpoch] = useState(0);
 
-  const activeBrief =
-    (activeBriefId ? getEventBrief(activeBriefId) : undefined) ??
-    chapterBriefs.find((b) => b.id === activeBriefId);
+  const activeBrief = activeBriefId ? getEventBrief(activeBriefId) : undefined;
 
   const answerDepth = panelDepth ?? reader?.answerDepth ?? "standard";
 
@@ -87,13 +80,15 @@ export default function AskEventPanel({
       : "";
 
   const readAloudScript =
-    responseKind === "chapter" && chapterNarrationText
-      ? `Continuing the story. ${chapterNarrationText}`
-      : activeBrief && confirmedQuestion && answerBody
-        ? isAddendum
-          ? `Here is more detail. ${answerBody}`
-          : `You asked: ${confirmedQuestion}. Here is the answer. ${answerBody}`
-        : "";
+    responseKind === "search" && searchAnswer && confirmedQuestion
+      ? buildSearchReadAloud(searchAnswer, confirmedQuestion)
+      : responseKind === "chapter" && chapterNarrationText
+        ? `Continuing the story. ${chapterNarrationText}`
+        : activeBrief && confirmedQuestion && answerBody
+          ? isAddendum
+            ? `Here is more detail. ${answerBody}`
+            : `You asked: ${confirmedQuestion}. Here is the answer. ${answerBody}`
+          : "";
 
   function resetNarrationState() {
     setPanelDepth(null);
@@ -102,13 +97,34 @@ export default function AskEventPanel({
     setChapterNarrationText(null);
     setChapterCursor(0);
     setBriefAddendumUsed(false);
+    setSearchAnswer(null);
+    setSearchShownCount(0);
+    setActiveBriefId(null);
     spokenCorpusRef.current = "";
     spokenKeyRef.current = null;
   }
 
   function revealBrief(eventId: string) {
     setActiveBriefId(eventId);
+    setSearchAnswer(null);
+    setSearchShownCount(0);
+    setResponseKind("brief");
     setInDialogue(true);
+  }
+
+  function revealSearchAnswer(answer: AskSearchResult) {
+    setActiveBriefId(null);
+    setSearchAnswer(answer);
+    setSearchShownCount(answer.entries.length);
+    setResponseKind("search");
+    setInDialogue(true);
+  }
+
+  function buildSearchReadAloud(answer: AskSearchResult, question: string): string {
+    const entryText = answer.entries
+      .map((entry) => `${entry.label}. ${entry.summary.join(" ")}`)
+      .join(" ");
+    return `You asked: ${question}. ${answer.intro} ${entryText}`;
   }
 
   function handleDepth(depth: AnswerDepth, opts?: { fromDepth?: AnswerDepth; label?: string }) {
@@ -138,7 +154,33 @@ export default function AskEventPanel({
     setInDialogue(true);
   }
 
+  function advanceSearchResults(label = "Tell me more") {
+    if (!searchAnswer || !confirmedQuestion) return;
+
+    const more = getMoreSearchEntries(confirmedQuestion, searchShownCount, 3);
+    if (!more.length) {
+      setVoiceMessage("No more indexed records for this question.");
+      return;
+    }
+
+    setSearchAnswer({
+      ...searchAnswer,
+      entries: [...searchAnswer.entries, ...more],
+    });
+    setSearchShownCount((count) => count + more.length);
+    spokenKeyRef.current = null;
+    setNarrationEpoch((n) => n + 1);
+    setVoiceMessage("Adding more related records from the family index.");
+    setInDialogue(true);
+    setConfirmedQuestion(label);
+  }
+
   function advanceNarration(label = "Tell me more") {
+    if (responseKind === "search") {
+      advanceSearchResults(label);
+      return;
+    }
+
     if (!activeBrief) return;
 
     setConfirmedQuestion(label);
@@ -155,6 +197,30 @@ export default function AskEventPanel({
         return;
       }
       setBriefAddendumUsed(true);
+    }
+
+    if (!section || chapterParagraphs.length === 0) {
+      const linkedChapterId = activeBrief.chapterIds?.[0];
+      const linkedSection = linkedChapterId ? getStorySection(linkedChapterId) : null;
+      if (!linkedSection) {
+        setVoiceMessage("No more detail available for this topic.");
+        return;
+      }
+      const linkedParagraphs = getChapterParagraphs(linkedSection.blocks);
+      const chunk = getNextChapterNarration(linkedParagraphs, chapterCursor, spokenCorpusRef.current);
+      if (!chunk) {
+        setVoiceMessage("No more narrative passages for this topic.");
+        return;
+      }
+      setPanelDepth("deep");
+      setResponseKind("chapter");
+      setAddendumFromDepth(null);
+      setChapterNarrationText(chunk.text);
+      setChapterCursor(chunk.nextCursor);
+      setNarrationEpoch((n) => n + 1);
+      setVoiceMessage("Continuing from the linked chapter in the family narrative.");
+      setInDialogue(true);
+      return;
     }
 
     const chunk = getNextChapterNarration(
@@ -187,12 +253,17 @@ export default function AskEventPanel({
   }
 
   function applyAskResult(transcript: string) {
-    const heard = transcript.trim() || DEFAULT_QUESTION;
+    const heard = transcript.trim();
+    if (!heard) {
+      setVoiceMessage("Type or speak a question first.");
+      return;
+    }
+
     setConfirmedQuestion(heard);
     setQuestionInput(heard);
     setVoiceError(null);
 
-    const outcome = processAskEventTranscript(heard, chapterBriefs);
+    const outcome = processAskEventTranscript(heard);
     const depthBeforeAsk = answerDepth;
 
     if (outcome.type === "reveal") {
@@ -205,76 +276,44 @@ export default function AskEventPanel({
       return;
     }
 
+    if (outcome.type === "search-answer") {
+      resetNarrationState();
+      revealSearchAnswer(outcome.answer);
+      setNarrationEpoch((n) => n + 1);
+      setVoiceMessage(outcome.message);
+      return;
+    }
+
     if (outcome.type === "depth") {
-      if (outcome.depth === "deep" && activeBriefId) {
+      if (outcome.depth === "deep" && (activeBriefId || responseKind === "search")) {
         advanceNarration(heard);
         return;
       }
       handleDepth(outcome.depth, { fromDepth: depthBeforeAsk, label: heard });
-      if (!activeBriefId && chapterBriefs[0]) {
-        revealBrief(chapterBriefs[0].id);
-      }
       return;
     }
 
-    if (chapterBriefs[0]) {
-      resetNarrationState();
-      setPanelDepth("standard");
-      reader?.setAnswerDepth("standard");
-      revealBrief(chapterBriefs[0].id);
-      setNarrationEpoch((n) => n + 1);
-      setVoiceMessage(`Showing answer for: “${heard}”`);
-      return;
-    }
-
+    resetNarrationState();
     setVoiceMessage(outcome.message);
   }
 
   function showFallbackAnswer(_errorMessage: string) {
-    const fallbackQuestion = questionInput.trim() || DEFAULT_QUESTION;
+    const fallbackQuestion = questionInput.trim();
+    if (!fallbackQuestion) {
+      setVoiceMessage("Couldn't catch speech — type your question or tap the mic to try again.");
+      return;
+    }
     spokenKeyRef.current = null;
     setConfirmedQuestion(fallbackQuestion);
-    if (chapterBriefs[0]) {
-      revealBrief(chapterBriefs[0].id);
-    }
+    applyAskResult(fallbackQuestion);
     setVoiceMessage(
-      "Couldn't catch every word — showing an answer below. Type or tap the mic to try again.",
+      "Couldn't catch every word — trying to answer from what we heard. Type or tap the mic to try again.",
     );
-  }
-
-  function handleChoice(choice: PromptChoice) {
-    setVoiceError(null);
-    if (choice.action === "event-brief" && choice.target) {
-      resetNarrationState();
-      setPanelDepth("standard");
-      reader?.setAnswerDepth("standard");
-      setConfirmedQuestion(choice.label);
-      revealBrief(choice.target);
-      setNarrationEpoch((n) => n + 1);
-      setVoiceMessage(`Showing: ${choice.label}`);
-      return;
-    }
-    if (choice.action === "answer-depth" && choice.target && isAnswerDepth(choice.target)) {
-      handleDepth(choice.target, { label: choice.label });
-      if (!activeBriefId && chapterBriefs[0]) {
-        revealBrief(chapterBriefs[0].id);
-      }
-      return;
-    }
-    if (choice.action === "ask-ai" && chapterBriefs[0]) {
-      resetNarrationState();
-      revealBrief(chapterBriefs[0].id);
-      setPanelDepth("deep");
-      reader?.setAnswerDepth("deep");
-      setBriefAddendumUsed(true);
-      setNarrationEpoch((n) => n + 1);
-      setVoiceMessage("Showing why this matters to our family.");
-    }
   }
 
   function handleSubmitQuestion(e: React.FormEvent) {
     e.preventDefault();
-    applyAskResult(questionInput.trim() || DEFAULT_QUESTION);
+    applyAskResult(questionInput.trim());
   }
 
   function handleAskAnother() {
@@ -282,6 +321,7 @@ export default function AskEventPanel({
     setConfirmedQuestion(null);
     setVoiceMessage(null);
     setVoiceError(null);
+    setInDialogue(false);
     resetNarrationState();
     speakControllerRef.current?.stop();
     speakControllerRef.current = null;
@@ -322,7 +362,7 @@ export default function AskEventPanel({
   useEffect(() => {
     if (!confirmedQuestion || !readAloudScript) return;
 
-    const speakKey = `${activeBrief?.id ?? "none"}:${confirmedQuestion}:${responseKind}:${answerDepth}:${addendumFromDepth ?? "full"}:${chapterCursor}:${narrationEpoch}`;
+    const speakKey = `${activeBrief?.id ?? "none"}:${searchAnswer?.topicLabel ?? "none"}:${confirmedQuestion}:${responseKind}:${answerDepth}:${addendumFromDepth ?? "full"}:${chapterCursor}:${searchShownCount}:${narrationEpoch}`;
     if (spokenKeyRef.current === speakKey) return;
     spokenKeyRef.current = speakKey;
 
@@ -361,18 +401,29 @@ export default function AskEventPanel({
       setAutoSpeaking(false);
       setSpeechState("idle");
     };
-  }, [confirmedQuestion, readAloudScript, responseKind, answerDepth, addendumFromDepth, chapterCursor, narrationEpoch, activeBrief?.id]);
+  }, [
+    confirmedQuestion,
+    readAloudScript,
+    responseKind,
+    answerDepth,
+    addendumFromDepth,
+    chapterCursor,
+    searchShownCount,
+    narrationEpoch,
+    activeBrief?.id,
+    searchAnswer?.topicLabel,
+  ]);
 
-  if (!prompt) return null;
+  const hasAnswer = Boolean(activeBrief || searchAnswer);
 
   return (
-    <div className="space-y-3">
+    <div className={`space-y-3 ${className}`}>
       <form
         onSubmit={handleSubmitQuestion}
         className="rounded-2xl border border-[#c4b5fd] bg-[#f5f3ff] p-4"
       >
         <label htmlFor="ask-event-input" className="text-sm font-semibold text-[#5b21b6]">
-          {inDialogue ? "Ask a follow-up" : "Ask your question"}
+          {inDialogue ? "Ask a follow-up" : "Ask anything"}
         </label>
         <p className="mt-0.5 text-xs text-[#6f5c49]">
           Type and Ask, or use the mic — words appear as you speak, then tap Done.
@@ -384,7 +435,7 @@ export default function AskEventPanel({
             type="text"
             value={questionInput}
             onChange={(e) => setQuestionInput(e.target.value)}
-            placeholder={DEFAULT_QUESTION}
+            placeholder={PLACEHOLDER}
             className="min-w-0 flex-1 rounded-xl border border-[#ddd6fe] bg-white px-4 py-2.5 text-sm text-[#2b2118] placeholder:text-[#a8a29e] focus:border-[#7c3aed] focus:outline-none focus:ring-2 focus:ring-[#c4b5fd]"
           />
           <button
@@ -421,16 +472,6 @@ export default function AskEventPanel({
           </p>
         )}
       </form>
-
-      {!inDialogue && (
-        <PromptChoicesPanel
-          promptId="ask-event"
-          onPick={handleChoice}
-          compact
-          hiddenGroupIds={["answer-depth"]}
-          interactiveActions={["event-brief", "answer-depth", "ask-ai"]}
-        />
-      )}
 
       {voiceHealthHint && (
         <p className="rounded-xl border border-[#fdba74] bg-[#fff7ed] px-3 py-2 text-sm text-[#9a3412]">
@@ -478,13 +519,13 @@ export default function AskEventPanel({
         </div>
       )}
 
-      {voiceMessage && (
+      {voiceMessage && !hasAnswer && (
         <p className="text-sm font-medium text-[#5b21b6]" role="status">
           {voiceMessage}
         </p>
       )}
 
-      {inDialogue && activeBrief && (
+      {inDialogue && hasAnswer && (
         <div className="flex flex-wrap items-center gap-2 rounded-xl border border-[#c4b5fd] bg-[#faf5ff] px-3 py-2">
           <span className="text-xs font-semibold text-[#5b21b6]">Follow-up:</span>
           <button
@@ -494,13 +535,15 @@ export default function AskEventPanel({
           >
             Tell me more
           </button>
-          <button
-            type="button"
-            onClick={() => handleDepth("brief", { label: "Shorter version" })}
-            className="rounded-full bg-[#ede9fe] px-3 py-1.5 text-xs font-semibold text-[#5b21b6] hover:bg-[#ddd6fe]"
-          >
-            Shorter
-          </button>
+          {activeBrief && (
+            <button
+              type="button"
+              onClick={() => handleDepth("brief", { label: "Shorter version" })}
+              className="rounded-full bg-[#ede9fe] px-3 py-1.5 text-xs font-semibold text-[#5b21b6] hover:bg-[#ddd6fe]"
+            >
+              Shorter
+            </button>
+          )}
           <button
             type="button"
             onClick={handleAskAnother}
@@ -511,11 +554,23 @@ export default function AskEventPanel({
         </div>
       )}
 
-      {activeBrief && (
+      {hasAnswer && (
         <div ref={answerRef} id="event-answer" className="scroll-mt-6 space-y-3">
+          {voiceMessage && (
+            <p className="text-sm font-medium text-[#5b21b6]" role="status">
+              {voiceMessage}
+            </p>
+          )}
+
           <div className="flex flex-wrap items-center justify-between gap-3">
             <h3 className="font-serif text-xl font-semibold text-[#2b2118]">
-              {responseKind === "chapter" ? "Continuing the story" : "Here's the answer"}
+              {responseKind === "chapter"
+                ? "Continuing the story"
+                : responseKind === "search"
+                  ? searchAnswer?.directMatch
+                    ? "Here's what we found"
+                    : "Closest family ties"
+                  : "Here's the answer"}
             </h3>
             {readAloudScript && (
               <ReadAloudButton text={readAloudScript} label="Hear again" />
@@ -525,8 +580,10 @@ export default function AskEventPanel({
           {responseKind === "chapter" && chapterNarrationText ? (
             <aside className="rounded-2xl border-2 border-[#e2d4bf] bg-[#fffaf2] p-5">
               <p className="text-[10px] font-semibold uppercase tracking-[0.25em] text-[#8b5e34]">
-                From the family narrative · {section.yearStart}
-                {section.yearEnd ? `–${section.yearEnd}` : ""}
+                From the family narrative
+                {section
+                  ? ` · ${section.yearStart}${section.yearEnd ? `–${section.yearEnd}` : ""}`
+                  : ""}
               </p>
               <div className="mt-3 space-y-3 text-sm leading-relaxed text-[#3f342c]">
                 {chapterNarrationText.split("\n\n").map((para, i) => (
@@ -534,15 +591,17 @@ export default function AskEventPanel({
                 ))}
               </div>
             </aside>
-          ) : (
+          ) : responseKind === "search" && searchAnswer ? (
+            <SearchAnswerCard answer={searchAnswer} />
+          ) : activeBrief ? (
             <EventBriefCard
               brief={activeBrief}
-              question={isAddendum ? undefined : prompt.question}
+              question={isAddendum ? undefined : confirmedQuestion ?? undefined}
               depth={answerDepth}
               bodyOverride={isAddendum ? answerBody : undefined}
               bodyHeading={isAddendum ? "Additional detail" : undefined}
             />
-          )}
+          ) : null}
         </div>
       )}
     </div>
