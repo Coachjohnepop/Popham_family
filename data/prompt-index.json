@@ -206,6 +206,22 @@
               "target": "salem-witch-trials"
             },
             {
+              "id": "salem-witchcraft-definition",
+              "label": "What is witchcraft? How did the rules change?",
+              "say": [
+                "what is witchcraft",
+                "define witchcraft",
+                "what did witchcraft mean",
+                "definition of witchcraft",
+                "how did the witchcraft rules change",
+                "spectral evidence",
+                "court of oyer and terminer",
+                "what changed in 1692"
+              ],
+              "action": "event-brief",
+              "target": "salem-witch-trials"
+            },
+            {
               "id": "quebec",
               "label": "Québec settlement — Goodwater branch",
               "say": ["quebec settlement", "jacques cartier", "stadacona", "why quebec", "goodwater quebec"],
