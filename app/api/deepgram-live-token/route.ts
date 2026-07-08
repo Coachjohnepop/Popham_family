@@ -29,10 +29,16 @@ export async function POST() {
     if (!res.ok) {
       const detail = await res.text();
       console.error("Deepgram grant failed:", res.status, detail);
+      const parsed = parseDeepgramError(detail);
+      const needsMember =
+        /insufficient permissions|forbidden/i.test(parsed) ||
+        /insufficient permissions|forbidden/i.test(detail);
       return NextResponse.json(
         {
           error: "Could not start live transcription",
-          hint: parseDeepgramError(detail),
+          hint: needsMember
+            ? "Deepgram key needs Member permission for live captions. In console.deepgram.com → API Keys → Create Key → Advanced → Member. Until then, mic still works via record-then-transcribe."
+            : parsed,
         },
         { status: 502 },
       );
