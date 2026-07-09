@@ -1,0 +1,111 @@
+{
+  "version": 1,
+  "mode": "chronological",
+  "updatedAt": "2026-07-09T12:00:00.000Z",
+  "segments": [
+    {
+      "id": "seg-01-doors-opening",
+      "order": 1,
+      "yearStart": 1485,
+      "yearEnd": 1574,
+      "title": "Doors Opening: England, France, and the River",
+      "branch": "both",
+      "status": "draft",
+      "storybookChapterId": "early-history-of-england-france-and-the-protestant-reformation",
+      "supplementalSources": [
+        "British Library — Henry VIII and the Reformation",
+        "Canadian Encyclopedia — Jacques Cartier, Stadacona",
+        "Stanford Encyclopedia of Philosophy — Martin Luther"
+      ],
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "The story does not begin with our people. It begins with the doors they would later walk through — kingdoms arguing over God, kings needing money, and a cold river in a country no Englishman yet called home."
+        },
+        {
+          "type": "paragraph",
+          "text": "In 1485, on a Leicestershire field at Bosworth, the last Plantagenet king fell and a Welsh-born Tudor lifted a crown from the mud. Henry VII meant to end the Wars of the Roses; what he really did was hand his teenage son a restless island that would spend the next century tearing at its own faith."
+        },
+        {
+          "type": "paragraph",
+          "text": "That son became Henry VIII in 1509 — eighteen years old, gifted, vain, and hungry for a male heir. England was still Catholic then, still Latin in its liturgy, still paying its conscience to Rome. Within a generation all of that would crack."
+        },
+        {
+          "type": "paragraph",
+          "text": "Across the Channel in 1517, a German monk named Martin Luther hammered his objections to indulgences onto a church door in Wittenberg. He had read the Latin Bible until the words burned in his hands. Rome ordered his books burned in 1521; by then the argument could not be unlit. The Protestant Reformation was not a single explosion — it was a slow fire moving through northern Europe, reaching into English parishes and French towns alike."
+        },
+        {
+          "type": "paragraph",
+          "text": "While England wrestled with conscience, France looked west. In 1534, navigator Jacques Cartier sailed the Gulf of St. Lawrence and climbed the great river toward a fortified Iroquois town the locals called Stadacona. He heard another word — kanata, village — and claimed the valley for Francis I. France had a doorway of its own now, colder and narrower than Spain's gold coast, but real."
+        },
+        {
+          "type": "paragraph",
+          "text": "Henry VIII's break with Rome was as political as it was spiritual. Denied an annulment, he made himself head of the English Church in 1534 and, between 1536 and 1541, dissolved the monasteries — brick by brick, chalice by chalice — to fill the crown's empty coffers. Abbeys that had stood for centuries became stone quarries for manor houses. Ordinary people watched saints' days disappear from the calendar and wondered what would replace them."
+        },
+        {
+          "type": "paragraph",
+          "text": "Death kept reshuffling the deck. James V of Scotland died in 1542, leaving a week-old daughter, Mary, to rule a kingdom. Henry VIII died in 1547, leaving nine-year-old Edward VI to the protectorship of ambitious men. In 1549 the Church of England printed its Book of Common Prayer in English — not Latin — and Parliament demanded uniformity. Faith became something you could be fined for."
+        },
+        {
+          "type": "paragraph",
+          "text": "Edward's death in 1553 brought nine days of Lady Jane Grey and then the return of Catholic Mary — fires in Smithfield, exiles on the Continent, names scratched from wills. John Calvin's Geneva writings crossed the sea in 1555, sharpening Puritan minds that already thought England's settlement had not gone far enough. When Mary died in 1558, Elizabeth Tudor inherited a country split down the middle."
+        },
+        {
+          "type": "paragraph",
+          "text": "Elizabeth's answer was compromise worn like armor: the Act of Supremacy again, an Oath that could ruin you, a church that kept some old robes while preaching salvation by faith. By the 1570s she was an aging queen on a contested throne, granting patents to men willing to risk ships on North Atlantic fog. England was learning to look past its own shoreline. France was already building on the St. Lawrence. Two colonial stories had begun — separate, unaware that centuries later they would meet in an Iowa wedding."
+        },
+        {
+          "type": "image",
+          "src": "/images/story/image109.png",
+          "caption": "From the family document",
+          "media": "image109.png"
+        }
+      ]
+    },
+    {
+      "id": "seg-02-two-doorways",
+      "order": 2,
+      "yearStart": 1575,
+      "yearEnd": 1590,
+      "title": "Two Doorways: Hébert and Alcock",
+      "branch": "both",
+      "status": "draft",
+      "relatedChapterIds": [
+        "early-history-of-england-france-and-the-protestant-reformation",
+        "edith-powers-branch-members-start",
+        "mary-ann-goodwater-s-branch-members-start-qu-bec-settlement-established"
+      ],
+      "supplementalSources": [
+        "Dictionary of Canadian Biography — Louis Hébert",
+        "Parks Canada — Port-Royal / early Acadian settlement",
+        "Cambridgeshire parish history — Protestant ministry in the late 1500s"
+      ],
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "In 1575, while Elizabeth's court still balanced Catholic memory against Protestant law, a boy was born in Paris who would outlive every throne in this chapter. Louis Hébert — nine July 1575 — was not yet Canada's first farmer; he was simply a child in a city of stone bridges and church bells, in a kingdom that had its own wars of religion still to fight."
+        },
+        {
+          "type": "paragraph",
+          "text": "Six years later and a hundred leagues north across the sea, another birth quietly mattered as much. On 25 March 1581, George Alcock came into the world at Cambridge in Cambridgeshire, son of Protestant minister John Richard Alcock and Alice Emily Abrich. No crown noted the day. No patent was issued. But the Powers branch of this tree — the English line that would one day meet the Hébert line in Iowa — starts here, in a university town smelling of river mud and ink."
+        },
+        {
+          "type": "paragraph",
+          "text": "France was filling the St. Lawrence with names our cousins would carry. In Perche, Abraham Côsté was born in 1576; in La Rochelle, Jean Galleran Martin — called the Merchant of Metz — would father children who crossed the Atlantic. Marie Rollet, Pierre Desportes, Guillaume Couillard, Zacharie Cloutier of Normandy: not yet the famous filles du roi or the King's Daughters, only young people in provincial towns where the church recorded births in careful ink."
+        },
+        {
+          "type": "paragraph",
+          "text": "England was waking to America in the same years. Sir Humphrey Gilbert took letters from the queen in 1583 to plant English feet on \"remote and barbarous\" shores. Walter Raleigh named Virginia for the Virgin Queen in 1584. That same spring, Susan Riddlesdale was born to John and Dorcas Riddlesdale; Thomas French Sr. and Thomas Hooker's people were entering the record; John Leavens Sr. would soon join the long roster of yeomen and dissenters who preferred risk to stagnation."
+        },
+        {
+          "type": "paragraph",
+          "text": "In 1588 — the year the Spanish Armada broke against English seas — Guillaume Couillard was born at Québec to André Couillard and Jeanne Basset, one more French life on a cliff above a river that froze solid half the year. Two worlds were filling with the same kind of people: farmers, merchants, ministers' sons, women who would marry across oceans without maps for what came after."
+        },
+        {
+          "type": "paragraph",
+          "text": "By 1590, Scotland's James VI was already hunting witches in a panic that would later cross the border when he became James I of England — a foreshadowing this story will meet again in Massachusetts. For now, the important fact is simpler: in 1575 the Goodwater doorway opened with Hébert, and in 1581 the Powers doorway opened with Alcock. Everything before was prologue. Everything after is the long walk toward Winifred."
+        }
+      ]
+    }
+  ]
+}

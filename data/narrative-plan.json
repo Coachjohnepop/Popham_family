@@ -1,0 +1,232 @@
+{
+  "version": 1,
+  "generatedAt": "2026-07-09T03:42:31.445703+00:00",
+  "approach": "chronological",
+  "sourcePolicy": {
+    "primary": "Family fact manifest (structured from Dad's document \u2014 prose never reused)",
+    "supplementalAllowed": true,
+    "supplementalUse": "Scene-setting, sensory detail, and well-established historical context only",
+    "supplementalExamples": [
+      "National Archives (UK)",
+      "Library and Archives Canada",
+      "Smithsonian, Parks Canada, Massachusetts Historical Society",
+      "Stanford Encyclopedia of Philosophy (Reformation context)",
+      "Established published histories (e.g. Bailyn, Eccles, Demos on Salem context)"
+    ],
+    "neverInvent": [
+      "Family dialogue, motives, or relationships not in records",
+      "Birth, marriage, death, or migration dates for named relatives",
+      "Ancestors not in the manifest or family index"
+    ]
+  },
+  "voice": {
+    "style": "Literary nonfiction \u2014 spare, concrete, Steinbeck-influenced rhythm",
+    "tone": "Understated emotion; let facts carry weight"
+  },
+  "segmentCount": 11,
+  "segments": [
+    {
+      "id": "seg-01-doors-opening",
+      "order": 1,
+      "yearStart": 1485,
+      "yearEnd": 1574,
+      "title": "Doors Opening: England, France, and the River",
+      "status": "pending",
+      "factCount": 29,
+      "personEventCount": 16,
+      "directFamilyFactCount": 24,
+      "uncoveredAtPhase0": 8,
+      "storybookChapterIds": [
+        "early-history-of-england-france-and-the-protestant-reformation",
+        "start-of-the-hudson-s-bay-company"
+      ]
+    },
+    {
+      "id": "seg-02-two-doorways",
+      "order": 2,
+      "yearStart": 1575,
+      "yearEnd": 1590,
+      "title": "Two Doorways: H\u00e9bert and Alcock",
+      "status": "pending",
+      "factCount": 31,
+      "personEventCount": 22,
+      "directFamilyFactCount": 29,
+      "uncoveredAtPhase0": 2,
+      "storybookChapterIds": [
+        "cyprien-tanguay-s-genealogical-dictionary",
+        "early-history-of-england-france-and-the-protestant-reformation",
+        "edith-powers-branch-members-start",
+        "great-depression-and-dust-bowl"
+      ]
+    },
+    {
+      "id": "seg-03-atlantic-crossings",
+      "order": 3,
+      "yearStart": 1591,
+      "yearEnd": 1625,
+      "title": "Atlantic Crossings",
+      "status": "pending",
+      "factCount": 234,
+      "personEventCount": 186,
+      "directFamilyFactCount": 212,
+      "uncoveredAtPhase0": 3,
+      "storybookChapterIds": [
+        "carignan-sali-res-regiment",
+        "connecticut-colony",
+        "cyprien-tanguay-s-genealogical-dictionary",
+        "edith-powers-branch-members-start",
+        "life-in-the-canada-colony",
+        "pequot-war"
+      ]
+    },
+    {
+      "id": "seg-04-planting-towns",
+      "order": 4,
+      "yearStart": 1626,
+      "yearEnd": 1655,
+      "title": "Planting Towns",
+      "status": "pending",
+      "factCount": 464,
+      "personEventCount": 351,
+      "directFamilyFactCount": 435,
+      "uncoveredAtPhase0": 8,
+      "storybookChapterIds": [
+        "beaver-wars",
+        "carignan-sali-res-regiment",
+        "connecticut-colony",
+        "english-civil-war",
+        "filles-marier-or-marriageable-girls",
+        "life-in-the-canada-colony",
+        "pequot-war",
+        "praying-indian-villages",
+        "queens-anne-s-war",
+        "rhode-island-colony"
+      ]
+    },
+    {
+      "id": "seg-05-frontier-and-faith",
+      "order": 5,
+      "yearStart": 1656,
+      "yearEnd": 1675,
+      "title": "Frontier and Faith",
+      "status": "pending",
+      "factCount": 283,
+      "personEventCount": 201,
+      "directFamilyFactCount": 265,
+      "uncoveredAtPhase0": 1,
+      "storybookChapterIds": [
+        "beaver-wars",
+        "carignan-sali-res-regiment",
+        "praying-indian-villages",
+        "restoration-of-the-english-king",
+        "start-of-the-hudson-s-bay-company"
+      ]
+    },
+    {
+      "id": "seg-06-wars-and-witch-panic",
+      "order": 6,
+      "yearStart": 1676,
+      "yearEnd": 1692,
+      "title": "Wars and Witch Panic",
+      "status": "pending",
+      "factCount": 134,
+      "personEventCount": 81,
+      "directFamilyFactCount": 123,
+      "uncoveredAtPhase0": 4,
+      "storybookChapterIds": [
+        "king-william-s-war",
+        "queens-anne-s-war",
+        "salem-witch-trials",
+        "start-of-the-hudson-s-bay-company"
+      ]
+    },
+    {
+      "id": "seg-07-british-north-america",
+      "order": 7,
+      "yearStart": 1693,
+      "yearEnd": 1750,
+      "title": "British North America",
+      "status": "pending",
+      "factCount": 139,
+      "personEventCount": 109,
+      "directFamilyFactCount": 127,
+      "uncoveredAtPhase0": 12,
+      "storybookChapterIds": [
+        "carignan-sali-res-regiment",
+        "king-william-s-war",
+        "life-in-the-canada-colony",
+        "queens-anne-s-war",
+        "salem-witch-trials"
+      ]
+    },
+    {
+      "id": "seg-08-empires-at-war",
+      "order": 8,
+      "yearStart": 1751,
+      "yearEnd": 1815,
+      "title": "Empires at War",
+      "status": "pending",
+      "factCount": 112,
+      "personEventCount": 55,
+      "directFamilyFactCount": 100,
+      "uncoveredAtPhase0": 18,
+      "storybookChapterIds": [
+        "carignan-sali-res-regiment",
+        "dakota-territory",
+        "pequot-war",
+        "queens-anne-s-war",
+        "salem-witch-trials",
+        "war-of-1812"
+      ]
+    },
+    {
+      "id": "seg-09-west-to-iowa",
+      "order": 9,
+      "yearStart": 1816,
+      "yearEnd": 1853,
+      "title": "West to Iowa",
+      "status": "pending",
+      "factCount": 61,
+      "personEventCount": 30,
+      "directFamilyFactCount": 55,
+      "uncoveredAtPhase0": 15,
+      "storybookChapterIds": [
+        "war-of-1812"
+      ]
+    },
+    {
+      "id": "seg-10-dakota-years",
+      "order": 10,
+      "yearStart": 1854,
+      "yearEnd": 1928,
+      "title": "Dakota Years",
+      "status": "pending",
+      "factCount": 113,
+      "personEventCount": 51,
+      "directFamilyFactCount": 96,
+      "uncoveredAtPhase0": 36,
+      "storybookChapterIds": [
+        "cyprien-tanguay-s-genealogical-dictionary",
+        "dakota-territory",
+        "edith-powers-branch-members-start",
+        "great-depression-and-dust-bowl"
+      ]
+    },
+    {
+      "id": "seg-11-depression-and-dust",
+      "order": 11,
+      "yearStart": 1929,
+      "yearEnd": 1950,
+      "title": "Depression and Dust",
+      "status": "pending",
+      "factCount": 16,
+      "personEventCount": 5,
+      "directFamilyFactCount": 11,
+      "uncoveredAtPhase0": 1,
+      "storybookChapterIds": [
+        "great-depression-and-dust-bowl",
+        "life-in-the-canada-colony"
+      ]
+    }
+  ]
+}
