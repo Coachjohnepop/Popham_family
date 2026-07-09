@@ -1,0 +1,117 @@
+{
+  "generatedAt": "2026-07-09T03:30:03.121415+00:00",
+  "sourceDocx": "/Users/johnpopham/Library/CloudStorage/Dropbox/THE STORY OF WINIDRED COSS FAMILY TREE.docx",
+  "substantiveFacts": 1814,
+  "personEvents": 1111,
+  "directFamilyFacts": 1565,
+  "sourceWordsInSubstantiveParagraphs": 120222,
+  "coverageByStatus": {
+    "uncovered": 210,
+    "storybook": 1470,
+    "indexed_only": 121,
+    "enriched": 13
+  },
+  "coveragePct": {
+    "storybookOrBetter": 81.8,
+    "anyIndex": 88.4,
+    "fullyUncovered": 11.6
+  },
+  "topGapsByChapter": [
+    {
+      "docChapterTitle": "Dakota Territory",
+      "totalFacts": 96,
+      "uncovered": 33,
+      "coveragePct": 65.6
+    },
+    {
+      "docChapterTitle": "No 1820 U. S. Census record has been found for Warren Coss.",
+      "totalFacts": 72,
+      "uncovered": 22,
+      "coveragePct": 69.4
+    },
+    {
+      "docChapterTitle": "Salem Witch Trials",
+      "totalFacts": 77,
+      "uncovered": 17,
+      "coveragePct": 77.9
+    },
+    {
+      "docChapterTitle": "Life in the Canada Colony",
+      "totalFacts": 73,
+      "uncovered": 17,
+      "coveragePct": 76.7
+    },
+    {
+      "docChapterTitle": "Early History of Canada",
+      "totalFacts": 25,
+      "uncovered": 14,
+      "coveragePct": 44.0
+    },
+    {
+      "docChapterTitle": "Great Depression and Dust Bowl",
+      "totalFacts": 32,
+      "uncovered": 11,
+      "coveragePct": 65.6
+    },
+    {
+      "docChapterTitle": "French and Indian War",
+      "totalFacts": 25,
+      "uncovered": 10,
+      "coveragePct": 60.0
+    },
+    {
+      "docChapterTitle": "Cyprien Tanguay\u2019s Genealogical Dictionary",
+      "totalFacts": 61,
+      "uncovered": 8,
+      "coveragePct": 86.9
+    },
+    {
+      "docChapterTitle": "Carignan-Sali\u00e8res Regiment",
+      "totalFacts": 98,
+      "uncovered": 8,
+      "coveragePct": 91.8
+    },
+    {
+      "docChapterTitle": "Return to Qu\u00e9bec",
+      "totalFacts": 26,
+      "uncovered": 7,
+      "coveragePct": 73.1
+    },
+    {
+      "docChapterTitle": "Edith Powers\u2019 branch members start",
+      "totalFacts": 76,
+      "uncovered": 7,
+      "coveragePct": 90.8
+    },
+    {
+      "docChapterTitle": "Rhode Island Colony",
+      "totalFacts": 64,
+      "uncovered": 5,
+      "coveragePct": 92.2
+    },
+    {
+      "docChapterTitle": "Start of the Hudson\u2019s Bay Company",
+      "totalFacts": 121,
+      "uncovered": 5,
+      "coveragePct": 95.9
+    },
+    {
+      "docChapterTitle": "American Revolutionary War",
+      "totalFacts": 37,
+      "uncovered": 5,
+      "coveragePct": 86.5
+    },
+    {
+      "docChapterTitle": "Must have either signed a marriage contract to get married in the Canada colony.",
+      "totalFacts": 119,
+      "uncovered": 4,
+      "coveragePct": 96.6
+    }
+  ],
+  "uniquePeople": 3095,
+  "familyIndexEntries": 770,
+  "yearRange": [
+    1000,
+    2016
+  ]
+}

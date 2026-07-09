@@ -12,6 +12,7 @@
     "extract:images": "python3 scripts/extract-images.py",
     "build:storybook": "python3 scripts/build-storybook.py",
     "build:format": "python3 scripts/build-story-format-data.py",
+    "build:manifest": "python3 scripts/build-fact-manifest.py",
     "index:locations": "python3 scripts/build-location-index.py",
     "index:search": "python3 scripts/build-search-index.py",
     "index:narration": "node scripts/build-narration-summaries.mjs",
