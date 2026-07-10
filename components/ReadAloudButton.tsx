@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
-import { chunkTextForTts } from "@/lib/tts-config";
+import { chunkTextForTts, configureTtsPlayback } from "@/lib/tts-config";
 import { speakBritishBrowser, waitForVoices } from "@/lib/browser-tts";
 
 type ReadAloudButtonProps = {
@@ -38,6 +38,7 @@ export default function ReadAloudButton({
     return new Promise((resolve, reject) => {
       const url = URL.createObjectURL(blob);
       const audio = new Audio(url);
+      configureTtsPlayback(audio);
       audioRef.current = audio;
       audio.onended = () => {
         URL.revokeObjectURL(url);

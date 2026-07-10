@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { getOpenAiApiKey, parseOpenAiError } from "@/lib/openai-server";
-import { chunkTextForTts, TTS_INSTRUCTIONS, TTS_VOICE } from "@/lib/tts-config";
+import { chunkTextForTts, TTS_INSTRUCTIONS, TTS_SPEED, TTS_VOICE } from "@/lib/tts-config";
 
 export async function POST(request: Request) {
   const apiKey = getOpenAiApiKey();
@@ -40,6 +40,7 @@ export async function POST(request: Request) {
         voice: TTS_VOICE,
         input: chunk,
         instructions: TTS_INSTRUCTIONS,
+        speed: TTS_SPEED,
         response_format: "mp3",
       }),
     });

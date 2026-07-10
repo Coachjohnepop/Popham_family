@@ -1,3 +1,5 @@
+import { TTS_SPEED } from "@/lib/tts-config";
+
 const BRITISH_VOICE_HINTS = [
   "daniel",
   "serena",
@@ -85,7 +87,7 @@ export function speakBritishBrowser(
     } else {
       utterance.lang = "en-GB";
     }
-    utterance.rate = 0.92;
+    utterance.rate = TTS_SPEED;
     utterance.pitch = 1;
     utterance.onend = () => speakNext();
     utterance.onerror = () => {

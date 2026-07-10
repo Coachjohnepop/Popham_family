@@ -1,5 +1,5 @@
 import { speakBritishBrowser, waitForVoices } from "@/lib/browser-tts";
-import { chunkTextForTts } from "@/lib/tts-config";
+import { chunkTextForTts, configureTtsPlayback } from "@/lib/tts-config";
 
 export type SpeakState = "idle" | "loading" | "speaking" | "paused";
 
@@ -14,6 +14,7 @@ function playBlob(blob: Blob, audioOut: { current: HTMLAudioElement | null }): P
   return new Promise((resolve, reject) => {
     const url = URL.createObjectURL(blob);
     const audio = new Audio(url);
+    configureTtsPlayback(audio);
     audioOut.current = audio;
     audio.onended = () => {
       URL.revokeObjectURL(url);
