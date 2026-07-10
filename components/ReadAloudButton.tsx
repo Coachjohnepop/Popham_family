@@ -7,9 +7,15 @@ import { speakBritishBrowser, waitForVoices } from "@/lib/browser-tts";
 type ReadAloudButtonProps = {
   text: string;
   label?: string;
+  /** When this value changes, narration starts automatically (e.g. jelly-bean selection). */
+  autoPlayKey?: string;
 };
 
-export default function ReadAloudButton({ text, label = "Read aloud" }: ReadAloudButtonProps) {
+export default function ReadAloudButton({
+  text,
+  label = "Read aloud",
+  autoPlayKey,
+}: ReadAloudButtonProps) {
   const [speaking, setSpeaking] = useState(false);
   const [loading, setLoading] = useState(false);
   const stopRef = useRef<(() => void) | null>(null);
@@ -97,6 +103,13 @@ export default function ReadAloudButton({ text, label = "Read aloud" }: ReadAlou
   }, [stop, speakApi, speakBrowser]);
 
   useEffect(() => () => stop(), [stop]);
+
+  useEffect(() => {
+    if (autoPlayKey == null || !text.trim()) return;
+    void speak();
+    // Only react to explicit play triggers, not speak/text churn.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [autoPlayKey]);
 
   const caption = loading ? "Preparing voice…" : speaking ? "Stop reading" : label;
 

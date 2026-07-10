@@ -23,7 +23,12 @@ export default function StoryTopicsHub({
 }: StoryTopicsHubProps) {
   const topics = getStoryTopics();
   const [activeId, setActiveId] = useState<string | null>(initialTopicId);
+  const [speakGeneration, setSpeakGeneration] = useState(0);
   const panelRef = useRef<HTMLDivElement>(null);
+
+  const requestNarration = useCallback(() => {
+    setSpeakGeneration((n) => n + 1);
+  }, []);
 
   const scrollToHub = useCallback(() => {
     const el = document.getElementById("story-topics");
@@ -37,7 +42,8 @@ export default function StoryTopicsHub({
   }, []);
 
   const activateTopic = useCallback(
-    (id: string | null) => {
+    (id: string | null, options?: { narrate?: boolean }) => {
+      const shouldNarrate = options?.narrate ?? false;
       setActiveId((current) => {
         const next = current === id ? null : id;
         if (next && variant === "story-index") {
@@ -46,10 +52,13 @@ export default function StoryTopicsHub({
         } else if (!next && variant === "story-index") {
           window.history.replaceState(null, "", "/story#story-topics");
         }
+        if (shouldNarrate && next) {
+          requestAnimationFrame(() => requestNarration());
+        }
         return next;
       });
     },
-    [variant, scrollToPanel],
+    [variant, scrollToPanel, requestNarration],
   );
 
   useEffect(() => {
@@ -105,15 +114,15 @@ export default function StoryTopicsHub({
             Sixteen angles into the paper
           </h2>
           <p className="mt-2 max-w-2xl text-sm leading-relaxed text-[#6f5c49]">
-            Pick a jelly bean — each opens a short narrative, then points you to the chapter and the
-            map. Follow <strong className="font-semibold text-[#5c4a38]">Up next</strong> for a guided
-            path through Dad&apos;s story.
+            Pick a jelly bean — each opens a short narrative and reads it aloud, then points you to
+            the chapter and the map. Follow <strong className="font-semibold text-[#5c4a38]">Up next</strong>{" "}
+            for a guided path through Dad&apos;s story.
           </p>
         </div>
         {!activeTopic && (
           <button
             type="button"
-            onClick={() => activateTopic(topics[0]?.id ?? null)}
+            onClick={() => activateTopic(topics[0]?.id ?? null, { narrate: true })}
             className="shrink-0 rounded-full bg-[#8b5e34] px-4 py-2 text-sm font-semibold text-white transition hover:bg-[#6f4a28]"
           >
             Start with topic 1 →
@@ -127,7 +136,7 @@ export default function StoryTopicsHub({
             key={topic.id}
             topic={topic}
             isActive={activeId === topic.id}
-            onActivate={() => activateTopic(topic.id)}
+            onActivate={() => activateTopic(topic.id, { narrate: true })}
           />
         ))}
       </div>
@@ -139,12 +148,13 @@ export default function StoryTopicsHub({
             index={activeIndex}
             total={topics.length}
             topics={topics}
-            onSelect={activateTopic}
+            onSelect={(id) => activateTopic(id, { narrate: true })}
+            speakGeneration={speakGeneration}
             onNext={() => {
-              if (activeTopic.nextTopicId) activateTopic(activeTopic.nextTopicId);
+              if (activeTopic.nextTopicId) activateTopic(activeTopic.nextTopicId, { narrate: true });
             }}
             onPrev={() => {
-              if (activeIndex > 0) activateTopic(topics[activeIndex - 1].id);
+              if (activeIndex > 0) activateTopic(topics[activeIndex - 1].id, { narrate: true });
             }}
             onClose={() => activateTopic(null)}
           />
@@ -216,6 +226,7 @@ type TopicPanelProps = {
   index: number;
   total: number;
   topics: StoryTopic[];
+  speakGeneration: number;
   onSelect: (id: string) => void;
   onNext: () => void;
   onPrev: () => void;
@@ -227,6 +238,7 @@ function TopicPanel({
   index,
   total,
   topics,
+  speakGeneration,
   onSelect,
   onNext,
   onPrev,
@@ -263,7 +275,12 @@ function TopicPanel({
           </button>
         </div>
         <div className="flex flex-wrap gap-2">
-          <ReadAloudButton text={topic.narrative.spoken} />
+          <ReadAloudButton
+            text={topic.narrative.spoken}
+            autoPlayKey={
+              speakGeneration > 0 ? `${topic.id}:${speakGeneration}` : undefined
+            }
+          />
           <button
             type="button"
             onClick={onClose}
