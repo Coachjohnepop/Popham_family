@@ -1,5 +1,6 @@
 import promptIndexData from "@/data/prompt-index.json";
 import { isAnswerDepth, type AnswerDepth } from "@/lib/event-briefs";
+import { isChronologicalNarrative, resolveLegacyChapterId } from "@/lib/narrative-storybook";
 import type { StorySection } from "@/lib/types";
 
 export type VoiceNavResult =
@@ -100,8 +101,16 @@ function resolveChapterTarget(
   const byId = sections.find((s) => s.id === target);
   if (byId) return byId;
 
+  if (isChronologicalNarrative()) {
+    const resolvedId = resolveLegacyChapterId(target, sections);
+    const byLegacy = sections.find((s) => s.id === resolvedId);
+    if (byLegacy) return byLegacy;
+  }
+
   if (target === "powers-start") {
     return (
+      sections.find((s) => s.id === "seg-02-two-doorways") ??
+      sections.find((s) => normalize(s.title).includes("alcock")) ??
       sections.find((s) => normalize(s.title).includes("edith powers")) ??
       sections.find((s) => s.branch === "powers") ??
       null
@@ -110,6 +119,8 @@ function resolveChapterTarget(
 
   if (target === "goodwater-start") {
     return (
+      sections.find((s) => s.id === "seg-02-two-doorways") ??
+      sections.find((s) => normalize(s.title).includes("hebert")) ??
       sections.find(
         (s) => normalize(s.title).includes("goodwater") && normalize(s.title).includes("quebec"),
       ) ??
@@ -119,7 +130,11 @@ function resolveChapterTarget(
   }
 
   if (target === "dakota") {
-    return sections.find((s) => normalize(s.title).includes("dakota")) ?? null;
+    return (
+      sections.find((s) => s.id === "seg-10-dakota-years") ??
+      sections.find((s) => normalize(s.title).includes("dakota")) ??
+      null
+    );
   }
 
   return null;

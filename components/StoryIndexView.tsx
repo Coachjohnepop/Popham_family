@@ -20,9 +20,9 @@ export default function StoryIndexView() {
             The full family story
           </h2>
           <p className="mt-3 text-sm leading-relaxed text-[#6f5c49]">
-            {book.sectionCount} tightened chapters drawn from the original document, with{" "}
-            {book.imageCountInDocument} photographs and illustrations — open slideshows when you
-            want them. For a spoken overview of the whole paper, start from{" "}
+            {book.sectionCount} chronological chapters tracing both family branches from 1485 to
+            1950, with {book.imageCountMapped} photographs and illustrations — open slideshows when
+            you want them. For a spoken overview of the whole paper, start from{" "}
             <HomeLink className="font-semibold text-[#8b5e34] hover:underline">
               Home
             </HomeLink>

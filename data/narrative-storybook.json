@@ -1,7 +1,7 @@
 {
   "version": 1,
   "mode": "chronological",
-  "updatedAt": "2026-07-09T12:00:00.000Z",
+  "updatedAt": "2026-07-10T04:00:00.000Z",
   "segments": [
     {
       "id": "seg-01-doors-opening",
@@ -104,6 +104,842 @@
         {
           "type": "paragraph",
           "text": "By 1590, Scotland's James VI was already hunting witches in a panic that would later cross the border when he became James I of England — a foreshadowing this story will meet again in Massachusetts. For now, the important fact is simpler: in 1575 the Goodwater doorway opened with Hébert, and in 1581 the Powers doorway opened with Alcock. Everything before was prologue. Everything after is the long walk toward Winifred."
+        }
+      ]
+    },
+    {
+      "id": "seg-03-atlantic-crossings",
+      "order": 3,
+      "yearStart": 1591,
+      "yearEnd": 1625,
+      "title": "Atlantic Crossings",
+      "branch": "both",
+      "status": "draft",
+      "storybookChapterId": "edith-powers-branch-members-start",
+      "relatedChapterIds": [
+        "mary-ann-goodwater-s-branch-members-start-qu-bec-settlement-established",
+        "massachusetts-bay-colony-puritans-arrive-in-the-winthrop-fleet"
+      ],
+      "supplementalSources": [
+        "National Park Service — Jamestown settlement survival statistics",
+        "Canadian Museum of History — Samuel de Champlain, founding of Québec",
+        "Dictionary of Canadian Biography — Louis Hébert, apothecary and first European farmer at Québec",
+        "New Netherland Institute — Henry Hudson and Dutch trading posts"
+      ],
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "The Atlantic in these years was not a bridge. It was a gamble — wood ships, salted pork, compasses that lied in fog, and kings who treated whole coastlines as chess squares. Our people were still mostly in parish registers on both shores, but the water between them was filling with names that would matter."
+        },
+        {
+          "type": "paragraph",
+          "text": "In England the births came steady as rain. William Preston in Chesham in 1591. Edmund Rice in Berkhamsted in 1594. John Upham in Devon, John Bent in Hampshire, William Towne in Norfolk, Martha Blanchard and Arthur Gary — each a line on a page that would later cross the sea. On 6 January 1609, Thomas Barrett was born at Thornbury in Gloucestershire to Christopher Barrett and Elizabeth Clarke; his granddaughter would one day sit in a Boston jail accused of witchcraft. On 8 July 1605, Walter Powers Sr. was baptized at Stanton St. Quintin in Wiltshire — the Powers name that Edith would carry into Vermont and Iowa was already in the font."
+        },
+        {
+          "type": "paragraph",
+          "text": "Scotland's James VI published his Daemonologie in 1597, obsessed with witches and violent death. When Elizabeth died childless in 1603, he walked south as James I of England — one crown, two kingdoms, and a church he meant to hold together with a new Bible. The Hampton Court Conference of 1604 set translators to work on what would become the King James Version: English words where Latin had ruled, Puritan hopes half-met and half-denied."
+        },
+        {
+          "type": "paragraph",
+          "text": "France was moving faster on the river. Samuel de Champlain — soldier, cartographer, royal geographer to Henry IV — had seen the Caribbean and Tadoussac where the Saguenay meets the St. Lawrence. Louis Hébert, the Paris apothecary born in 1575, married Marie Rollet in 1601 and kept shop while men around him talked of Acadia and the north. Their children Guillaume and Guillemette were born in the city; their father's life was already bending toward kebec — the Algonquin word for where the river narrows."
+        },
+        {
+          "type": "paragraph",
+          "text": "In 1606 James I chartered the Virginia Company of London and the Plymouth Company, still calling the whole coast Virginia. April 1607: three ships entered Chesapeake Bay and founded Jamestown on a feverish marsh. By 1608, of more than five hundred colonists, roughly one in eight still stood alive. The Plymouth Company's Popham Colony on the Kennebec lasted a winter and failed — fire, hunger, a harsh exchange with local peoples — but fishermen kept coming for cod on the Grand Banks anyway."
+        },
+        {
+          "type": "image",
+          "src": "/images/story/image124.png",
+          "caption": "The Virginia Company of London charter granted the company lands along the American coast.",
+          "media": "image124.png"
+        },
+        {
+          "type": "paragraph",
+          "text": "While Jamestown coughed itself hollow, Champlain stopped at the great rapids on 3 July 1608 and built where Cartier had once wintered. Louis Hébert came with Recollect friars and Jesuits, broke soil behind the Habitation, planted wheat and rye at the spring — the first European farmer in what would become Canada, not a fur trader counting beaver pelts but a man with a hoe. In Perche, Jean Guyon was born in 1592; Zacharie Cloutier, Jacques Gaudry, and the Giffards and Fourniers of Normandy were growing up in towns that would empty into the St. Lawrence within a generation."
+        },
+        {
+          "type": "paragraph",
+          "text": "The Dutch followed money, not monarchs. Henry Hudson, sailing for the Dutch East India Company in 1609, probed Delaware Bay and the river that would carry his name past the island where Manhattan would rise. By 1610 the Dutch had seasonal posts on the Hudson, Connecticut, and Delaware rivers — trading with Mohawks and Pequots, selling metal and buying pelts. Captain John Smith, back from Jamestown, mapped the coast from Maine to Cape Cod in 1614 and named the country New England as if naming could make it tame."
+        },
+        {
+          "type": "paragraph",
+          "text": "In Assington, Suffolk, John Winthrop and Thomas French Sr. lived in the same parish world — Winthrop the gentleman who would lead two thousand Puritans west, French the father whose sons would fight in Pequot country. Margaret Huntington was born in Cheshire in 1608; Thomas French married Susan Riddlesdale that September and baptized a son on St. Edmund's day. England was producing the stock of plantations: yeomen, dissenters, widows with courage, ministers' sons who could read Latin and track a plow."
+        },
+        {
+          "type": "paragraph",
+          "text": "Robert Giffard, a surgeon from Perche, saw Québec in 1621 and came home preaching land and contracts — three years' labor for a farm of your own. The Dutch West India Company claimed the coast from Cape Cod to the Delmarva Peninsula in 1621. Pilgrims who refused Dutch New Netherland took a Plymouth Company patent in 1619; in November 1620 they anchored off Cape Cod without a charter for where they actually landed and signed a compact in the cabin smoke. Plimoth Plantation — they called it plantation, not colony yet — was a foot on the shore Winthrop's people would pass ten years later."
+        },
+        {
+          "type": "paragraph",
+          "text": "Champlain fought beside Wendat and Algonquin allies at Sorel in 1610, arquebus against Mohawk canoes — the beaver wars politicized before our cousins' farms were cleared. In Paris and Perche, in Wiltshire and Suffolk, the registers kept filling: Ralph Shepard, John Leavens Sr., William Ward, Alice Harris, Thomas Green, Elizabeth Lynde, William Perkins, Priscilla Chase — names that sound like law firms until you see them on muster rolls and town meeting minutes."
+        },
+        {
+          "type": "paragraph",
+          "text": "When James I died in 1625, his son Charles inherited a kingdom short of money and long on pride — Ship Money, forced loans, knighthood fees, Parliament's teeth showing. The century's next act would be civil war in England and plantation wars in America. For this family, the Atlantic crossings of 1591–1625 laid the keel: Hébert farming behind Québec's walls, Barrett and Powers and Preston and Rice still in England but not for long, Cloutier and Guyon in France, Dutch traders on rivers our people would later border, and Jamestown's survivors proving only that the gamble could be survived — not that it could be gentle."
+        }
+      ]
+    },
+    {
+      "id": "seg-04-planting-towns",
+      "order": 4,
+      "yearStart": 1626,
+      "yearEnd": 1655,
+      "title": "Planting Towns",
+      "branch": "both",
+      "status": "draft",
+      "storybookChapterId": "massachusetts-bay-colony-puritans-arrive-in-the-winthrop-fleet",
+      "relatedChapterIds": [
+        "life-in-the-canada-colony",
+        "seigneurial-system-return-to-qu-bec-1-more",
+        "rhode-island-colony",
+        "connecticut-colony",
+        "pequot-war",
+        "english-civil-war",
+        "beaver-wars",
+        "praying-indian-villages",
+        "filles-marier-or-marriageable-girls"
+      ],
+      "supplementalSources": [
+        "Canadian Encyclopedia — Kirke brothers, surrender of Québec 1629",
+        "Massachusetts Historical Society — Winthrop Fleet and Great Migration",
+        "Library and Archives Canada — Seigneurial system, filles à marier",
+        "National Park Service — Pequot War, Mystic Fort massacre"
+      ],
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "After 1625 the story stops circling the Atlantic and starts putting down roots — wooden towns on Massachusetts mudflats, stone chimneys above the St. Lawrence ice, meetinghouses where freemen argued and rivers where beaver pelts bought muskets. Two branches of one tree planted in the same generation, unaware of the Iowa wedding waiting at the far end."
+        },
+        {
+          "type": "paragraph",
+          "text": "In 1626, while failed Gloucester fishermen retreated to Naumkeag and renamed it Salem without the king's permission, registers on both shores kept recording names. On 1 January, John Douglas Alcock was born at Markfield to George Alcock and Anne Hooker. Deacon John Upham married Elizabeth Webb at Bicton on 1 November. Robert Smith was born at Boston, Lincolnshire; Solomon Johnson married Eleanor Crofts in London. In France: Françoise Morin at Gahard, Anne Cloutier at Mortagne on 19 June, Pierre Tremblay at Randonnai, Pierre Saint-Denis and Vivienne Brunel at Dieppe and Rouen, Etienne Dumay Sr. at Dieppe, Sébastienne Veillon near La Rochelle, Marguerite Couillard at Québec on 6 August to Guillaume Couillard and Guillemette Hébert. Champlain granted Louis Hébert more land along the Saint-Charles River and opened the farm country at Château-Richer across from Île d'Orléans. The Iroquois destroyed the Mohicans and turned north toward the river."
+        },
+        {
+          "type": "paragraph",
+          "text": "1627 brought death and structure in equal measure. Louis Hébert — fifty-two years old, Québec's first farmer — fell on January ice; widow Marie Rollet kept the farm with son-in-law Guillaume Couillard, who inherited half the estate and received another hundred acres on the Saint-Charles, driving the colony's first plow the next spring. Cardinal Richelieu dissolved old trading monopolies and chartered the Company of One Hundred Associates — four thousand settlers promised in fifteen years, Catholics only, Huguenots pushed toward English and Dutch colonies. The seigneurial system arrived: river-front lots in three-by-nine-mile manors, feudal obligations dressed as settlement policy. Robert Giffard sailed home to Perche to recruit. Jean Guay was born at Berneuil. Richard Sawtelle married Elizabeth Pople; Ralph Farnham Sr. married Alice Harris at Southampton. England and France were at war; La Rochelle's Huguenots starved through a fifteen-month siege."
+        },
+        {
+          "type": "image",
+          "src": "/images/story/image37.jpg",
+          "caption": "The seigneurial system granted river-front land to seigneurs who subdivided it for habitants — a framework that shaped French Canada for two centuries.",
+          "media": "image37.jpg"
+        },
+        {
+          "type": "paragraph",
+          "text": "The Kirke brothers made 1628–1629 brutal for New France. English ships intercepted Giffard's fleet from Dieppe; Robert and Marie Renouard turned back. Cap Tourmente's farm was burned, livestock slaughtered, men killed. Champlain bluffed through a July demand for surrender, but by August 1629 Québec had one tub of roots for sixty-seven starving souls. On 9 August he yielded to David, Thomas, and Louis Kirke. Abraham Martin, Marguerite Langlois, and most settlers sailed for England; Marie Hébert Rollet refused to leave the ground her husband had broken. Jean Nicolet stayed with the Nipissing, blocking English trade. Nine-year-old Hélène Desportes landed in Dieppe with aunt Marguerite Martin. Jacques Ménard was born at Fontenay. Jean Bonneau married Catherine Poulet. Euphrosine Madeleine Nicolet was born — Métis daughter of Nicolet and Jeanne Bahmahmaadjimiwin Giisis. In England, John Endecott signed the New England Company grant; the London Plantation patented Salem; William Perkins took his B.A. at Christ's College."
+        },
+        {
+          "type": "paragraph",
+          "text": "March 1629: Charles I dismissed Parliament for eleven years. The Massachusetts Bay Company charter arrived in August — and crucially failed to require meetings in England. Cambridge investors voted to move the whole company to America. In October they elected John Winthrop governor while he was still in Lincolnshire. The Petition of Right, passed 7 June 1628, would later bind the restored Stuart throne. When Québec fell, the French colony was forgotten in the crossfire of European religion — a pattern that would repeat every time Paris and London quarreled."
+        },
+        {
+          "type": "image",
+          "src": "/images/story/image118.png",
+          "caption": "In April 1630 the Winthrop Fleet left Southampton — the Great Migration that would carry the Powers branch to Massachusetts Bay.",
+          "media": "image118.png"
+        },
+        {
+          "type": "paragraph",
+          "text": "April 1630 changed the English branch forever. Winthrop led Puritans out of Boston, Lincolnshire, toward a patent running from the Merrimack to the Charles. Eleven ships, roughly two thousand souls, livestock and salted fear. Salem could not feed them; they shivered through a Charlestown winter, then crossed to Shawmut where William Blackstone offered his peninsula — Boston rose from that mud. George Alcock, butcher of Roxbury, brought Anne Hooker and four-year-old John Douglas. Thomas French Sr. and Susan Riddlesdale came on the Arabella with sons including Thomas Jr., who married Mary Scudamore in Boston. Thomas Lamb, Dr. Richard Palgrave, the Richardson brothers, Thomas Green Jr., Roger Williams on the Lyon — each a line in the Winthrop journals. Paul Vachon and Pierre Bonneau were born in France; Pierre Gaudin at Châtillon-sur-Seine; Pierre Maheu and Marie Anne Le Laboureur in Perche and Bayeux. Hugh Maxwell was born in Scotland. Chief Masconomet entertained the Arbella's officers; hundreds died of hunger and nor'easters before the Lyon arrived 16 September with grain and Winthrop's family."
+        },
+        {
+          "type": "paragraph",
+          "text": "1631–1633 filled the margins. Elizabeth Wooton sailed with the fleet; Nathaniel Gary and Agnes Bent were born in England. George Alcock became freeman and deacon at Dorchester. William Perkins arrived March 1632 on the William & Francis; Ralph Shepard married Thankslorde Perkins in London; John Leavens Sr. and Elizabeth Stebbins reached Roxbury in June. Thomas Hooker — Anne Alcock's brother — fled Laud's net aboard the Griffin with two hundred Puritans and took the Cambridge church. Galileo's Dialogue earned an Inquisition summons; Archbishop Laud accelerated the exodus. Québec returned to France by the Treaty of Saint-Germain-en-Laye in March 1632; Guillaume Couillard fought Iroquois raids, piloted to Tadoussac, became churchwarden. Giffard recruited pilot Noël Langlois Sr. Pierre Duchesne was born at Mesnil. Champlain rebuilt Québec as a true ville — upper town for elites, lower town for merchants and sailors. Anne Ozanne Achon was born at La Rochelle. Toussaint Giroux at Réveillon. Nicholas Holt married Elizabeth Short. Mary French was born 2 March 1634 in Boston."
+        },
+        {
+          "type": "paragraph",
+          "text": "1634 was the heaviest year on the St. Lawrence since Champlain's habitation. Giffard brought thirty Perche families on four ships — Guyon the mason with wife Mathurine and seven children including Marie, Zacharie Cloutier the carpenter with son Jean, Drouin the brickmaker, Bélanger, Côté father and son, Caron brothers, pilot Langlois, fille à marier Françoise Garnier. They wintered inside Fort Saint-Louis while Drouin laid brick for Giffard's manor and a parish church. Zacharie and Jean Guyon signed servitude contracts: passage, livestock, 845 acres after three years' labor. Cloutier brought wife Saintes and children including Anne. Trois-Rivières was founded eighty miles upriver. Hélène Desportes returned with Abraham Martin and daughter Anne; she married Guillaume Hébert 1 October. Jean Nicolet reached Green Bay wearing silk meant for China. Marie Crevet, Anne Antoinette de Liercourt, Louis Marier — more French births. Measles appeared in a Huron village, probably carried by settler children."
+        },
+        {
+          "type": "paragraph",
+          "text": "England's 1634 harvest was Laud's persecution and Wood's New England's Prospect — a book that sold the frontier like real estate. Ralph Shepard was summoned before the High Commission and sailed with Thankslorde and daughter on the smallpox-ridden Abigail. William Ward married Elizabeth Storey and became a Sudbury pillar. William Preston, widowed of Elizabeth Sale, married Mary Seabrook. Thomas Barrett married Margaret Huntington. William Perkins made freeman and ensign at Roxbury. Deacon William Ward helped petition for Marlborough. Edward Preston, Daniel Preston, Walter Powers Sr. and Joane Newman, Thomas Green Sr., Mary and John Baldwin, John Johnson, William Towne with wife Joanna and daughter Martha, Phineas Upham — the 1635 ships read like a parish census: Hopewell, James, Confidence, Truelove, Christian, Elizabeth. John Upham left Weymouth pregnant with Elizabeth Webb and three children. Nicholas Holt's tannery rose at Newbury; Ralph Farnham Sr. barbered at Ipswich. Roger Preston settled there. Rev. Joseph Hull planted Weymouth. Champlain died Christmas Day 1635; Abraham Martin received the heights that would become the Plains of Abraham. Mathieu Côté and family sailed from Mortagne."
+        },
+        {
+          "type": "paragraph",
+          "text": "1636–1637 split the English line west and lit the Connecticut powder keg. Harvard opened in the Bay Colony — John Douglas Alcock would graduate there in 1646. Thomas Hooker drove a hundred congregants and 160 cattle to the Connecticut River, founding Hartford, Wethersfield, and Windsor with freeman rules looser than Massachusetts. William Preston the solicitor moved to New Haven — likely among Hooker's company. Sergeant Thomas French Jr. fought the Pequot War and received grants at Ipswich and later Salisbury. The General Court organized militia regiments 13 December 1636 — ancestor of the National Guard. Between July 1636 and September 1638 the Pequot War scarred the river valley: trader murders, Endecott's burned villages, spring raids on Connecticut towns, then the Mystic Massacre of 26 May 1637 — five hundred Pequot dead in a pre-dawn fort fire, Sassacus beheaded by Mohawk allies. Nicholas Holt walked forty miles to vote Winthrop over Vane. Anne Mattle Douglas was born in England. Joseph Hills, Rose Clarke, and Rebecca sailed on the Susan & Ellen."
+        },
+        {
+          "type": "image",
+          "src": "/images/story/image125.png",
+          "caption": "May 1637 — Connecticut towns raised a militia under Captain John Mason for the campaign that ended at Mystic Fort.",
+          "media": "image125.png"
+        },
+        {
+          "type": "paragraph",
+          "text": "French cousins in those same years were marrying into stone and fear. Governor Montmagny replaced Champlain. Saintes Cloutier arrived with Pierre and Anne to join Zacharie. Robert Drouin married eleven-year-old Anne Cloutier 12 July 1637; Jean Nicolet married Marguerite Couillard in October and settled at Trois-Rivières as clerk, ennobled Sieur de Belleborne. Langlois received 253 acres at Beauport below Montmorency Falls. François Bélanger married Marie Guyon. Marie Crevet came as a fille à marier and married Robert Caron. Smallpox reached Huron country — prelude to the beaver wars that would empty villages. Sillery opened for Christian Algonquins at an eel-and-salmon cove. Catherine Fortier, Sébastien Gingras, Suzanne Debure, Jeanne Mignon, Charles Garnier — births in Normandy and Perche that would matter when the ships came later."
+        },
+        {
+          "type": "paragraph",
+          "text": "The late 1630s brought the second wave to Massachusetts. Edmund Rice and Thomasine Frost arrived 1638; Rice would lease from Harvard president Henry Dunster, buy a Sudbury farm, become magistrate. John Bent brought Martha Blanchard and five children including Agnes to Sudbury on the Confidence. Joseph Hills opened Charlestown's first woolen shop. Ensign William Perkins joined the Ancient and Honorable Artillery Company and surveyed the Plymouth boundary. Robert Smith came as Whittingham's indentured servant. Thomas French Sr. farmed Reedy Marsh at Ipswich. Elizabeth Sawtelle, the Richardson brothers at Malden, John Leavens's wife Elizabeth Stebbin died October 1638. In 1639: Walter Powers Jr. born at Essex — the name Edith Powers would carry; Joseph Barrett born at Braintree; Francis Gould a Boston watchman; Richard Robbins to Charlestown; William Ward and Deborah on the Diligent to Sudbury; Solomon Johnson's family to Sudbury; Arthur Gary freeman at Roxbury; Guillaume Hébert died at Québec, likely smallpox, leaving Hélène Desportes with young children; Noël Morin the cartwright arrived; Ursulines and Hospitalières landed with Madame de la Peltrie. Laurent Migneron, Martin Adroche Côté, Marguerite Langlois — Canada births and marriages. Françoise Hébert, Nicolas Bélanger, Anne Lemoine, Louis Robert."
+        },
+        {
+          "type": "paragraph",
+          "text": "1640–1642: towns hardened and empires cracked. John Leavens Jr., Tryall Shepard, Joshua Lamb, Elizabeth Perkins, Roger Preston and Martha Blessing Towne, John Ramsdell and Priscilla Chase, William Douglas the cooper with Ann Mattle and daughter Anne — each a certificate of planting. William Preston sat first in New Haven's meetinghouse. By 1640 forty thousand English lived in the Bay Colony. Noël Morin married Hélène Desportes 9 January with her house near Notre-Dame and three stepchildren. Nicolas Bonhomme married fille à marier Catherine Gouge. Jean Carrier was born at Saintes; Jean Baptiste Halay married Mathurine Valet at Chartres-de-Bretagne. Michel Messier born at Rouen. Jeanne Mance and Paul de Maisonneuve recruited forty-eight souls and founded Ville-Marie at the island confluence — future Montréal. Jean Nicolet drowned in the St. Lawrence 27 October 1642 after canoeing from Lake Nipissing. King Charles I's quarrel with Parliament became civil war; Winthrop noted immigration fall from two thousand a year to a trickle. John Upham signed a Weymouth land treaty with local Natives April 1642."
+        },
+        {
+          "type": "image",
+          "src": "/images/story/image129.png",
+          "caption": "In 1637 Rev. Thomas Hooker and his congregation walked cattle 160 miles west to plant the Connecticut towns.",
+          "media": "image129.png"
+        },
+        {
+          "type": "paragraph",
+          "text": "1643–1648: the beaver wars began in earnest. Iroquois with Dutch firearms raided Ville-Marie and Trois-Rivières; Canada counted roughly three hundred fifty souls against twelve thousand Haudenosaunee. Jean Dumay arrived with sons Etienne and André; Jean Leblanc married Métis Euphrosine Nicolet to Guillaume Couillard's household. Guillaume Couillard built a lime kiln. Mathieu Choret served Jesuits at Trois-Rivières. Jacques Ménard, Vincent Chrétien, Jean Baptiste Bourgery, Jacques Samson, Anne Dequain, Jeanne Renard — more arrivals and births in France and Québec. Nicholas Holt moved to Andover with his tannery and ferry; William Perkins became Captain of Weymouth militia. Woburn held its first town meeting 13 April 1644. Ville-Marie imported mastiff bitches named Pilote to scent ambushes. Louis Gagne and Marie Michel left Perche. François Bélanger and Masse Gravel farmed Beaupré coast. Cromwell's New Model Army won Naseby 1645; the Little Ice Age bit New England farms. Barbe Halay born at Chartres-de-Bretagne; Marie Anne Leclerc at Dieppe. Noël Morin received Saint-Luc lands; Jean Côté got title after ten years' work. Guyon and Cloutier led a Corpus Christi procession in Québec — bell-ringers, torches, mason's compass on a shield."
+        },
+        {
+          "type": "paragraph",
+          "text": "1647 poured French settlers like a second spring: Raymond Pagé with Madeleine Bergeron and the colony's first horse; Pierre Tremblay enlisted for three years; Charlotte Gaudry and sons Nicolas and Jacques; Thomine Bigot's orphaned Françoise married Charles Guillebourg within weeks of arrival; Mathieu Choret returned with wife Sébastienne Veillon; Gervais le Normand and family from Mortagne; Ignace Bonhomme born at Québec. William Preston's pew order at New Haven; Nicholas Holt laid Andover's bounds; Edward Rice married Agnes Bent at Sudbury; Daniel Cheever and Esther Hester reached Cambridge. Anne Cloutier Drouin died 4 February 1648; Robert Drouin remarried widow Marie Chapelier and moved toward Trois-Rivières fur trade. Etienne Dumay Sr. married fille à marier Françoise Morin and pushed toward Ville-Marie. Marie Hébert Rollet — first European woman farmer, first teacher at Québec — died May 1649. The Iroquois shattered the Huron; four Jesuits died with them. Margaret Jones, Charlestown midwife, hanged 1648 — first of fifteen New England witch executions before 1693."
+        },
+        {
+          "type": "paragraph",
+          "text": "1649–1651: Charles I lost his head; Cromwell ruled Britain; Scottish prisoners including David and John Stirling sailed on the John and Sarah as indentured servants. Francis Gould married Rose and moved toward Braintree. Pierre Bonneau married Marie Lambert; Joseph Bonneau born at Vernoux. Anne Saint-Denis, Etiennette Loriot, Jacques Dion, Catherine Rivet, Antoine Dubois, Mathurine Goard, Anne Le Seigneur. John Eliot, backed by Cromwell's £12,000, organized Praying Indian villages — Nashoba granted 1651 for Chief Tahattawan's people, land that would become Littleton after King Philip's War. Nathaniel Richardson born at Woburn; Edward Preston married Margaret Hurst at New Haven. Ville-Marie shrank below fifty under Mohawk attack; Paul de Maisonneuve sailed home to recruit or abandon. Trois-Rivières bled — Father Buteux killed, governor and twenty-two settlers dead August 1651. Pierre Maheu contracted to Juchereau; Guillaume Fournier arrived; Blaise Juillet married fille à marier Anne Antoinette de Liercourt. Guillaume Labelle born at Lisieux; Nicole Dumay born at Sillery."
+        },
+        {
+          "type": "paragraph",
+          "text": "1652–1653: the Grande Rescue gathered on the horizon. Mary Alcock baptized at Roxbury; Nathaniel Gary admitted to church; Thomas Green Jr. married Rebecca Hills at Malden. Zacharie Cloutier received Château-Richer land from Governor Lauzon. Jean Guay married fille à marier Jeanne Mignon at Point Lévis. Jean Baptiste Bourgery sailed from La Rochelle. Paul Vachon the mason-notary married Marguerite Langlois at Beauport. Pierre Gaudin enlisted as master carpenter, advanced 127 livres, arrived September 1653. On 16 November, Maisonneuve landed one hundred recruits at Ville-Marie — the settlement would live. Nicolas Gaudry married twelve-year-old Agnés Morin. Toussaint Giroux contracted with Giffard. Jean Bonneau — Huguenot, first of the Bonneau-Goodwater line — reached Canada; Catherine Hurault and Jean Lemarché came with the rescue to Montréal. Michel Messier and Jacques-Hugues Picard among the soldiers. Noël Morin became Sieur de Saint-Luc with river-front seigneurie. William Peacock married Mary Willis at Roxbury."
+        },
+        {
+          "type": "paragraph",
+          "text": "1654–1655 closed the era with land, law, and loss. Joane Newman Powers sailed with fifteen-year-old Walter Jr. after Walter Sr.'s death — Salem landing for the branch that would reach Vermont and Iowa. John Upham, Ralph Shepard, and Joseph Hills angered the General Court by electing their own minister at Malden. Martha Gould born at Braintree. Lt. Quentin Moral married widow Marie Marguerie Hertel and fought over inherited acres at Trois-Rivières. Pierre Gaudin and Jeanne Rousseliere married at Ville-Marie; Jean Lemarché married Catherine Hurault; Toussaint Giroux married Marie Godard under Giffard's roof — twin infants dead within a week. Guillaume Couillard ennobled by Louis XIV. Jean Bonneau summoned son Pierre to Île d'Orléans; Paul Vachon laid Hôtel-Dieu stone with Governor Lauzon. Robert Drouin, prosperous at last, returned to Château-Richer with Marie Chapelier and brick for the Jesuits. May 1655: Chelmsford approved on Pennacook land — salmon falls, maple sugar, beaver meadows handed to English farmers who found fields already cleared. Elizabeth Preston born at New Haven; Daniel Rice Sr. at Sudbury; John Preston at Ipswich. Pierre Saint-Denis and Jean Baptiste Halay sailed for Québec, leaving wives and children in France. Paul Vachon notarized at Notre-Dame-des-Anges. Noël Morin bought a cathedral pew for 1.7 acres. Bourgery's family sheltered inside Trois-Rivières fort as Iroquois pressure mounted."
+        },
+        {
+          "type": "paragraph",
+          "text": "Between 1626 and 1655 the family learned two vocabularies of survival: freeman oaths and militia drills in towns named for English shires, and contrats de servitude, filles à marier, and Jesuit bells above a river that froze six months a year. English villages multiplied toward forty thousand souls; French Canada counted hundreds, not thousands — yet the Québec farm, the Beauport manor, the Ville-Marie rescue, and the Bonneau field on Île d'Orléans would outlast every charter. The next segment is frontier and faith — colder winters, louder wars, and prayers in three languages on soil that was never empty."
+        }
+      ]
+    },
+    {
+      "id": "seg-05-frontier-and-faith",
+      "order": 5,
+      "yearStart": 1656,
+      "yearEnd": 1675,
+      "title": "Frontier and Faith",
+      "branch": "both",
+      "status": "draft",
+      "storybookChapterId": "carignan-sali-res-regiment",
+      "relatedChapterIds": [
+        "beaver-wars",
+        "carignan-sali-res-regiment",
+        "praying-indian-villages",
+        "restoration-of-the-english-king",
+        "start-of-the-hudson-s-bay-company"
+      ],
+      "supplementalSources": [
+        "Canadian War Museum — Carignan-Salières Regiment and Tracy campaign",
+        "Massachusetts Historical Society — Restoration, Navigation Acts, King Philip's War",
+        "Hudson's Bay Company History Foundation — charter of 1670 and Rupert's Land",
+        "Library and Archives Canada — Filles du Roi, Conseil souverain of 1663",
+        "National Park Service — Praying towns and John Eliot's mission"
+      ],
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "After 1655 the margins grew teeth. English towns pushed inland toward groves already cleared by Pennacook hands; French farms clung to riverbanks while Iroquois warriors watched from every cedar swamp. Faith meant different things on each shore — Puritan meetinghouses where Eliot's Praying Indians wore English coats, and stone chapels where Jesuits exorcised devils from teenage girls. Both branches were about to learn that frontier peace is always borrowed time."
+        },
+        {
+          "type": "paragraph",
+          "text": "1656–1658 kept the registers busy on both sides of the ocean. Edward Peter Hurst died in Boston; his daughter Margaret had married Edward Preston at New Haven in 1651. William Towne sold Salem land and bought Topsfield meadow. Robert Smith, tailor of Rowley, married Mary French. Eleven-year-old William Taylor came alone on the Speedwell toward country that would become Marlborough. In Canada, Robert Drouin's prosperity showed in dowries — from nothing in 1656 to milk cows, clothing, and livres cash within eight years. Marie Anne Le Laboureur arrived from Bayeux as a fille à marier and married carpenter Jean Normand in Charlesbourg's star-shaped Jesuit layout. Ignace Gagne was born at Sainte-Anne-de-Beaupré; Étienne Dumay Jr. at Sillery; Marie Bonneau followed her husband Pierre from France with seven-year-old Joseph. Louis XIV, recalling Governor Lauzon, authorized the \"36-mois\" indenture — three years' labor, no citizenship, no fur trade, hope of land at the end. Canada held fewer than three thousand souls against an empire of beaver and fear."
+        },
+        {
+          "type": "paragraph",
+          "text": "Deacon Ralph Mousall of Charlestown left £20 in his will to ward Ruth Wood — who would marry Phineas Upham at Malden on 14 February 1658. Nathaniel Gary wed Anne Mattle Douglas at Roxbury; Walter Powers Jr. would marry Tryall Shepard three years later. John Johnson and Deborah Ward married at Sudbury; Bethiah Ward born to Deacon William Ward and Elizabeth Storey — fifteen children between them. Solomon Johnson received 130 acres in Sudbury's two-mile strip. Between 1651 and 1658, John Eliot and Daniel Gookin organized seven Praying Indian villages — over fourteen such towns eventually, forty-five to sixty Native inhabitants each, Bibles in Algonquin, English houses, Puritan meetinghouses. Chief Tahattawan's Nashoba grant of 1651 would one day become Littleton. Oliver Cromwell died in 1658; son Richard lasted months before exile. The Act of Uniformity marked every non-Anglican a nonconformist. David and John Stirling, Scottish prisoners indentured in New England, sailed home when the Protectorate cracked."
+        },
+        {
+          "type": "paragraph",
+          "text": "French Canada in those same years filled with arrivals and plague. On 8 March 1658, Étienne de Lessard donated land for a chapel at Sainte-Anne-de-Beaupré — rheumatic builder Louis Guimont cured laying three foundation stones, miracles multiplying. Michel Messier married fille à marier Anne Lemoine at Ville-Marie and bought Île de Montréal acreage. Léonard Pilote sailed from La Rochelle on Le Taureau, leaving pregnant Denise Gauthier behind; by October he was procurator for merchant Michel Desorcy, emissary of the king. Toussaint Giroux finished servitude under Giffard, built a heated room with cellar and attic at Beauport, took up eel fishing beside Michel Baugis. In 1659, Bishop François de Laval arrived with Paul de Rainville's family and eighty-four Normandy fishermen. Jeanne Mance recruited Olivier Charbonneau's laboring family — the Saint-André lost its rudder, returned, sailed again, and the Black Plague killed ten at sea; the infection spread through Québec until Charbonneau fled to Boucherville with Pierre Dagenets, wheat farming and a water mill at Pointe-aux-Trembles. Paul Vachon became notary at Beauport and first notary of Île d'Orléans. Jean Pichet contracted at Château-Richer. Pierre Maheu contracted to marry twelve-year-old Jeanne Drouin before notary Paul Vachon. Léonard Pilote wrote Denise: \"It is here you must come. I have obtained a beautiful grant right next door to Québec.\""
+        },
+        {
+          "type": "paragraph",
+          "text": "30 January 1660: Charles II climbed to a throne his father had lost on a scaffold. The Restoration bargain gave him army and purge; Parliament held him to the Petition of Right — no forced loans, no martial law without consent. Charles II and his ministers pulled colonies under crown control and passed Navigation Acts forcing Atlantic trade onto English hulls, turning colonial merchants into smugglers overnight. In Massachusetts, the General Court named Marlborough and ordered every claimant to pay public charges by November or forfeit interest — Edmund Rice, William Ward, Solomon Johnson, John Howe among the signers. William Ward moved nine miles west from Sudbury, became Marlborough's first deacon, received fifty acres. Roger Preston kept a Salem inn for strangers and strong liquor. William Sterling married Elizabeth Sawtelle at Haverhill — ship carpenter, miller, future selectman. Francis Gould and Rose Whitehall left Braintree for Chelmsford's western edge in late 1659. William Douglas bought at New London and moved from Boston with Ann Mattle and their children. In Canada, Jean Carrier arrived from Saintes to work for the Hospitallers; Nicolas Bélanger married Marie de Rainville at Beauport; Iroquois raiders took girls from Ville-Marie — Marie Madeleine Bourgery, Jeanne Baillargeon — and slaughtered militia who ventured beyond the walls."
+        },
+        {
+          "type": "paragraph",
+          "text": "1661 was a year of terror on the St. Lawrence. Walter Powers Jr. and educated Tryall Shepard bought land from Lt. Joseph Wheeler north of Concord's garrison, built on Quagany Hill. Joseph-François Hertel, stepson of Lt. Quentin Moral, was captured by four Iroquois, tortured, adopted, smuggled letters to Father Simon Le Moyne, escaped — future \"Hero of Canada.\" Louis Gagne died with seven Frenchmen on the Mohawk River near future Auriesville. Michel Messier was reported burned by Onondagas; he would surface again. Iroquois massacred nearly a hundred French and Huron on Île d'Orléans; Sainte-Famille parish rose from the blood. Governor Davaugour sent Pierre Boucher to France; Louis XIV chose the Carignan-Salières Regiment — hand-picked soldiers fresh from fighting Turks — rather than abandon the colony. Raymond Pagé moved his carpenter's family to Beaupré waterfront; Jacques Lareau sharecropped north of the Saint-Charles as carpenter and wood-turner. Michele Picard born at Ville-Marie to Jacques-Hugues Picard and widow Anne Antoinette de Liercourt. Charles Garnier sailed from Caen. Marie-Marthe Moral born at Trois-Rivières where Quentin Moral would argue 29 cases in a court that tried 907 disputes for 700 settlers — two-thirds debt, inheritance the rest."
+        },
+        {
+          "type": "paragraph",
+          "text": "1662–1663 restructured both empires. Louis XIV made Canada a royal province; stone replaced boat-builder timber; upper towns and lower towns plotted on paper before ground was broken. The filles à marier program ended — 262 women in twenty-eight years, average ten per year. Jean Besset of Cahors joined La Tour's Company of the coming regiment. Jean Pichet bought 38.5 acres at Saint-Pierre on Île d'Orléans — one of three hundred founding families. Iroquois killed Jean Leblanc at Saint-Pierre; widow Euphrosine Nicolet remarried Elie Dussault. Denise Pilote arrived with children Marguerite and Jean. Thomas Barrett and Margaret Huntington left Braintree for Chelmsford in 1663 — fifty-two acres on Robin's Hill, great central chimney, low ceilings against cold. On 5 February, earthquakes shook the valley; Jesuit Father Lalemant counted shocks morning through night; a glacial moraine failed and sent a wall of water down the St. Lawrence, scouring lower Québec. Jean Guyon died mid-quake after twenty-six years in Canada; his estate quarreled five years. Angiers warriors killed eight at Beaupré; François Bélanger spared, prospering toward forty-two acres and thirteen cattle. The Conseil souverain ended the Company of One Hundred Associates. Louis XIV launched the filles du Roi — parish certificates, priest's recommendation, dowries paid by merchants at fifty livres per passage. Thirty-eight arrived 22 September 1663. Michel Messier escaped the Iroquois again."
+        },
+        {
+          "type": "paragraph",
+          "text": "1664–1665 brought plague to London and soldiers to Québec. Bubonic death climbed from 43 in May to 31,159 in August — red crosses on doors, \"Bring out your dead,\" Charles II fled to Oxford while fifteen percent of England perished. English ships seized Dutch New Netherland and split it into New York and New Jersey; Iroquois lost Dutch gun suppliers but kept the English alliance. Charles Garnier married fille à marier Louise Vezina at Château-Richer — six children would die young. Florian LeClerc died at Trois-Rivières, leaving Marie Gendre seven children including Marie Madeleine Bourgery, Iroquois captive rehabilitated by Ursuline sisters. Then the Carignan-Salières Regiment arrived — twelve hundred soldiers delayed at La Rochelle for Huguenot conversions and canoe-building, landed June through September under Tracy. Forts rose on the Richelieu; Mohawk country felt French steel. Jean Talon came as intendant. Léonard Pilote died at Beauport 26 May. René Dumats and Mathieu Gervais landed on L'Aigle d'Or; Jean Besset on Le Vieux Simêon after a hundred-day crossing; Louis Robert billeted with Marie Gendre's household in the attacked fort at Trois-Rivières. Filles du Roi Anne Bellesoeur married Nicolas Massard; Catherine Rivet would marry Pierre Duchesne. Vincent Chrétien, whose brothers Louis XIV had beheaded, settled Sainte-Famille on Île d'Orléans. Michel Messier became Sieur de Saint-Michel with fifty acres and militia lieutenant's commission. Noël Langlois Sr. sheltered regiment officers — François Laumonier de Traversy killed hunting Lake Champlain; young Noël Jr. would take the dit name Traversy."
+        },
+        {
+          "type": "image",
+          "src": "/images/story/image28.jpg",
+          "caption": "Iroquois raids pushed French settlers behind palisades — the beaver wars that made the Carignan-Salières campaign necessary.",
+          "media": "image28.jpg"
+        },
+        {
+          "type": "paragraph",
+          "text": "1666 was defeat, census, and marriage in the same breath. Governor Courcelle led six hundred Carignan soldiers into Mohawk country in January snowshoes without Algonquin guides — lost, exhausted, stumbled into Schenectady in New York. Mohawk warriors ambushed French officers at Lake Champlain in July; Tracy imprisoned a peace delegation. Fall brought thirteen hundred men under Tracy destroying deserted Mohawk villages and seizing crops; Chief Canaqueese carried peace terms into 1667. Jean Talon's door-to-door census counted 3,215 Canadians in 538 families — 2,034 men, 1,181 women, professions from servants to gentlemen. Laurent Migneron and Anne Saint-Denis married at Château-Richer, signing with X's, starting in a wooden shack. Louis Robert married twelve-year-old Marie Madeleine Bourgery in Trois-Rivières, working as cobbler while she remained with her mother. At the Hôtel-Dieu, Jean Carrier met Barbe Halay — Bishop Laval's ward, \"possessed by the devil\" until exorcism succeeded; she would work for the sisters before their cathedral wedding. Jean Pichet married Marie Madeleine Leblanc on Île d'Orléans — her mother Euphrosine, Métis daughter of Jean Nicolet. Pierre Duchesne wed Catherine Rivet at Montmorency. Denise Pilote assigned Jesuit domestic Jean Drouard guardian of ten-year-old Jean Pilote. Paul Vachon raised seven cattle on twenty acres while serving as seigneurial attorney and notary on Île d'Orléans."
+        },
+        {
+          "type": "image",
+          "src": "/images/story/image51.png",
+          "caption": "Fort Chambly on the Richelieu River — wooden predecessor built in 1665 when Jean Besset and the Carignan companies wintered in Québec.",
+          "media": "image51.png"
+        },
+        {
+          "type": "paragraph",
+          "text": "Peace let the colony breathe and the king's daughters fill the empty beds. Four hundred Carignan soldiers stayed in 1668; Louis XIV granted a hundred francs and a year's food to each. At Fort Chambly, Jean Besset married fille du Roi Anne Le Seigneur — officer Jacques d'Harcinval witnessing, best man Jean-Baptiste de Poitiers, winter at Fort Saint-Louis above Québec. Vincent Chrétien wed Marie Anne Leclerc at Sainte-Famille. Lt. Michel Messier received the fief Cap de la Trinité with brother-in-law Jacques Le Moyne. Louis XIV sent twelve mares, two stallions, fifty sheep, and 64,000 livres to recruit five hundred more souls. Nicolas Gaudry died leaving Agnés Morin eight children; neighbor Jacques Nourry executed for molesting a child — his land passed to Charles Garnier. Jeanne Mance wiped Ville-Marie debts. Olivier Charbonneau finally repaid Jeanne Mance's passage loan after ten years. Joseph Bonneau finished mason's servitude under Noël Jérémie, leased land on Île d'Orléans, bought 2.5 acres with cabin and outdoor oven, partnered with Pierre Letat sawing timbers for Intendant Talon. On 31 October 1670 he married fille du Roi Marie-Anne Lelong at Sainte-Famille with joint property and a 250-livre dowry. Four ships brought 150 filles du Roi and tons of supplies that August. Jean Carrier and exorcised Barbe Halay wed in the cathedral 4 November. Zacharie Cloutier sold Beauport and crossed the river to Château-Richer."
+        },
+        {
+          "type": "paragraph",
+          "text": "2 May 1670: Charles II's cousin Prince Rupert chartered the Hudson's Bay Company — oldest joint-stock merchandiser in the English-speaking world, exclusive trade on all rivers draining into Hudson Bay, vast Rupert's Land named for the prince. Two French traders had pitched the idea to England after Paris refused them in 1665; beaver felt hats in Europe turned pelts into empire. While English merchants looked north, French cousins married south and west. Guillaume Labelle, illiterate and confirmed at Ville-Marie in 1668, courted fifteen-year-old Anne Charbonneau in November 1671 with notaries, Sulpicians, and lords of Longueuil present — 300 livres from the bride, land bought from surgeon and ex-Carignan soldier René Sauvageau payable in roof planks. Jacques Samson wed Marie Anne Metru days after she arrived from Paris with father Claude — her mother dead at childbirth. René Dumats married fille du Roi Marie Lelong. Agnés Morin, widowed of Nicolas Gaudry, married Ignace Bonhomme with eight children in tow. Noël Morin rendered homage for his Saint-Luc seigneurie on the Richelieu. John Ramsdell Jr. and Elizabeth Perkins married at Boxford and joined Leonard brothers' iron works — first castings in New England. William Taylor wed Mary Johnson at Marlborough; she died in childbirth December 1672, infant Samuel following weeks later."
+        },
+        {
+          "type": "image",
+          "src": "/images/story/image61.png",
+          "caption": "Jean Carrier and Barbe Halay married at the Cathédrale de Québec in 1670 — faith, hospital, and frontier in one ceremony.",
+          "media": "image61.png"
+        },
+        {
+          "type": "paragraph",
+          "text": "1672–1673 tightened the frontier's net. Governor Frontenac arrived contentious and ceremonious, clashing with the Sovereign Council. Joseph Barrett married Martha Gould at Chelmsford 17 September 1672 — Goulds and Barretts already tied by Francis Gould's daughter. Sergeant Thomas French Jr. won Pequot War veterans' land northeast of Salisbury with eight Ipswich men. William Douglas became New London deacon and General Court deputy. Jean Lebeau married fille du Roi Etiennette Loriot at Chambly. Noël Langlois Jr. wed Aimée Caron — stepdaughter of his father's second wife Marie Crevet; he took Traversy as dit name and followed Frontenac west toward Kingston, earning a seigneury called Port Joli for oak spars and hunting ground. Guillaume Fournier received thirty acres on the south shore — pioneer of Montmagny parish, church later built on three acres he donated. Louis XIV ordered uncleared seigneurial lands forfeited to the crown; Noël Morin cleared Saint-Luc and parceled to sons and stepchildren. Rebecca Barrett born at Chelmsford 4 July 1673. That October the town approved Joseph Barrett and Francis Gould building a sixteen-by-eighteen-foot lookout on Robin's Hill — single-thickness boards, one window, watchers for hostile warriors. Jean Besset received twenty-six arpents on the Richelieu at Chambly, then sold and bought sixty-eight acres at Sault St-Louis opposite Ville-Marie. Québec legislated latrines and ended the French habit of throwing waste into streets."
+        },
+        {
+          "type": "paragraph",
+          "text": "1674 was births and land transfers before the storm. John Leavens Jr. married Elizabeth Preston at New Haven — second wife after Hannah Woods died at Roxbury. Walter Powers III born at Concord to Walter Jr. and Tryall. Marie Suzanne Samson born at Pointe-Lévy; Pierre Julien Dion at Québec. Joseph Bonneau paid debts in silver. Guillaume Labelle and Olivier Charbonneau accepted Pierre Boucher's offer to farm forty-five cultivated acres on Île Jésus — oxen, hay, wheat, poultry — sharecroppers poised to become proprietors. In England, Richard Sawtelle's Groton garrison had sheltered neighbors since the 1660s; he would petition out of militia training at sixty. The Nashoba Praying Village still held Chief Tahattawan's people on land granted 1651 — three by four miles that English maps would later call Littleton. Faith had bought a generation of uneasy coexistence. It would not buy the next."
+        },
+        {
+          "type": "image",
+          "src": "/images/story/image95.png",
+          "caption": "1675 — tribal lands across New England as King Philip's War ignited; Marlborough and Chelmsford sat on the frontier line.",
+          "media": "image95.png"
+        },
+        {
+          "type": "paragraph",
+          "text": "1675 exploded. King Philip — Metacomet, son of the Mayflower's ally Massasoit — led Nipmuck, Pocumtuc, and Narragansett warriors against towns that had been eating his people's land for fifty years. Twelve towns destroyed, half of New England attacked, one in ten military-age men dead. Phineas Upham commissioned lieutenant in September, marched Nipmuck country with Captain Gorham, joined the Massachusetts regiment under Captain Isaac Johnson. On 19 December, Governor Josiah Winslow's united army attacked the Great Swamp fort in Rhode Island — frozen swamp ice allowing approach where finished walls would have made assault suicide. Narragansett and Wampanoag defenders burned in their cedar island stronghold; Nathaniel Richardson of Woburn, in Captain Prentiss's horse troop, was among the wounded. John Preston served under Captain Gardner. Deacon William Douglas delivered provisions to the commissary. At Marlborough, William Taylor garrisoned with Deacon William Ward — whose house was burned, cattle killed, a son killed in the fighting. Joshua Lamb married Mary Alcock at Roxbury. Daniel Johnson born to John Johnson and Deborah Ward at Marlborough. Mary Ramsdell born at Topsfield. Laurent Migneron's wife Anne Saint-Denis died in childbirth; Paul Vachon inventoried a shack, two cows, two bulls, veal calves, a sow — half the land to the widow, half to three children before Laurent remarried fille du Roi widow Marie Guillaume in May."
+        },
+        {
+          "type": "paragraph",
+          "text": "Between 1656 and 1675 the family stood on two frontiers learning the same lesson in different tongues. English cousins pushed garrison houses, lookout shacks, and militia drills west of Boston while Praying Villages that Eliot had built with Cromwell's money faced starvation on Deer Island. French cousins survived plague ships, earthquakes, Iroquois terror, regiment demobilization, and filles du Roi dowries to raise stone chimneys on Île d'Orléans and Richelieu riverlots. The Hudson's Bay Company and the Carignan muster roll were the empires' answers to the same beaver — trade and troops where settlement alone failed. King Philip's War was not the end of the story; it was the crack in the ice. The next segment is wars and witch panic — burned towns giving way to burned women, and a French colony that thought peace would last a decade."
+        }
+      ]
+    },
+    {
+      "id": "seg-06-wars-and-witch-panic",
+      "order": 6,
+      "yearStart": 1676,
+      "yearEnd": 1692,
+      "title": "Wars and Witch Panic",
+      "branch": "both",
+      "status": "draft",
+      "storybookChapterId": "salem-witch-trials",
+      "relatedChapterIds": [
+        "king-william-s-war",
+        "queens-anne-s-war",
+        "salem-witch-trials",
+        "start-of-the-hudson-s-bay-company",
+        "king-philip-s-war-the-province-of-massachusetts-bay"
+      ],
+      "supplementalSources": [
+        "Massachusetts Archives Vol. 135 No. 64 — Thomas Barrett petition for Martha Sparks",
+        "National Park Service — King Philip's War and Praying Indian towns",
+        "Canadian War Museum — King William's War, Battle of Québec 1690, Lachine massacre",
+        "Salem Witch Trials Documentary Archive — spectral evidence and Court of Oyer and Terminer",
+        "Hudson's Bay Company History Foundation — York Factory trading post 1684"
+      ],
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "The war did not end when the smoke cleared. It changed shape — from burning garrisons to burning charters, from Iroquois canoes on the Richelieu to English cannon on the St. Lawrence, from frontier militia to courtroom spectral evidence. Between 1676 and 1692 both branches learned that peace treaties and prayer books are written on paper the powerful can rewrite overnight."
+        },
+        {
+          "type": "paragraph",
+          "text": "King Philip's War bled out through 1676. At the Great Swamp Fight sixty-eight colonists died and a hundred fifty were wounded; twenty-two more perished on the march home. Lt. Phineas Upham, carried wounded to Wickford, then dragged through the \"Hungry March\" where soldiers ate their own horses — died of his wounds at Malden, date unknown but autumn 1676. Groton burned 13 March; Richard Sawtelle fled thirty miles east to Watertown with his family, leaving one of five garrison houses in ashes. Widower William Taylor married widow Hannah Merriam 16 July 1677 — her first husband Henry Axtell killed on the Marlborough-Sudbury road in April 1676; she brought five children. Eliezer Taylor born April 1678 was named for Deacon William Ward's son slain in the war. Nashoba Praying Indians, rounded up to Deer Island, starved; Robert Robbins would buy their confiscated land in 1686. On the St. Lawrence, discharged Carignan soldier Mathieu Gervais married fifteen-year-old Michele Picard at Ville-Marie August 1676, farming four acres at La Prairie. Pierre Gaudin sold at Lachine and sailed to Acadia to build a mill. Marguerite Messier born at Chambly to Lt. Michel Messier and Anne Lemoine."
+        },
+        {
+          "type": "image",
+          "src": "/images/story/image113.jpg",
+          "caption": "By 1677, six Praying Indian villages marked New England's map — white crosses on land that King Philip's War would empty.",
+          "media": "image113.jpg"
+        },
+        {
+          "type": "paragraph",
+          "text": "Prosperity and quarrel filled the years the English counted as recovery. 13 August 1677, Pierre Boucher deeded Île Jésus farm lot 8 to Guillaume Labelle and Anne Charbonneau — sharecroppers become the island's first landowners with three children, musket above the hearth. François Bélanger, sixty-five, accepted Frontenac's grant of Bonsecours seigneurie on the south shore — three miles of river front, six miles deep, domain title recorded October 1680; he gave L'Ange-Gardien farm to son Charles and started L'Islet. Nathaniel Gary died of smallpox at Roxbury 28 January 1678; widow Anne Mattle Douglas raised ten children, remarried Thomas Bishop in 1683. Agnès Bonhomme Morin insulted Governor Frontenac, was arrested, exonerated by the Sovereign Court — Frontenac raged at the clerk and locked him up for days. Jean Besset bought abandoned Chambly frontage July 1678. Joshua Lamb of Roxbury bought half of Roanoke Island in Carolina for £150 September 1677. Daniel Rice Sr. married Bethiah Ward at Marlborough 10 February 1681 — Ward blood tying Marlborough's deacon line to Rice farms."
+        },
+        {
+          "type": "paragraph",
+          "text": "In the 1680s Boston merchants began buying vast western tracts — square miles with vague bounds — then petitioning the General Court to confirm title if enough families settled within set years, with land reserved for church, school, and town house. New Hampshire chartered separately 1679, absorbed into the Dominion in 1686. France sent Troupes de la Marine — professional navy infantry who learned forest warfare; Denonville's 1687 expedition mustered 832 soldiers, 1,030 militia, and 800 Native allies against Seneca villages. Laurent Migneron's Beaupré grant west of the Sainte-Anne River was registered 1680. Raphaël Giroux married Marie-Madeleine Vachon at Beauport November 1681. Jean Pilote wed Marie-Françoise Gaudry 27 June 1678; Charles Carrier born at Lauzon December 1678. Dorothy Lamb born to Joshua and Mary Alcock at Roxbury June 1679. Daniel Rice Jr. born at Marlborough June 1684. John Leavens Jr., master carpenter, moved from Stratford to Roxbury, Connecticut, received into church April 1684."
+        },
+        {
+          "type": "paragraph",
+          "text": "Canada's 1681 census counted over 1,300 at Québec alone. Robert Drouin at seventy-five still farmed sixteen acres at Château-Richer with a servant, inviting son Etienne to help make bricks. Paul Vachon worked thirty-five cultivated acres at Beauport with thirteen cattle and a tenant on Île d'Orléans. Jean Carrier and exorcised Barbe Halay farmed fifteen acres at Lauzon with five cattle and a musket. Guillaume Labelle held fifty acres on Île Jésus with two horned beasts. Joseph Bonneau and Marie-Anne Lelong had fourteen acres and three cattle at Saint-François. Pierre Maheu worked twenty-five acres at L'Ange-Gardien; Pierre Saint-Denis kept fifteen arpents on Île d'Orléans with eight cattle; Raymond Pagé at seventy-seven still carpentered at Beaupré beside his four married children. Pierre Charles Le Sueur left Jesuit Sault Ste. Marie for illegal western fur trade — arrested at Ville-Marie, freed, reached Green Bay and the Mississippi headwaters, brought bluish clay samples to France declared copper ore, imprisoned again, eventually commissioned to \"mine\" furs. Joseph Bonneau and Maurice Arrivé laid stone masonry in Lower Town Québec for five livres per toise. Jean Pilote's Illinois expedition returned ambushed — Iroquois took seven canoes, all pelts, left five trappers one rifle."
+        },
+        {
+          "type": "paragraph",
+          "text": "1682–1683 drew new towns and new wives from old violence. Massachusetts bought Mohegan land that included Wabaquasset — a Praying village split during King Philip's War, north siding with Philip, south with the Mohegans — and thirteen Roxbury men founded New Roxbury seventy miles west, renamed Woodstock 1690 on Judge Sewall's suggestion. Widower William Taylor married Mary Cheevers at Cambridge November 1683 — third wife; she bore nine children before dying in childbirth 1697 with infant Marcy, Taylor's third wife lost that way. Antoine Dubois sold his beaver license for 150 livres in pelts May 1683. François Chrétien born on Île d'Orléans February 1682; Noël Lareau at Québec February 1682. Charles Maheu married Marie Charlotte Garnier at L'Ange-Gardien April 1688. Nathaniel Richardson and Mary Peacock's son Thomas born at Woburn April 1687. John Preston married widow Sarah Gary at Andover November 1687 — her first husband John Holt died that March. Deacon Edward Rice led Marlborough's church in the Dominion years. Agnès Bonhomme Morin died August 1687; Ignace remarried into the Gaudry widow line."
+        },
+        {
+          "type": "paragraph",
+          "text": "England reorganized itself and the colonies paid. Charles II revoked the Massachusetts Bay charter October 1684 for discriminating against Anglicans and Quakers and running an illegal mint. James II, Catholic brother of the dead king, took the throne 1685 and created the Dominion of New England — Massachusetts, Plymouth, Connecticut, New Hampshire, Rhode Island united under Sir Edmund Andros, town meetings forbidden, new taxes imposed. Joshua Lamb's Roxbury investors bought Native land west of Boston — Strawberry Hill, then Rutland, then Woodstock in Connecticut; John Leavens Jr. sold Roxbury property and became a founding selectman of New Roxbury 1686. Ralph Farnham III married Sarah Sterling at Andover October 1685. Edward Preston listed among New Haven proprietors. Robert Drouin died at seventy-eight 1 June 1685; Marie Chapelier would feud with stepchildren twenty years. Joseph Bonneau's first wife Marie-Anne Lelong died of influenza February 1684; he married Madeleine Duchesne April 1684 and took the dit name LaBecasse for the family's snipe hunting. York Factory rose on Hudson Bay 1684 — HBC's foothold in Rupert's Land. Jerome Longtin sailed from Paris and married Catherine Marier at Ville-Marie October 1684."
+        },
+        {
+          "type": "paragraph",
+          "text": "Families kept living inside the Dominion's squeeze. William Sterling built a two-story house where Haverhill's city hall would stand, selectman and ship carpenter on the Merrimack, offered his home for the minister's use, served tithingman and constable 1693–1696. Nathaniel Robbins born at Canterbury 1685 to Robert and Mary Maxwell. Ignace Choret the Beauport shoemaker married Marie Therese Bélanger November 1685. René Dumats and Marie Lelong's daughter Marie Louise born at La Prairie September 1685; Jean Besset's son Francois at Chambly July. Etienne Dumay Jr. married Jeanne Françoise Ménard at Boucherville November 1686. Mathurin Lebeau born at Fort Chambly April 1684 to Jean Lebeau and fille du Roi Etiennette Loriot. Marguerite Gervais born to Mathieu and Michele Picard December 1684. Marie Labelle born to Guillaume and Anne Charbonneau December 1681. Richard Sawtelle, back in Watertown after Groton burned, would be elected selectman 1689. Robert Robbins bought Nashoba plantation lands the war had emptied from Wampanoag and Narragansett hands."
+        },
+        {
+          "type": "paragraph",
+          "text": "The Glorious Revolution of 1688 shattered the Dominion. Parliament invited William of Orange and Protestant Mary — James II's daughter — to replace Catholic James; Andros's New England collapsed when James fled 23 December. King William's War followed immediately: Penobscot versus Kennebec as the Acadia-Maine border, Wabanaki allies seeking revenge for refugees King Philip had driven north. Ephraim Smith Sr. marched six weeks under Andros against the Wabanaki 1688. Elizabeth Leavens born at Woodstock; Elizabeth Taylor at Marlborough. Jean Baptiste Neveu sailed from France 1687, married Catherine Gaudin at Lachine February 1688 — Pierre Gaudin's daughter, survivors of the world that Lachine would lose. 18 April 1689, Boston rose — Andros seized at Fort Mary, imprisoned on Castle Island, escaped to Rhode Island, recaptured, charges dismissed in London. Fifteen hundred Mohawk warriors burned Lachine 4 August 1689 — eighty French dead, English encouragement because France and England were at war again. Frontenac answered Phips's 1690 siege demand with \"the mouth of my cannons\" — thirty-seven English ships bombarded Québec walls ineffectively; Beauport defeat sent the fleet home in ruins. Battle of La Prairie August 1691: English and Mohawk allies struck; French mustered seven hundred at the fort built three years earlier. Pierre Charles Le Sueur married Marguerite Messier at Boucherville March 1690; Marie-Claude Dubois born at Trois-Rivières to Antoine Dubois and Marie-Marthe Moral."
+        },
+        {
+          "type": "image",
+          "src": "/images/story/image59.jpg",
+          "caption": "1690 — Sir William Phips bombarded Québec from the St. Lawrence; Frontenac's walls held and the New England fleet retreated.",
+          "media": "image59.jpg"
+        },
+        {
+          "type": "paragraph",
+          "text": "7 October 1691, William and Mary rechartered the Province of Massachusetts Bay — tighter crown control, religious tolerance beyond Puritan membership, oaths to the king not the colony. Sir William Phips arrived as governor and immediately rode west to fight Natives, leaving Boston's government hollow. Puritans feared their world was ending twice — charter gone, then witch panic arriving from the west, not Salem village first. At Chelmsford, thirty miles from Salem, Martha Barrett Sparks — granddaughter of Thomas Barrett and Margaret Huntington, daughter of Thomas Barrett Jr., wife of Henry Sparks away on military service — was accused of witchcraft and sent to Boston prison 28 October 1691. Thirty-five years old, never brought to trial. Jailer John Arnold held her fifty-eight weeks alongside Sarah Good, Sarah Osbourn, and Rebecca Nurse from Salem. Samuel Green married Elizabeth Upham at Malden that same autumn — Upham blood after Phineas died of war wounds. Dominique Bonneau born at Montmorency October 1691 to mason Joseph and Madeleine Duchesne. Louis Guay wed Marie Suzanne Samson at Lévis January 1692; Jean Jacoti married Anne Marie Massard at Québec in February."
+        },
+        {
+          "type": "image",
+          "src": "/images/story/image100.jpg",
+          "caption": "Spring 1692 — accused witches were shackled and pressed to confess while Governor Phips was absent on the frontier.",
+          "media": "image100.jpg"
+        },
+        {
+          "type": "paragraph",
+          "text": "Spring 1692 changed the rules of witchcraft while leadership was gone. Before, accusation was costly because prisoners paid jail fees and could sue for slander if acquitted — many accusations were curses not meant literally. Now the Court of Oyer and Terminer accepted spectral evidence: a witness could swear the accused's spirit attacked in a dream while the body was elsewhere. Guilt was assumed; shackles, starvation, and torture extracted confessions; conviction meant forfeited property and court costs whether innocent or guilty. Between 1648 and 1693 roughly eighty New Englanders faced witch charges; fifteen were executed — Margaret Jones the Charlestown midwife hanged in 1648 was first. The 1692 burst came with a new royal governor absent and Puritans convinced their charter and faith were under simultaneous attack."
+        },
+        {
+          "type": "paragraph",
+          "text": "Andover and Chelmsford sat inside the panic's orbit. Ralph Farnham Jr. died 8 January 1692, expected as witness in Mary Tyler's trial — illness blamed on witchcraft. 30 July, Ralph Farnham III and brother John summoned against Martha Carrier, accused after smallpox killed her father, two brothers, and two of her four children; Carrier hanged 19 August though trial transcripts omit Ralph III's testimony. Our direct tie stayed in Boston stone. 1 November 1692, Thomas Barrett Jr. petitioned Governor Phips — Massachusetts Archives Vol. 135 No. 64: daughter imprisoned twelve months five days on Deputy Governor Danforth's warrant, no evidence produced, no accuser remaining; Henry Sparks still in the king's service in the eastern parts; Thomas caring for Martha's two young children and a lame elderly wife in poor health. 6 December he posted bond for her appearance; 8 December Martha Barrett Sparks walked free after fifty-eight weeks beside the Salem women Arnold also kept."
+        },
+        {
+          "type": "image",
+          "src": "/images/story/image101.png",
+          "caption": "The 1691 Province of Massachusetts Bay charter redrew New England — crown colony, not Puritan company.",
+          "media": "image101.png"
+        },
+        {
+          "type": "paragraph",
+          "text": "French cousins in those same years traded furs through danger and built stone. Lt. Michel Messier took La Barre's 1684 expedition against Iroquois, won Ottawa-country trade license, made his will before leaving — granted again 1692 with power of attorney to wife Anne before a final trip, then settled his Cap Saint-Michel fief until eighty-five. Antoine Dubois sold beaver-trapping license for 150 livres in pelts 1683, married Marie-Marthe Moral at Trois-Rivières 1682, took Île d'Orléans frontage 1684. Joseph Bonneau contracted fireplaces for pickled eels, pine planks for a Québec shipyard, stone houses in Lower Town. François Bélanger at seventy-seven still had twelve children dispersing from L'Islet. Toussaint Giroux entered Québec hospital October 1692; Guillaume Labelle hospitalized forty days at Hôtel-Dieu, family shifting from Ville-Marie attacks to Côte-de-Beaupré land bought from the Episcopal Corporation. Pierre Maheu, Jacques Samson, Jean Pichet, Guillaume Fournier at Montmagny — each census line a ledger of cattle and muskets."
+        },
+        {
+          "type": "paragraph",
+          "text": "Between 1676 and 1692 the family survived the war's long aftermath and the panic that followed. English lines buried Upham, burned Groton, bought Nashoba's stolen acres, lived under Andros, overthrew him, fought William's War on the Kennebec and watched Phips fail at Québec, then saw a Barrett daughter jailed a year on suspicion while Salem hanged neighbors. French lines took seigneurial titles, lost Lachine, held Québec's walls, and kept farming while Le Sueur chased copper that was mostly beaver. Martha Sparks's release on 8 December 1692 did not end witch fear — Rebecca Barrett, born at Chelmsford 4 July 1673 to Joseph Barrett and Martha Gould, would marry Walter Powers III in 1696 and carry the line toward Josiah Powers in a Littleton garrison house. The next segment is British North America — charters hardening into empire, borders drawn with gunpowder, and both branches learning to live under crowns that never stopped quarreling."
+        }
+      ]
+    },
+    {
+      "id": "seg-07-british-north-america",
+      "order": 7,
+      "yearStart": 1693,
+      "yearEnd": 1750,
+      "title": "British North America",
+      "branch": "both",
+      "status": "draft",
+      "storybookChapterId": "queens-anne-s-war",
+      "relatedChapterIds": [
+        "king-william-s-war",
+        "queens-anne-s-war",
+        "life-in-the-canada-colony",
+        "start-of-the-hudson-s-bay-company",
+        "salem-witch-trials"
+      ],
+      "supplementalSources": [
+        "Treaty of Utrecht 1713 — Acadia, Hudson Bay, and Newfoundland to Britain",
+        "Canadian Encyclopedia — Great Peace of Montreal 1701, Walker expedition 1711",
+        "Massachusetts Historical Society — Queen Anne's War and capture of Louisbourg 1745",
+        "National Park Service — Dummer's War and Fort Dummer 1723",
+        "Britannica — Act of Union 1707, Transportation Act 1718"
+      ],
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "After the witch panic, the colonies did not rest. They multiplied — towns west of Boston, farms on stolen Praying land, stone forts on the Richelieu, trading posts on lakes no European map had named. Between 1693 and 1750 the English branch learned to live as subjects of a crown, not shareholders in a company; the French branch learned that peace treaties with thirty-nine nations could hold sixteen years and still leave the border smoking. One million English souls against sixty thousand French by mid-century — yet Canada covered more ground than the thirteen colonies, and every river between them was a future battlefield."
+        },
+        {
+          "type": "paragraph",
+          "text": "The Powers line took root where Nashoba had been. 16 December 1696, Walter Powers III married Rebecca Barrett at Littleton — granddaughter of Chelmsford Barretts, daughter of Joseph and Martha Gould — and kept an inn on the northerly part of town near Brown Hill and Spectacle Pond. When elder brother William died, Walter inherited their father Walter Jr.'s Concord house; by 1704 he was caring for sixty-five-year-old Walter Jr. and sixty-three-year-old Tryall at Nashoba. 22 September 1710, Josiah Powers Sr. was born in a garrison house on Neshoba Hill — seventh and last child of Walter and Rebecca, the name that would reach Vermont and Iowa. William Sterling served Haverhill as tithingman and constable 1693–1696 until a 1697 Abenaki attack on Haverhill sent him disposing mills and lands on Fishing River and rebuilding a shipyard on the Lieutenant River at Lyme, Connecticut. Ephraim Smith married Mary Ramsdell at Topsfield September 1694; their son Ephraim Jr. born Boxford 1698 would marry Hannah Rice at Shrewsbury 1733. Daniel Johnson wed Dorothy Lamb at Framingham December 1697. Nathaniel Farnham born Andover July 1695 to Ralph III and Sarah Sterling; he married Hannah Preston 1719 — Preston, Upham, Green, and Sterling braids tightening."
+        },
+        {
+          "type": "paragraph",
+          "text": "King William's War exhaled with the Treaty of Ryswick 30 October 1697. William Taylor lost third wife Mary Cheevers in childbirth that July — third wife dead that way — and would marry Sarah Parker Wheeler in 1699. Nova Scotia and New Brunswick peeled from the Province charter the same year Puritans feared royal tolerance. Across the river, Pierre Charles Le Sueur settled a Sioux-Chippewa dispute at Chequamegon Bay 1693, built forts on the Brule-St. Croix portage and an island nine hundred sixty miles above the Illinois junction, returned July 1695 with Ojibwe and Dakota chiefs. He wintered at Fort L'Huillier near Blue Earth, Minnesota, eating bison with twenty men; the ore proved worthless; Sac and Fox warriors killed three and abandoned the fort. Le Sueur sailed for Louisiana on the Pélican, contracted yellow fever at Havana, died 17 July 1704 — namesake of Minnesota rivers and counties. Marie Le Sueur born Québec April 1696; Mathurin Lebeau would marry her at Boucherville 1713."
+        },
+        {
+          "type": "image",
+          "src": "/images/story/image53.png",
+          "caption": "August 1701 — the Great Peace of Montreal let Guillaume Labelle return to fifty acres on Île Jésus after Iroquois raids drove him east.",
+          "media": "image53.png"
+        },
+        {
+          "type": "paragraph",
+          "text": "4 August 1701, Governor Callière and thirteen hundred delegates from thirty-nine First Nations signed the Great Peace at Ville-Marie — sixteen years of trade before the next war; the island settlement took the name Montréal. Guillaume Labelle brought Marie and twenty-three-year-old daughter back to fifty acres on Île Jésus. Jean Migneron married Marie Labelle at Côte-de-Beaupré 1695 where Guillaume worked for the Episcopal Corporation. Charles Carrier married Marie Gesseron at Lauzon June 1699; Louis Neveu born Sainte-Anne-de-Bellevue January 1694 to Jean Baptiste Neveu and Catherine Gaudin. Paul Vachon the notary-farmer lost four children, a daughter-in-law, and six grandchildren to smallpox 1702–1703, then died himself 24 June 1703 — Beauport's brick and cattle line thinned. Joseph Bonneau's son Joseph Jr. and two grandchildren died the same epidemic; daughter Marie-Jeanne entered Québec Seminary after her husband died within a year. Ignace Choret the Beauport shoemaker died October 1701 days after twin brother Pierre. By 1700, ten thousand French farmers lived along the lower St. Lawrence; English America held two hundred fifty thousand."
+        },
+        {
+          "type": "paragraph",
+          "text": "Queen Anne's War opened 1702 when Protestant Anne succeeded William III. New England raided Acadia; Port Royal fell 1710; Québec's walls were targeted again and again. 23 August 1711, Rear Admiral Walker's fleet — nineteen warships, forty-one transports, eleven thousand men — blundered onto rocks in the St. Lawrence \"marine cemetery\" near Île-aux-Oeufs; nine hundred fifty soldiers drowned in fog and current. Walker abandoned the Québec expedition; France kept the capital. Robert Robbins traded Nashoba land for meadow and upland at Groton 1702 — eight miles northwest of the plantation his father had bought from emptied Wampanoag and Narragansett hands. Littleton incorporated 1714–1715 on the same Nashoba rectangle Eliot had granted Chief Tahattawan in 1651; survivors got five hundred rocky acres between Nagog and Fort ponds. 1 May 1707, Acts of Union made Great Britain of England, Wales, and Scotland. 1712: Thomas Newcomen's steam engine and Nathaniel Robbins marrying Elizabeth Leavens at Concord, Thomas Richardson marrying Elizabeth Green at Malden — Green-Upham blood from Malden moving west."
+        },
+        {
+          "type": "image",
+          "src": "/images/story/image39.jpg",
+          "caption": "1713 — New France after Utrecht: Québec, Louisiana, and a shrunken Acadia facing an English empire on three sides.",
+          "media": "image39.jpg"
+        },
+        {
+          "type": "paragraph",
+          "text": "The Treaty of Utrecht ended Queen Anne's War in 1713 — Hudson Bay, Acadia, and Newfoundland to Britain; Wabanaki nations not at the table, setting Dummer's War in motion. France acknowledged England's Rupert's Land claim; HBC posts multiplied at bay mouths while interior traders undercut coast waiting. Acadian refugees settled L'Acadie across from Saint-Jean-sur-Richelieu. Samuel Green and Elizabeth Upham left Malden for Strawberry Hill 1717 — first sawmill and gristmill in land that became Leicester; nine hundred twenty-nine acres by 1727, captain of Leicester's first militia company. Thomas Richardson followed with four-year-old Esther. Joshua Lamb's Roxbury investors had already bought Towtaid and Rutland. 1718 Transportation Act sent convicts to Virginia and Maryland — fifty-two thousand before 1776. Fort Chambly rose in stone 1709–1711 above the wooden 1665 walls. François Bélanger's L'Islet seigneurie produced grain and fruit per engineer de Catalogne's 1709 survey. Dominique Bonneau Sr. married Françoise Agnès Gingras 1716; son Dominique Jr. born Baie-Saint-Paul 1722 — Bonneau-Goodwater line pushing downriver."
+        },
+        {
+          "type": "paragraph",
+          "text": "Marriage registers on both shores read like census poetry. Jean Côté wed Marie Anne Langlois at Beauport 1694; Louis Robert's son Jacques born Boucherville 1694. André Allard married Marie Anne Lemarché at Charlesbourg 1695; Pierre François Giroux born Beauport 1693, wed Marie Angélique Maheu 1714. Nicolas Bourdet soldier of the Knights de Beaucours married Marie-Anne Jacoti 1714. François Besset and Marie-Claude Dubois at Chambly 1715. Jerome Longtin Jr. married Marie Louise Dumats at La Prairie 1704. Louis Pichet wed Marie Anne Côté on Île d'Orléans 1710. Joseph Normand married Marie Jeanne Choret; daughter Marie Anne born 1711. François Chrétien married Louise Migneron at Montréal 1713. Jean-Baptiste Giroux born 1720; Dominique Bonneau Jr. and Marie Françoise Gautier at Baie-Saint-Paul 1741; Benjamin Bonneau Sr. at Petite-Rivière 1743. Charles Carrier Jr. married Marie-Véronique Guay at Lévis 1727; son Charles-Joseph born 1731. François Xavier Dion wed Marie Josèphine Allard 1735. Toussaint Giroux sold Beauport land to grandson Raphaël 1711 for old-age care; estranged wife Therese Leblanc lost her court fight to block it."
+        },
+        {
+          "type": "paragraph",
+          "text": "The frontier kept moving and the wars kept finding it. 1722 Gray Lock's Abenaki raids on Northfield brought Fort Dummer at Brattleboro — base for scouts into Wabanaki country. Dummer's War ran 1722–1725 along the Maine-Acadia line Utrecht had drawn without Native consent; by 1713 no English homes remained in Acadia. Walter Powers III held Littleton's second pew 1723 for paying the town's next-largest tax. John Robbins born Canterbury 1721 to Nathaniel and Elizabeth Leavens; half-share in Windham-Canterbury common land 1723. Zebadiah Johnson born Marlborough 1706 to Daniel and Dorothy Lamb; married Esther Richardson at Shrewsbury 1731; son Thomas born Shrewsbury 1746. Ephraim Smith Jr. wed Hannah Rice 1733; Daniel Rice Jr. married Elizabeth Taylor at Marlborough 1713 — Taylor blood from William Taylor's three wives lost to childbirth. Rice apple orchards northeast of Shrewsbury stayed three generations. Hannah Rice baptized at eighteen 1732 when all colonies required property or tax payment to vote. Capt. Josiah Powers Sr. married Martha Mercy Anon at Quabbin 1732 — militia captain on frontier renamed Greenwich 1739, town drowned 1939 for Boston's Quabbin Reservoir. Rebecca Farnham born Hampton 1730; John Robbins married her 1748. John Preston sold Windham land to a nephew 1727 — King Philip's War pay under Captain Gardner."
+        },
+        {
+          "type": "paragraph",
+          "text": "Daily life filled the years between the headlines. Canada counted sour milk, scarce tea, imported brandy, and parish grog-shops — Louis XV limited each parish to two in 1725. The Chameau wrecked off Louisbourg August 1725 in a hurricane; three hundred ten aboard, one hundred eighty bodies in nightclothes buried at La Baleine. George I died 1727; German George II ruled through Walpole while Samuel Green captained Leicester militia. Louis Pichet and Marie Anne Côté raised children on Île d'Orléans; Marie Anne Pichet born Saint-Pierre 1727. Jacques Robert Sr. married Jeanne Dumay at Boucherville 1718; son Jacques Jr. born Chambly 1729. Joseph Lareau wed Marie Anne Normand 1735. Claude Gautier's daughter Marie Françoise born Baie-Saint-Paul 1721. Louis Francois Neveu married Marie Anne Bourdet 1741. Pierre Julien Dion's son François Xavier, born Lorette 1703, wed Marie Josèphine Allard 1735 — Dion line with three wives and fifteen children spreading through Charlesbourg. English America absorbed the Little Ice Age's coldest decades 1645–1715; French Canada held missionary alliances, engineer Beaucours fortifying Québec and Montréal, and the stubborn fact that ten thousand farmers could not outpopulate a quarter million neighbors."
+        },
+        {
+          "type": "image",
+          "src": "/images/story/image52.png",
+          "caption": "1745 — Massachusetts militia under William Pepperrell captured Louisbourg; hurricanes and smallpox broke the French counterattack.",
+          "media": "image52.png"
+        },
+        {
+          "type": "paragraph",
+          "text": "King George's War erupted 1744 — third of the French and Indian wars. Governor William Shirley mobilized four thousand militia; Louisbourg on Cape Breton fell 1745 after intelligence from exchanged prisoners revealed weak French defenses. France sent seventy-six ships and three thousand men to retake it; a hurricane and smallpox devastated the fleet and spread disease through allies — more dead than battle. British naval blockade choked Québec trade; Native trappers shifted to English goods. Shirley built a chain of Massachusetts outposts toward New York; French and Native allies burned Saratoga November 1745 — more than a hundred killed or captured, settlements north of Albany abandoned. A 1746 French expedition to recover Louisbourg foundered in storms and commander's death. Massachusetts estimated eight percent of military-age men lost. Louis Lebeau married Marie Angélique Besset at Chambly 1745; Noël and Joseph Lareau moved families south to the Richelieu where settlers were needed against Iroquois pressure. Jean-Baptiste Giroux wed Marie-Catherine Longtin at La Prairie 1746."
+        },
+        {
+          "type": "image",
+          "src": "/images/story/image44.png",
+          "caption": "York Factory on Hudson Bay — after Utrecht 1713 the HBC and French traders competed for the interior fur country.",
+          "media": "image44.png"
+        },
+        {
+          "type": "paragraph",
+          "text": "1748 brought births that would matter on both margins. Elizabeth Smith born Shrewsbury to Ephraim Jr. and Hannah Rice February 1748. Louis Charles Lebeau born Chambly September 1748. At York Factory on Hudson Bay, a Cree girl was born to Payukoonisk and Ollie Ani-Waya — distant root of a branch the story has not yet reached. Nicholas Louis St Sauveur of Paris married Marie Angélique Chrétien at Montréal February 1748. Marie Marguerite Moreau born Île d'Orléans June 1749. Benning Wentworth claimed New Hampshire lands between the Connecticut and Hudson 1741, grants that would breed the Vermont Republic. By 1750, British North America held one million inhabitants against Canada's sixty thousand — six percent of the population on more than half the map. Josiah Powers Jr. born Littleton 28 December 1742 to Capt. Josiah Sr. and Martha Mercy Anon — the seventh child line edging toward Edith."
+        },
+        {
+          "type": "paragraph",
+          "text": "Between 1693 and 1750 the family learned imperial rhythm: peace treaties, land grants, militia musters, parish weddings, smallpox winters, failed invasions. English cousins married into a web — Barrett to Powers, Rice to Smith, Farnham to Preston, Robbins to Leavens, Green to Richardson — and pushed west to Leicester, Shrewsbury, Woodstock, Littleton on soil Praying Indians once chose. French cousins married through Beauport, Chambly, La Prairie, Baie-Saint-Paul, Lauzon — Le Sueur on the Mississippi, Labelle on Île Jésus, Bonneau down the north shore, Carrier and Guay at Lévis. Utrecht and the Great Peace were parentheses, not endings. The next segment is empires at war — Louisbourg's echo, the Conquest, revolution on two continents, and the Iowa wedding drawing closer with every border skirmish."
+        }
+      ]
+    },
+    {
+      "id": "seg-08-empires-at-war",
+      "order": 8,
+      "yearStart": 1751,
+      "yearEnd": 1815,
+      "title": "Empires at War",
+      "branch": "both",
+      "status": "draft",
+      "storybookChapterId": "french-and-indian-war-british-qu-bec-1-more",
+      "relatedChapterIds": [
+        "french-and-indian-war-british-qu-bec-1-more",
+        "war-of-1812",
+        "dakota-territory",
+        "queens-anne-s-war",
+        "king-william-s-war"
+      ],
+      "supplementalSources": [
+        "Canadian War Museum — Plains of Abraham 1759, Conquest and Royal Proclamation",
+        "National Park Service — French and Indian War, Fort Ticonderoga",
+        "Library of Congress — Declaration of Independence, War of 1812",
+        "Parks Canada — Québec Act 1774 and Constitutional Act 1791",
+        "Smithsonian — Battle of New Orleans and Treaty of Ghent 1814"
+      ],
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "The final French and Indian War was not a footnote — it was the hinge. Sixty thousand French subjects against two million British colonists, yet Canada held the interior until the ships and muskets tipped. When the smoke cleared in 1763, New France was British, thirteen colonies were angry, and two branches of one family stood on opposite sides of a border that would not hold peace for twenty years. Between 1751 and 1815 the English line learned revolution; the French line learned to live under a Protestant king and keep their language; and a Cree métis girl on the Red River would one day meet a Vermont soldier's grandson in a way no parish register in Perche could have predicted."
+        },
+        {
+          "type": "paragraph",
+          "text": "28 May 1754: twenty-two-year-old Lt. Colonel George Washington ambushed a French patrol at Jumonville Glen — the Forks of the Ohio, Fort Duquesne, Pittsburgh not yet invented. The fourth French and Indian War exploded across the continent and the Atlantic; Britain blockaded Canada while Acadians who refused the oath were scattered — some toward Louisiana, seed of the Cajun name. Seven Years' War followed in Europe 1756. Montcalm took Fort William Henry 1757; Native allies massacred surrendered British troops and carried smallpox back to the Ohio valley. Louisbourg fell 1758. September 1759 on the Plains of Abraham — ground Abraham Martin had farmed since Champlain's company — Wolfe and Montcalm both died; Lévis won a second battle on the plain but the fleet forced retreat; Montréal surrendered 8 September 1760. Great Britain switched to the Gregorian calendar 1752. Charles-Joseph Carrier married Marie Anne Pichet on Île d'Orléans 1752; Joseph Carrier born Lévis 1755. Marguerite St Sauveur born Longueuil 1757 to Nicholas Louis St Sauveur and Marie Angélique Chrétien. Zebadiah Johnson served Andover church assessor 1759."
+        },
+        {
+          "type": "image",
+          "src": "/images/story/image45.png",
+          "caption": "1754 — the French and Indian War redrew North America from the Ohio forks to the St. Lawrence.",
+          "media": "image45.png"
+        },
+        {
+          "type": "paragraph",
+          "text": "Treaty of Paris 1763 gave Britain all of New France; Spain took Louisiana west of the Mississippi. King George III's Royal Proclamation 7 October drew a line along the Appalachians — Ohio country reserved for Native nations, infuriating colonial speculators who would not stay east. Governor James Murray kept French civil law, Catholic worship, and seigneurial custom in the new Province of Québec; birth rates soared to sixty-five per thousand. Grenville's government needed revenue for ten thousand garrison troops: Stamp Act 1765, Boston Massacre 1770, Tea Party 1773, Massachusetts Government Act 1774 revoking the 1691 charter. Capt. Josiah Powers Sr. chartered Neshoba 20 October 1761 — twenty-three thousand acres in New Hampshire named for his boyhood Nashoba; renamed Brandon 1784 in Vermont where he would own three thousand acres. Jacques Robert Jr. married Marie Anne Lareau at Chambly 1761 with war rumbling around them. Louis Charles Lebeau wed Marie-Anne Neveu at Chambly July 1763; Jacques Robert III born same month. New Hampshire Grants collided with New York claims — Ethan Allen's Green Mountain Boys formed 1770."
+        },
+        {
+          "type": "image",
+          "src": "/images/story/image114.png",
+          "caption": "The Proclamation Line of 1763 barred settlement west of the Appalachians — one grievance on the road to revolution.",
+          "media": "image114.png"
+        },
+        {
+          "type": "paragraph",
+          "text": "April 1775: Lexington and Concord; the Province of Massachusetts Bay dissolved into a provincial congress. Nathaniel Farnham enlisted in Poor's New Hampshire regiment, helped Ethan Allen and Benedict Arnold seize Ticonderoga's cannon — Knox dragged guns to Dorchester Heights and broke Boston's siege. Josiah Powers Jr. enlisted in Reed's 3rd New Hampshire, fought 17 June at Bunker Hill on Breed's Hill. 8 January 1769 he had married Mary Robbins at Westmoreland; Nathaniel Powers born Chesterfield 29 November 1774. Zebadiah Johnson of Temple — five sons under sixteen, one man in the army, zero guns in the 1775 census — pledged 4 July 1776 with eighty-three neighbors to risk life and fortune against the British fleet; marched as sergeant to Fort Number 4 and Ticonderoga. Josiah Jr. moved to Brandon 1776, helped write Vermont's constitution, served the 1778 legislature, fought Bennington 16 August 1777 with Stark and Warner's Green Mountain Boys. Josiah Sr. represented Neshoba and Whiting at Windsor July 1777 — drowned crossing the swollen Connecticut River horseback October 1778 returning from convention. Thomas Johnson married Elizabeth Smith at Shrewsbury 1771; Esther born Phillipston 1778."
+        },
+        {
+          "type": "paragraph",
+          "text": "Congress invaded Canada 1775; Montgomery died at Québec; Arnold's Cedars garrison surrendered May 1776. Franklin, Chase, and Carroll offered Québec a fourteenth colony — French Canadians wavered, then refused after the American defeat. Parliament's Québec Act 1774 guaranteed French civil law, Catholic faith, and French language — loyalty Britain bought and American patriots resented as favoritism. Joseph Carrier married Marguerite St Sauveur at Chambly February 1777; Benjamin Bonneau Sr. wed Marie Catherine Giroux at Saint-Philippe 1770; Benjamin Jr. born 1784. André Carrière born Boucherville 1779 to Joseph and Marguerite — he would Gallicize the spelling. Jacques Robert III married Marie Charlotte Lebeau at Saint-Mathias-sur-Richelieu 1781; Marie Anne Robert born 1785. British evacuated Boston 17 March 1776; independence declared 4 July. Treaty of Paris 1783 sent loyalists to Nova Scotia, New Brunswick, and the upper St. Lawrence — five thousand to Ontario, two hundred acres each. Vermont constitution approved 8 July 1777 while war still burned."
+        },
+        {
+          "type": "paragraph",
+          "text": "The new republic counted itself. First census 1790: 3,929,214 — Washington and Jefferson both suspected an undercount. Zebadiah Johnson and Esther Richardson at Shrewsbury; Thomas Johnson and Elizabeth Smith at Westminster with twelve-year-old Esther. Josiah Powers Jr. at Chesterfield with four children, then Marlboro, Vermont — census pages lost but Roswell born 1793 proves the move. Constitutional Act 1791 split Québec into Protestant Upper Canada and Catholic Lower Canada. Warren Coss born 1791 at Lowell, Massachusetts — parents unknown, name a stub waiting for a Powers bride. 13 July 1800, Nathaniel Powers married Esther Johnson at Westminster, Vermont; 30 October Edith Powers was born at Athens — eight miles from Westminster, twenty-five from Marlboro where grandfather Josiah still farmed. Two branches of Winifred's tree touched in a cradle: Edith Powers on a Vermont hillside, Marie Angélique Dion in a Manitoba métis camp, Warren Coss in a Lowell mill town."
+        },
+        {
+          "type": "image",
+          "src": "/images/story/image56.jpg",
+          "caption": "Marie Angélique Dion — Cree and Shawnee métis — married André Carrière at St. Boniface in 1805, carrying the Goodwater line west.",
+          "media": "image56.jpg"
+        },
+        {
+          "type": "paragraph",
+          "text": "French cousins walked west while English cousins walked north. Thomas Dion's tenth child born Lorette 1753; François Xavier wed Marie Josèphine Allard 1735. Marie Angélique Dion born St. Boniface 1787 — daughter of Payukoonisk the Fathom and Ollie Ani-Waya Chicamagu, Thomas Dion her French father. André Carrière left Boucherville circa 1805, fourteen hundred miles to St. Boniface where HBC traded; married eighteen-year-old Marie Angélique there. Louisiana Purchase 1803 doubled the United States for fifteen million dollars — Napoleon shedding a continent after Haiti revolted. Lord Selkirk's Red River Colony 1811 — Winnipeg today, agriculture to feed Canada, André Carrière on North West Company rolls. Benjamin Bonneau Jr. married Marie Anne Robert at Mont-Saint-Hilaire 1811; Benjamin III born and baptized Saint-Mathias-sur-Richelieu November 1811 on the Richelieu corridor that linked Chambly to Lake Champlain battlefields. James Falconer married Mary Morrison at Inverness 1795; Angus Falconer born Sutherland 1808 — Scottish thread the Coss line would later pull."
+        },
+        {
+          "type": "image",
+          "src": "/images/story/image46.png",
+          "caption": "1811 — Lord Selkirk's Red River Colony at the forks of the Red and Assiniboine, where André Carrière traded for the North West Company.",
+          "media": "image46.png"
+        },
+        {
+          "type": "paragraph",
+          "text": "18 June 1812, the United States declared war on Britain — second struggle for the border, Tecumseh and Creek nations crushed, Native resistance to Ohio expansion broken. Mary Louise Carrière born St. Boniface 16 September 1813 — quarter métis, daughter of André and Marie Angélique. British secret orders reached Pakenham to fight past rumored peace; Treaty of Ghent signed Christmas Eve 1814 but news slow across the Atlantic. 8 January 1815, Andrew Jackson's volunteers at New Orleans repulsed Pakenham in thirty minutes — two thousand British casualties, sixty American — had the redcoats won, they might have challenged the Louisiana Purchase. Treaty of Ghent reaffirmed the 49th parallel and the lakes; 1818 convention would fix the Red River boundary. Grand Forks, Les Grandes Fourches, had been a fur rendezvous since the 1740s; Alexander Henry's North West post 1808 sat on ground the 1818 line would divide."
+        },
+        {
+          "type": "paragraph",
+          "text": "Between 1751 and 1815 empires traded places. French Canada became British Québec without losing parish bells; thirteen colonies became a republic without losing their militia habits. Josiah Powers chartered towns and drowned in a river; his grandson Nathaniel cradled Edith. Joseph Carrier's line forked — Robert and Lebeau marriages along the Richelieu, André carrying Carrière to the Red River, Mary Louise métis-born a generation before Benjamin Bonneau III would father Mary Ann in New York. Warren Coss waited in Lowell. The French and Indian War, the Revolution, and the War of 1812 were one continuous argument about who owns the continent. The next segment is west to Iowa — Vermont farms to Erie County, Lancaster to the Mississippi, and the wedding that finally stitches Edith Powers to Mary Ann Goodwater."
+        }
+      ]
+    },
+    {
+      "id": "seg-09-west-to-iowa",
+      "order": 9,
+      "yearStart": 1816,
+      "yearEnd": 1853,
+      "title": "West to Iowa",
+      "branch": "both",
+      "status": "draft",
+      "storybookChapterId": "war-of-1812",
+      "relatedChapterIds": [
+        "war-of-1812",
+        "dakota-territory",
+        "edith-powers-branch-members-start"
+      ],
+      "supplementalSources": [
+        "National Archives — Treaty of 1818 and the 49th parallel survey",
+        "Iowa PBS — Black Hawk Purchase 1832 and Iowa Territory 1838",
+        "Wisconsin Historical Society — lead mining and territorial settlement",
+        "Hudson's Bay Company Archives — North West Company merger 1821",
+        "Smithsonian — Fort Laramie Treaty 1851 and westward expansion"
+      ],
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "Peace did not mean stillness. The Treaty of Ghent had ended the shooting, but the continent kept rearranging itself — borders surveyed straight because rivers were too quarrelsome, fur companies merged because competition bled profit, and young people who had never seen Perche or Cambridge started walking toward land no parish had named. Between 1816 and 1853 the English branch learned canals and railroad timetables; the French branch learned to cross borders without papers and change a surname to English; and Iowa, which had been someone else's cornfield yesterday, became the place where Edith Powers' grandson would marry a métis girl's daughter and finally stitch Winifred's tree."
+        },
+        {
+          "type": "paragraph",
+          "text": "20 October 1818: the United States and Britain signed the Convention of 1818 — fisheries, slave restoration clauses, joint occupation of Oregon, and a boundary at the 49th parallel because a straight line surveys easier than a watershed. Britain ceded Rupert's Land south of the line, including the Red River Colony below the parallel; the United States gave up the northern edge of Missouri Territory. French missionaries at Red River worked with Ojibwe and Cree families; by 1823 roughly eight hundred métis households lived in the colony and present-day North Dakota. In 1821 Parliament forced the North West Company into the Hudson's Bay Company — André Carrière's employer changed names but not latitude. 1820 census: Nathaniel Powers at Westminster, Vermont, with Esther and seven children including twenty-year-old Edith; widow Elizabeth Johnson Smith at Phillipston; Warren Coss, twenty-nine, in Lowell but missing from the enumerator's book."
+        },
+        {
+          "type": "image",
+          "src": "/images/story/image79.png",
+          "caption": "1818 — the Treaty of 1818 fixed the 49th parallel and opened joint occupation of Oregon.",
+          "media": "image79.png"
+        },
+        {
+          "type": "paragraph",
+          "text": "30 September 1824, Warren Coss married Edith Powers at Lowell, Middlesex County — the short Coss stub grafted onto the long Powers limb Nathaniel and Esther had grown in Vermont hill towns. July 1827, Joseph Warren Coss was born to Warren and Edith; no birth certificate survives and census pages disagree between Massachusetts and New Hampshire, but Martha Coss, one year old, died at Peterborough two months later — the grave argues for Hillsborough County. That same year André Carrière held lot 164 in the Red River census: forty-five, Catholic, one woman, six children, three acres, a plough, a canoe. Spring floods and whooping cough had shaken the valley; his daughter Mary Louise would not stay. 17 May 1831, twenty-year-old Benjamin Bonneau III married eighteen-year-old Mary Louise Carrière at Saint-Athanase, Iberville — fourteen hundred miles east of St. Boniface, where her father had traded until his HBC record ended."
+        },
+        {
+          "type": "image",
+          "src": "/images/story/image77.png",
+          "caption": "1821 — the North West Company merged into the Hudson's Bay Company; André Carrière's ledger changed hands, not homelands.",
+          "media": "image77.png"
+        },
+        {
+          "type": "paragraph",
+          "text": "1830 counted households. Warren Coss at Lowell with Edith and two-year-old Joseph; Nathaniel Powers at Westminster with Esther and a second family under the same roof. 24 February, Angus Falconer wed Josephine Morrison at Eddrachilles, Sutherland — Scotland industrializing after the '45. Wheelock, Vermont, thirty-five miles from Canada, offered Dartmouth tuition free to any resident accepted — a town named for a college founder would later hold the Goodwaters. Between 1832 and 1833 Benjamin and Mary Louise slipped fifty miles south across the border without a record; birth dates of their children are the only proof. André, fifty-three, stayed on the Red River — census takers would find him in 1838, 1840, 1843, 1846, and 1849 while his wife and married daughter vanished from the rolls. Québec's farms could not feed a population that quadrupled while acreage lagged; nine hundred thousand French Canadians would leave for New England mills between 1840 and 1930."
+        },
+        {
+          "type": "paragraph",
+          "text": "The frontier opened in treaties. Winnebago resistance flared 1827; Black Hawk's war failed 1832; 1 June 1833 the Black Hawk Purchase let settlers occupy Iowa for twenty thousand dollars a year paid thirty years. Benjamin Bonneau III moved Mary Louise and their children three hundred seventy-five miles west to Lancaster, Erie County — ten miles from Buffalo. 15 April 1839, Mary Ann Bonneau was born there; the register is lost but censuses and Find a Grave agree. Her father would answer an enumerator as Goodwater — Bonneau meaning good water — before he naturalized in 1854. Warren Coss listed as a Lowell machine-shop hand in 1833 and 1834 while Congress approved Iowa Territory 4 July 1838 — Minnesota west of the Mississippi, the Dakotas east of the White Earth and Missouri, four hundred square miles reserved for Sac and Fox. 3 July 1836, Wisconsin Territory formed; southwest lead pits would supply half the nation's ore by the 1840s."
+        },
+        {
+          "type": "image",
+          "src": "/images/story/image94.png",
+          "caption": "1838 — Iowa Territory opened a tide of settlement beyond the Black Hawk Purchase line.",
+          "media": "image94.png"
+        },
+        {
+          "type": "paragraph",
+          "text": "1840 found the elders still counting. Nathaniel Powers, sixty-six, and Esther, sixty-two, at Westminster with grandchildren in the house; Warren Coss farmed at Athens with Edith, twelve-year-old Joseph, and young William. After 1840 the Powers patriarchs would ride west — more than a thousand miles to Palmyra, Jefferson County, Wisconsin, where sand reminded settlers of Syria and sawmills ate the pinewoods. After 5 May 1841, when Whitcomb Nathaniel Coss was born at Windham, Warren and Edith packed the Erie Canal to Buffalo, Lake Erie to Toledo, stage and wagon where rails stopped short of Chicago. Angus Falconer and Josephine reached Port Elgin on Lake Huron with six-year-old Elizabeth — born on the Atlantic passage 3 August 1835, baptized New London, Prince Edward Island, 12 February 1836 — and John William born Saugeen 19 January 1841. Hebron, Wisconsin, rose as a lumber town eight miles from Palmyra; bible names on map edges."
+        },
+        {
+          "type": "paragraph",
+          "text": "1843 pulled the children ahead of their parents. Warren Coss moved again to Palmyra — railroad now to Rockford, sixty miles short of Jefferson County — with eighteen-year-old Joseph Warren in the wagon. Joseph would not stay. Sometime before 1850 he walked a hundred ninety miles farther west to Winneshiek County, Iowa, organized 1847 in the northeast corner where Winnebago names still clung to ridges. 13 July 1846, Nathaniel Powers died at seventy-two in the town his family had helped settle; Cyrus Norton had arrived that same year, David Johnson Powers would raise a sawmill and name the place Palmyra after desert sand. England counted its first nationwide census 1841; Canada renamed Upper and Lower as West and East. Yorkshire branches sent Charlotte Pollard and Mary Collingwood into the story; Henry Raymond, born 13 April 1829, surfaced farming a hundred acres of wheat at Houghton on Lake Erie by 1851."
+        },
+        {
+          "type": "image",
+          "src": "/images/story/image90.png",
+          "caption": "15 April 1839 — Mary Ann Bonneau born at Lancaster, New York; her father would answer to Goodwater before Iowa.",
+          "media": "image90.png"
+        },
+        {
+          "type": "paragraph",
+          "text": "1850 was the year ownership became visible. Warren and Edith Coss farmed four hundred dollars of land at Palmyra with six children — Joseph already gone west. Benjamin Goodwater III farmed at Wheelock, Caledonia County, with Mary Louise and five children including eleven-year-old Mary Ann; after 12 September the enumerator's ink was obsolete — the family was in Ossian, Winneshiek County, thirteen hundred miles from Vermont by canal, lake, and rail to Rockford, then wagon the last two hundred. Subsistence plots became commodity fields as rails arrived; Civil War would draft the men who had just learned to sell corn. September 1851, the first Treaty of Fort Laramie promised annuities and roads through country that would become Montana, Wyoming, and the Dakotas — promises the government would break within a decade. Angus Falconer wove cloth at Chatham, Ontario; Thomas Franklin served a Cold Harbor farm; Mary Collingwood studied as a visitor in Durham."
+        },
+        {
+          "type": "paragraph",
+          "text": "2 April 1853, twenty-seven-year-old Joseph Warren Coss married fifteen-year-old Mary Ann Goodwater in Winneshiek County, Iowa. The Powers line through Edith and the Goodwater line through Mary Louise Carrière — Chambly stone, Red River canoes, Vermont border crossings, Lancaster birth records — met in a courthouse on the edge of corn. Two adventures that began in Cambridge and Paris four centuries apart finally shook hands. The next segment is Dakota years — homestead acts, Civil War pensions, a hotel at Grand Forks, and the Dust Bowl still two generations downriver."
+        }
+      ]
+    },
+    {
+      "id": "seg-10-dakota-years",
+      "order": 10,
+      "yearStart": 1854,
+      "yearEnd": 1928,
+      "title": "Dakota Years",
+      "branch": "both",
+      "status": "draft",
+      "storybookChapterId": "dakota-territory",
+      "relatedChapterIds": [
+        "dakota-territory",
+        "war-of-1812",
+        "edith-powers-branch-members-start"
+      ],
+      "supplementalSources": [
+        "National Park Service — Homestead Act of 1862",
+        "North Dakota State Historical Society — Dakota Boom and statehood 1889",
+        "Canadian War Museum — 78th Battalion and Vimy Ridge 1917",
+        "Minnesota Historical Society — 1st Minnesota Heavy Artillery and Chattanooga",
+        "Library and Archives Canada — Red River Resistance and Manitoba Act 1870"
+      ],
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "The wedding in Winneshiek County was not an ending — it was a departure. Between 1854 and 1928 the merged family learned what it meant to hold land with a filing fee and a prayer, to lose a wife at thirty-nine on a Red River floodplain, and to raise children within earshot of tepees and buffalo hunts. Homestead patents, Civil War pensions, stagecoach miles, and a hotel ledger at Grand Forks carried the story from Iowa corn to Dakota wheat while cousins in Ontario fished Lake Huron and a métis great-grandfather's name still appeared on a St. Boniface map."
+        },
+        {
+          "type": "paragraph",
+          "text": "1854 poured settlers into Iowa — ferries over the Mississippi running day and night, canvas tents blooming on open ground. 29 March, Benjamin Goodwater III naturalized at Winneshiek and homesteaded Frankville, twenty miles from Minnesota; Québec abolished the seigneurial system he had already left behind. Henry Raymond and Elizabeth Falconer married at Saugeen, Bruce County, Ontario — no register found. 8 November 1855, Edgar Putnam Coss was born at Sauk Centre, Wisconsin, two hundred sixty miles northwest of his parents' Iowa wedding. 1860 census: Warren Coss machinist at Hebron, Jefferson County, with Edith, twins Helen and Henry, Whitcomb, and young Goodwater nephews in the house; Joseph and Mary Ann farmed Cherry Grove, Minnesota, beside Norman Goodwater; Benjamin held twelve hundred dollars of Iowa soil at Glenwood. Minnesota statehood 1858 left unorganized land the Sioux had not surrendered; Congress created Dakota Territory 2 March 1861."
+        },
+        {
+          "type": "image",
+          "src": "/images/story/image76.png",
+          "caption": "1862 — Lincoln's Homestead Act opened 270 million acres; ten dollars and a filing fee could claim what treaties had taken.",
+          "media": "image76.png"
+        },
+        {
+          "type": "paragraph",
+          "text": "20 May 1862, Lincoln signed the Homestead Act — ten dollars to file, six months to prove, greenbacks printed to fund the war that same year. The Dakota War followed broken annuities; three hundred three Santee warriors surrendered at Camp Release, thirty-eight hanged at Mankato 26 December — the largest mass execution in American history. May 1862, Sarah Mary Pearson was born at Cornforth, Durham, to unwed Mary Collingwood; her surname would shift between Pearson and Collingwood all her life. 16 February 1865, thirty-eight-year-old Joseph Warren Coss enlisted in the 1st Minnesota Heavy Artillery — blue eyes, brown hair, five-foot-nine — and guarded Chattanooga's rail junction through Sherman's march while Bragg never attacked. Mustered out 27 September 1865; by then he was a carpenter at Concord, Dodge County. June 1869, Warren Coss died at Concord, Wisconsin; September, William Pearson died at Coxhoe, Durham, leaving Mary a dressmaker with eight-year-old Sadie."
+        },
+        {
+          "type": "paragraph",
+          "text": "Louis Riel's provisional government at Red River negotiated Manitoba into Canada 1870; André Carrière's property still showed on a St. Boniface map in 1871 while his granddaughter's children farmed Iowa. The Northern Pacific reached Fargo June 1872, Bismarck the year after — a Dakota Boom that outnumbered the Sioux. Thomas Franklin sailed from Kent to Ingersoll, Ontario, 1871; twins Anne Elizabeth and George Warren born March 27. Angus Falconer still fished Saugeen; Henry Raymond smithied next door. 1876: Custer fell on the Little Bighorn while Joseph and Mary Ann moved two hundred thirty miles north to Grand Forks and opened the first hotel — tepees nearby, bison on the horizon. 23 September 1878, Mary Ann Goodwater died at thirty-nine, leaving Joseph a widower with a stagecoach route and a house full of travelers."
+        },
+        {
+          "type": "image",
+          "src": "/images/story/image71.jpg",
+          "caption": "Grand Forks at the forks of the Red and Red Lake — where Joseph Coss opened the town's first hotel in 1876.",
+          "media": "image71.jpg"
+        },
+        {
+          "type": "paragraph",
+          "text": "14 April 1880, Edgar Putnam Coss married seventeen-year-old Sarah Collingwood at Grand Forks. He had driven the stage fifteen miles to Fisher's Landing when her mother Mary Kenmir and stepfather climbed aboard heading for Canada; the hotel talk kept them in town and kept Sarah near Edgar. Edith Powers Coss, blind and bedridden, lived with son Henry at Palmyra until 1887. Angus and Josephine Falconer left Ontario for Crystal, Pembina County — twelve hundred miles, grandson William James Raymond possibly in the wagon — fleeing smallpox fear that would riot Montréal in 1885. Dudley Hersey built a forty-two-room mansion at Arvilla west of Grand Forks in 1881; William James likely hammered there. 10 March 1889, William James Raymond married Annie Franklin at Arvilla; 27 February, Angus died at eighty-one in Crystal; 2 November, North and South Dakota entered the Union. 21 July 1890, Charles Whitcomb Coss was born to Edgar and Sadie; Joseph filed his Civil War pension that March."
+        },
+        {
+          "type": "paragraph",
+          "text": "Benjamin Goodwater kept climbing — Frankville farmland worth three thousand dollars by 1870, a French-born citizen who could read and write. Joseph Warren Coss left farming for stone masonry at Getty, Stearns County, then carpentry at Little Sauk, Todd County, by 1875. February 1877, Le Métis newspaper recorded a golden wedding at St. Boniface — Daniel Carrière, André's son, hosting breakfast after the Landry ceremony; speeches in French, English, Cree, German, Italian, Salteaux, and Montagnais while André's map plot still sat on parish land. Sarah Collingwood naturalized 1879; her mother Mary Kenmir would die in England's shadow while Sarah made Grand Forks home. 1885: Edgar farmed outside town, widower Joseph carpentered next door with thirteen-year-old Mamie and English boarder Elizabeth Pearson; Montréal's smallpox riot sent vaccinators running. 30 May 1884, Angus Falconer took U.S. citizenship at Grand Forks. 1898, Annie Franklin's mother Sarah Cannon died at Grafton; 7 October 1891, Josephine Morrison Falconer died at Hoople — Angus's wife outlived him by two years in Walsh County soil."
+        },
+        {
+          "type": "paragraph",
+          "text": "The twentieth century found them working. 1900: Edgar teamster at 726 South Fourth, Grand Forks, with six sons and two daughters; William Raymond blacksmith at Arvilla with nine-month-old Ethel Cannon. 1910, Edgar graded streets; sons Joseph Warren and Charles Whitcomb surfaced in the 1915 state census. 11 February 1908, Joseph Warren Coss died of apoplexy at sister Victoria Kincaid's home — buried at Hillside, Palmyra, under a Union soldier's stone beside the Wisconsin he had left. 3 October 1916, Charles married Josephine Olson; 9 December he enlisted in Winnipeg's 78th Battalion — Vimy Ridge cost seventy-five killed, two hundred sixty-one wounded; discharged 12 June 1919, widowed. 21 July 1920, Charles married twenty-one-year-old Ethel Cannon Raymond at Arvilla. 1920: Edgar dug basements as an excavating contractor; sons Charles and Clarence ran as firemen; William bought grain at Arvilla. 30 August 1922, Winifred Eloise Coss was born there while her father worked Grand Forks fire."
+        },
+        {
+          "type": "image",
+          "src": "/images/story/image68.png",
+          "caption": "1900 — Edgar Putnam Coss and Sadie Pearson at 726 South Fourth, Grand Forks, with a houseful of sons.",
+          "media": "image68.png"
+        },
+        {
+          "type": "image",
+          "src": "/images/story/image74.png",
+          "caption": "30 August 1922 — Winifred Eloise Coss born at Arvilla; the name the whole story had been walking toward.",
+          "media": "image74.png"
+        },
+        {
+          "type": "paragraph",
+          "text": "18 December 1927, Ethel died at twenty-eight in Deaconess Hospital — stomach illness — leaving Charles with five-year-old Winifred, three-year-old Charles Jr., and four-month-old Clarence. 1928, Charles gave Winifred to his sister Lorraine Geiger and her husband Winfield Happy Geiger at Kenmare, two hundred forty-three miles west, where they were mourning an infant son born 6 January 1929. The stock market would crash before the year turned. Between 1854 and 1928 four centuries of migration narrowed to a five-year-old girl on a prairie she did not yet know would be called the Dust Bowl. The next segment is depression and dust — Wall Street falling, dirt snowdrifts, Farmers Union militancy, and a wedding in Las Vegas."
+        }
+      ]
+    },
+    {
+      "id": "seg-11-depression-and-dust",
+      "order": 11,
+      "yearStart": 1929,
+      "yearEnd": 1950,
+      "title": "Depression and Dust",
+      "branch": "both",
+      "status": "draft",
+      "storybookChapterId": "great-depression-and-dust-bowl",
+      "relatedChapterIds": [
+        "great-depression-and-dust-bowl",
+        "dakota-territory"
+      ],
+      "supplementalSources": [
+        "Federal Reserve History — Stock Market Crash of October 1929",
+        "USDA — Dust Bowl drought years 1934 and 1936",
+        "North Dakota Studies — Nonpartisan League and Governor William Langer",
+        "National Archives — WWII draft registration and home-front recovery",
+        "Smithsonian — Farmers Holiday Association and rural protest 1932"
+      ],
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "24 October 1929, Wall Street broke. North Dakota, already a farm state on the knife edge of weather, fell twice — prices for wheat and cattle collapsed while drought turned the western half of the country to powder. 1934 and 1936 were the cruelest years: grasses failed, cows starved, scorching winds piled dirt like snowdrifts, and grasshopper clouds ate what the wind left. More than a hundred twenty-one thousand people left the state; twelve thousand three hundred eight farms were foreclosed. Winifred Eloise Coss was seven when the crash came, living with her aunt and uncle Geiger at Kenmare — already motherless, already given away to kin who would keep her."
+        },
+        {
+          "type": "paragraph",
+          "text": "1930 census told the damage in rows. Edgar P. Coss, seventy-five, unemployed at 31 Euclid Avenue on Grand Forks' Red River floodplain; widower son Charles and grandsons Charles Jr. and Clarence crowded the house with firemen's wages. Next door, Ina Pearson kept roomers — a spelling that hinted at kinship never proved. Winfield Geiger owned a Kenmare service station and a thirty-four-hundred-dollar house; Lorraine raised Delores and seven-year-old niece Winifred with two young roomers. Henry D. Geiger farmed near Cavalier in a six-thousand-dollar Sears catalog house — rural America's mail-order answer to a broken economy. William Raymond, sixty-one, no longer bought grain; he and Annie lived with son Eddie and laborers who paid rent to survive. Farmers Union cooperatives rose; the Farmers Holiday Organization blocked shipments; William Langer became governor 1933, slashed spending, embargoed grain, was convicted and removed — four governors in seven months."
+        },
+        {
+          "type": "image",
+          "src": "/images/story/image89.png",
+          "caption": "The 1930s — Sears catalog houses and Farmers Union elevators: North Dakota modernizing through the drought.",
+          "media": "image89.png"
+        },
+        {
+          "type": "paragraph",
+          "text": "11 March 1932, William James Raymond died at Arvilla; two days later his wife Annie Franklin followed — sixty years of Arvilla blacksmithing and grain buying ended in a single week. The Raymond line that had crossed from Prince Edward Island to Dudley Hersey's mansion closed in the same soil where William had married Annie in 1889. Winifred grew up in Kenmare through it — 1940 census listed her at seventeen, a high school junior in a three-thousand-dollar Geiger house while Uncle Winfield ran a Pontiac dealership. At 31 Euclid, Uncle Clarence earned fifteen hundred eighty dollars as fire department foreman; her father Charles and brother Charles Jr. worked beside him with the department horses. The Coss men stayed when the farms failed."
+        },
+        {
+          "type": "image",
+          "src": "/images/story/image80.png",
+          "caption": "1940 — Clarence and Charles Coss on the Grand Forks fire department; steady wages when the land would not pay.",
+          "media": "image80.png"
+        },
+        {
+          "type": "paragraph",
+          "text": "War brought rain and prices. By 1945 North Dakota held the largest per-capita bank deposits in the nation — debt paid down, crops selling again. 25 April 1942, twenty-year-old Winifred Eloise Coss married Morris Rankin Batie in Las Vegas, Nevada, where he worked air traffic control at the airport — a long way from Arvilla and the Geiger kitchen table. Charles Whitcomb Coss Sr. registered for the draft 27 April: five-foot-ten, one hundred seventy pounds, gray hair, blue eyes, still a Grand Forks fireman. The English Powers branch, the French Goodwater branch, the Ontario Raymonds and Franklins, the Yorkshire Collingwoods — all of it narrowed to a woman at Lake Mead in a wartime wedding photograph."
+        },
+        {
+          "type": "image",
+          "src": "/images/story/image78.png",
+          "caption": "April 1942 — Winifred Eloise Coss and Morris Rankin Batie married in Las Vegas.",
+          "media": "image78.png"
+        },
+        {
+          "type": "paragraph",
+          "text": "1950 census: Morris and Winifred Batie at Twenty-Second Avenue, Sacramento, California — he at the metropolitan airport control tower, six-year-old Charles and four-year-old Gloria in the house. Clarence Coss, fifty-two, still fought fires in Grand Forks; Charles lodged with him, gardening twenty hours a week at fifty-nine. Two brothers on Euclid Street, one daughter in California with a new family name."
+        },
+        {
+          "type": "image",
+          "src": "/images/story/image47.png",
+          "caption": "Morris and Wini — where four centuries of two branches arrive at one marriage and one life.",
+          "media": "image47.png"
+        },
+        {
+          "type": "paragraph",
+          "text": "Between 1929 and 1950 the story finished its arc. A stock crash and a dust cloud took farms that Homestead Acts had given and treaties had stolen. Winifred survived by firemen's wages, Geiger gasoline, and an aunt's house in Kenmare. She married a controller who read the sky for a living and moved to California while uncles stayed on the Red River with hoses and horses. From George Alcock in Cambridge and Louis Hébert in Paris, through Neshoba garrison houses and St. Boniface canoes, through an Iowa courthouse and a Grand Forks hotel, the family tree that began as two doors opening ended as one woman with a name the whole book had been carrying: Winifred Eloise Coss."
         }
       ]
     }

@@ -64,6 +64,63 @@ function chapterFullText(section) {
   return sectionParagraphs(section).join("\n\n");
 }
 
+function countImages(blocks) {
+  return (blocks || []).reduce((total, block) => {
+    if (block.type === "image") return total + 1;
+    if (block.type === "slideshow") return total + (block.images?.length ?? 0);
+    return total;
+  }, 0);
+}
+
+function loadStorySections() {
+  const legacy = loadJson("storybook.json");
+  const legacyById = new Map(legacy.sections.map((section) => [section.id, section]));
+  const narrative = loadJson("narrative-storybook.json");
+  if (narrative.mode !== "chronological") {
+    return legacy.sections;
+  }
+
+  const plan = loadJson("narrative-plan.json");
+  const planById = new Map(plan.segments.map((segment) => [segment.id, segment]));
+
+  return [...narrative.segments]
+    .filter((segment) => segment.status !== "pending")
+    .sort((a, b) => a.order - b.order)
+    .map((segment) => {
+      const legacyIds = [
+        segment.storybookChapterId,
+        ...(segment.relatedChapterIds ?? []),
+        ...(planById.get(segment.id)?.storybookChapterIds ?? []),
+      ].filter(Boolean);
+
+      const famousPeople = new Set();
+      const familyNames = new Set();
+      for (const legacyId of legacyIds) {
+        const legacySection = legacyById.get(legacyId);
+        if (!legacySection) continue;
+        for (const name of legacySection.famousPeople ?? []) famousPeople.add(name);
+        for (const name of legacySection.familyNames ?? []) familyNames.add(name);
+      }
+
+      const blocks = segment.blocks ?? [];
+      const teaser =
+        blocks.find((block) => block.type === "paragraph")?.text?.slice(0, 160) ?? "";
+
+      return {
+        id: segment.id,
+        title: segment.title,
+        branch: segment.branch,
+        yearStart: segment.yearStart,
+        yearEnd: segment.yearEnd,
+        teaser,
+        famousPeople: [...famousPeople],
+        familyNames: [...familyNames],
+        imageCount: countImages(blocks),
+        blocks,
+      };
+    });
+}
+
 function timelineEventText(eventId, timeline) {
   const row = timeline.find((e) => e.id === eventId);
   if (!row) return "";
@@ -128,7 +185,8 @@ async function aiSummary(sourceText, depth, label, apiKey) {
 
 async function main() {
   const briefs = loadJson("event-briefs.json");
-  const storybook = loadJson("storybook.json");
+  const storySections = loadStorySections();
+  const storybook = { sections: storySections };
   const searchIndex = loadJson("search.index.json");
   const timeline = loadJson("timeline.index.json");
 

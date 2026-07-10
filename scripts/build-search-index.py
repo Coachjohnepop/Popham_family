@@ -165,12 +165,74 @@ def merge_refs(*groups: list[dict]) -> list[dict]:
     return merged
 
 
+def count_images(blocks: list[dict]) -> int:
+    total = 0
+    for block in blocks:
+        if block.get("type") == "image":
+            total += 1
+        elif block.get("type") == "slideshow":
+            total += len(block.get("images") or [])
+    return total
+
+
+def load_story_sections() -> list[dict]:
+    legacy = json.loads((DATA / "storybook.json").read_text(encoding="utf-8"))
+    legacy_by_id = {section["id"]: section for section in legacy["sections"]}
+    narrative = json.loads((DATA / "narrative-storybook.json").read_text(encoding="utf-8"))
+    if narrative.get("mode") != "chronological":
+        return legacy["sections"]
+
+    plan = json.loads((DATA / "narrative-plan.json").read_text(encoding="utf-8"))
+    plan_by_id = {segment["id"]: segment for segment in plan["segments"]}
+    sections: list[dict] = []
+
+    for segment in sorted(narrative["segments"], key=lambda item: item["order"]):
+        if segment.get("status") == "pending":
+            continue
+
+        legacy_ids = []
+        if segment.get("storybookChapterId"):
+            legacy_ids.append(segment["storybookChapterId"])
+        legacy_ids.extend(segment.get("relatedChapterIds") or [])
+        legacy_ids.extend(plan_by_id.get(segment["id"], {}).get("storybookChapterIds") or [])
+
+        famous_people: set[str] = set()
+        family_names: set[str] = set()
+        for legacy_id in legacy_ids:
+            legacy_section = legacy_by_id.get(legacy_id)
+            if not legacy_section:
+                continue
+            famous_people.update(legacy_section.get("famousPeople") or [])
+            family_names.update(legacy_section.get("familyNames") or [])
+
+        blocks = segment.get("blocks") or []
+        teaser = next(
+            (block["text"][:160] for block in blocks if block.get("type") == "paragraph" and block.get("text")),
+            "",
+        )
+        sections.append(
+            {
+                "id": segment["id"],
+                "title": segment["title"],
+                "branch": segment["branch"],
+                "yearStart": segment["yearStart"],
+                "yearEnd": segment.get("yearEnd"),
+                "teaser": teaser,
+                "famousPeople": sorted(famous_people),
+                "familyNames": sorted(family_names),
+                "imageCount": count_images(blocks),
+                "blocks": blocks,
+            }
+        )
+
+    return sections
+
+
 def main() -> int:
     timeline = json.loads((DATA / "timeline.index.json").read_text(encoding="utf-8"))
-    storybook = json.loads((DATA / "storybook.json").read_text(encoding="utf-8"))
     locations = json.loads((DATA / "locations.index.json").read_text(encoding="utf-8"))
     family_tree = json.loads((DATA / "family-tree.seed.json").read_text(encoding="utf-8"))
-    sections = storybook["sections"]
+    sections = load_story_sections()
 
     entries: list[dict] = []
 

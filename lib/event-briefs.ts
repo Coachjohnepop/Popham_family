@@ -1,4 +1,5 @@
 import briefsData from "@/data/event-briefs.json";
+import { resolveLegacyChapterId } from "@/lib/narrative-storybook";
 
 export type AnswerDepth = "brief" | "standard" | "deep";
 
@@ -121,8 +122,17 @@ export function getEventBriefDelta(
   return novelSentences.join(" ").trim();
 }
 
+function chapterMatchesBrief(chapterId: string, briefChapterIds: string[] | undefined): boolean {
+  if (!briefChapterIds?.length) return false;
+  const resolvedChapterId = resolveLegacyChapterId(chapterId);
+  return briefChapterIds.some((briefChapterId) => {
+    if (briefChapterId === chapterId || briefChapterId === resolvedChapterId) return true;
+    return resolveLegacyChapterId(briefChapterId) === resolvedChapterId;
+  });
+}
+
 export function getBriefsForChapter(chapterId: string): EventBrief[] {
-  return briefs.filter((b) => b.chapterIds?.includes(chapterId));
+  return briefs.filter((b) => chapterMatchesBrief(chapterId, b.chapterIds));
 }
 
 export function getAutoShowBriefsForChapter(chapterId: string): EventBrief[] {

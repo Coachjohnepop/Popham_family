@@ -5,7 +5,7 @@
     "yearStart": 1534,
     "yearEnd": 1598,
     "keywords": ["québec", "quebec", "cartier", "champlain", "canada", "st. lawrence", "goodwater"],
-    "chapterIds": ["early-history-of-england-france-and-the-protestant-reformation"],
+    "chapterIds": ["seg-01-doors-opening"],
     "summary": "How France claimed the St. Lawrence valley — and why it matters to the Goodwater branch.",
     "askOnChapter": false,
     "tiers": {
@@ -42,7 +42,7 @@
       "defamation",
       "court of oyer"
     ],
-    "chapterIds": ["salem-witch-trials"],
+    "chapterIds": ["seg-06-wars-and-witch-panic"],
     "summary": "Leading ideas from Scotland, colony context, Martha (Barrett) Sparks imprisoned in Boston, and the Barrett line into the Powers branch.",
     "askOnChapter": true,
     "tiers": {
