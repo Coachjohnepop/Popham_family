@@ -14,14 +14,14 @@
  */
 export const TTS_VOICE = process.env.TTS_VOICE || "onyx";
 
-/** 1.0 = default; 0.8 = 20% slower with unchanged pitch (client preserves pitch). */
-export const TTS_SPEED = 0.8;
+/** 1.0 = default; client playback uses preservesPitch so pitch stays natural. */
+export const TTS_SPEED = 0.65;
 
 export const TTS_INSTRUCTIONS =
   "Speak in a warm, refined British English accent. Sound like a thoughtful BBC " +
   "documentary narrator reading family history to a loved one — calm, smooth, and clear. " +
-  "Use a relaxed, measured pace about twenty percent slower than everyday conversation. " +
-  "Gentle pauses at commas and full stops. Never rush or sound robotic.";
+  "Use a very relaxed, unhurried pace — noticeably slower than everyday conversation. " +
+  "Linger gently on commas and take a full beat at full stops. Never rush or sound robotic.";
 
 export const TTS_MAX_CHARS = 3500;
 
