@@ -2,17 +2,17 @@
  * OpenAI gpt-4o-mini-tts voices (override with TTS_VOICE on Vercel):
  * alloy — balanced neutral
  * ash — clear, conversational
- * ballad — warm, melodic storytelling (default)
+ * ballad — warm, melodic storytelling
  * coral — warm, approachable female
  * echo — smooth male
  * fable — expressive British-leaning narrator
- * onyx — deep, authoritative male
+ * onyx — deep, authoritative male (default)
  * nova — friendly, energetic female
  * sage — calm, measured
  * shimmer — bright female
  * verse — versatile audiobook narrator
  */
-export const TTS_VOICE = process.env.TTS_VOICE || "ballad";
+export const TTS_VOICE = process.env.TTS_VOICE || "onyx";
 
 /** 1.0 = default; 0.8 = 20% slower with unchanged pitch (client preserves pitch). */
 export const TTS_SPEED = 0.8;
