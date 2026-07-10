@@ -1,4 +1,5 @@
 import type { IndexMeta, IndexedLocation, StoryChapter, TimelineEvent } from "@/lib/types";
+import { getStoryTopics, type StoryTopic } from "@/lib/story-topics";
 import storiesSeed from "@/data/stories.seed.json";
 import timelineIndex from "@/data/timeline.index.json";
 import locationsIndex from "@/data/locations.index.json";
@@ -23,4 +24,8 @@ export function getIndexMeta(): IndexMeta {
 export function getYearBounds(events: TimelineEvent[]) {
   const years = events.map((e) => e.year);
   return { min: Math.min(...years), max: Math.max(...years) };
+}
+
+export function getMapStoryTopics(): StoryTopic[] {
+  return getStoryTopics();
 }

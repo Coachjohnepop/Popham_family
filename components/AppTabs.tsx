@@ -89,12 +89,14 @@ export default function AppTabs({ initialTab }: AppTabsProps) {
             ))}
           </nav>
         </div>
-        <div className="mx-auto max-w-6xl space-y-3 px-4 pb-4">
-          <Suspense fallback={null}>
-            <EventSearch />
-          </Suspense>
-          <AskEventPanel />
-        </div>
+        {pathname !== "/story" && (
+          <div className="mx-auto max-w-6xl space-y-3 px-4 pb-4">
+            <Suspense fallback={null}>
+              <EventSearch />
+            </Suspense>
+            <AskEventPanel />
+          </div>
+        )}
       </header>
 
       <main className="mx-auto w-full max-w-6xl flex-1 px-4 py-6">

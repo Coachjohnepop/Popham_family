@@ -1,17 +1,25 @@
 import HomeLink from "@/components/HomeLink";
 import Link from "next/link";
 import StoryFormatGuide from "@/components/StoryFormatGuide";
+import StoryAskSection from "@/components/StoryAskSection";
+import StoryTopicsHubLoader from "@/components/StoryTopicsHubLoader";
 import { getStorybook } from "@/lib/storybook";
+import { getStoryTopicCount } from "@/lib/story-topics";
 import StorySidebar from "@/components/StorySidebar";
 
 export default function StoryIndexView() {
   const book = getStorybook();
+  const topicCount = getStoryTopicCount();
 
   return (
     <div className="grid gap-6 lg:grid-cols-[280px_1fr]">
       <StorySidebar />
 
       <div className="space-y-6">
+        <StoryTopicsHubLoader />
+
+        <StoryAskSection />
+
         <div className="rounded-3xl border border-[#e2d4bf] bg-white p-6 shadow-sm sm:p-8">
           <p className="text-xs font-semibold uppercase tracking-[0.25em] text-[#8b5e34]">
             Interactive Storybook
@@ -20,13 +28,9 @@ export default function StoryIndexView() {
             The full family story
           </h2>
           <p className="mt-3 text-sm leading-relaxed text-[#6f5c49]">
-            {book.sectionCount} chronological chapters tracing both family branches from 1485 to
-            1950, with {book.imageCountMapped} photographs and illustrations — open slideshows when
-            you want them. For a spoken overview of the whole paper, start from{" "}
-            <HomeLink className="font-semibold text-[#8b5e34] hover:underline">
-              Home
-            </HomeLink>
-            .
+            {topicCount} story topics above, then {book.sectionCount} chronological chapters (1485–1950)
+            with {book.imageCountMapped} photographs. For a spoken overview, start from{" "}
+            <HomeLink className="font-semibold text-[#8b5e34] hover:underline">Home</HomeLink>.
           </p>
         </div>
 
@@ -34,27 +38,33 @@ export default function StoryIndexView() {
           <StoryFormatGuide compact />
         </div>
 
-        <div className="grid gap-4 sm:grid-cols-2">
-          {book.sections.map((section) => (
-            <Link
-              key={section.id}
-              href={`/story/${section.id}`}
-              className="rounded-2xl border border-[#e2d4bf] bg-[#fffaf2] p-5 transition hover:border-[#c8b08d] hover:shadow-sm"
-            >
-              <div className="text-[10px] font-semibold uppercase tracking-wider text-[#8b5e34]">
-                {section.yearStart}
-                {section.yearEnd ? `–${section.yearEnd}` : ""} · {section.branch}
-                {section.imageCount > 0 ? ` · ${section.imageCount} photos` : ""}
-              </div>
-              <h3 className="mt-2 font-serif text-xl font-semibold leading-snug">
-                {section.title}
-              </h3>
-              <p className="mt-2 line-clamp-3 text-sm text-[#6f5c49]">{section.teaser}</p>
-              <span className="mt-4 inline-block text-sm font-semibold text-[#8b5e34]">
-                Read section →
-              </span>
-            </Link>
-          ))}
+        <div>
+          <h3 className="font-serif text-xl font-semibold text-[#2b2118]">All chapters</h3>
+          <p className="mt-1 text-sm text-[#6f5c49]">
+            Read straight through — or use the topics above as your guide.
+          </p>
+          <div className="mt-4 grid gap-4 sm:grid-cols-2">
+            {book.sections.map((section) => (
+              <Link
+                key={section.id}
+                href={`/story/${section.id}`}
+                className="rounded-2xl border border-[#e2d4bf] bg-[#fffaf2] p-5 transition hover:border-[#c8b08d] hover:shadow-sm"
+              >
+                <div className="text-[10px] font-semibold uppercase tracking-wider text-[#8b5e34]">
+                  {section.yearStart}
+                  {section.yearEnd ? `–${section.yearEnd}` : ""} · {section.branch}
+                  {section.imageCount > 0 ? ` · ${section.imageCount} photos` : ""}
+                </div>
+                <h4 className="mt-2 font-serif text-xl font-semibold leading-snug">
+                  {section.title}
+                </h4>
+                <p className="mt-2 line-clamp-3 text-sm text-[#6f5c49]">{section.teaser}</p>
+                <span className="mt-4 inline-block text-sm font-semibold text-[#8b5e34]">
+                  Read section →
+                </span>
+              </Link>
+            ))}
+          </div>
         </div>
       </div>
     </div>

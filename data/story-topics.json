@@ -1,0 +1,372 @@
+{
+  "version": 1,
+  "topicCount": 16,
+  "topics": [
+    {
+      "id": "three-kingdoms",
+      "order": 1,
+      "buttonLabel": "What did each country want?",
+      "shortTitle": "Three kingdoms",
+      "teaser": "England, France, and the Dutch — three reasons to cross the Atlantic.",
+      "style": "amber",
+      "branch": "both",
+      "yearStart": 1485,
+      "yearEnd": 1625,
+      "location": { "name": "North Atlantic", "lat": 50.0, "lng": -40.0, "scope": "world" },
+      "storyChapterId": "seg-01-doors-opening",
+      "nextTopicId": "two-branches",
+      "narrative": {
+        "label": "Three Kingdoms",
+        "spoken": "What did each country want from the New World? England wanted room and control — patents, plantations, and towns where dissenting Protestants could farm and worship. France wanted empire on the St. Lawrence — furs, fish, and Catholic farming families to hold Québec. The Dutch wanted trade, not territory — beaver pelts and posts on the Hudson while others built colonies around them. Three appetites, one cold ocean, and four centuries before they meet in Iowa.",
+        "paragraphs": [
+          "England wanted room — and control. After the break with Rome, restless Puritans and yeomen wanted land where they could farm, worship, and govern without the Archbishop breathing down their necks. Patents and plantations sent ships across the North Atlantic fog.",
+          "France wanted empire on a cold river. Cartier sailed for gold and a passage to Asia; what he found was the St. Lawrence — a doorway to furs, fish, and a valley France could claim as Canada. Kings and cardinals wanted farmers behind Québec's walls and families along the water.",
+          "The Dutch wanted trade, not territory. Merchants followed the beaver — seasonal posts on the Hudson, Connecticut, and Delaware, metal and cloth swapped for pelts while English and French settlers built colonies on every side."
+        ]
+      }
+    },
+    {
+      "id": "two-branches",
+      "order": 2,
+      "buttonLabel": "Two branches",
+      "shortTitle": "Two branches",
+      "teaser": "Edith Powers from England; Mary Ann Goodwater from Québec — one tree, two doorways.",
+      "style": "violet",
+      "branch": "both",
+      "yearStart": 1575,
+      "yearEnd": 1853,
+      "location": { "name": "St. Lawrence & New England", "lat": 45.5, "lng": -72.0, "scope": "world" },
+      "storyChapterId": "seg-02-two-doorways",
+      "nextTopicId": "powers-england-mass",
+      "narrative": {
+        "label": "Two Branches",
+        "spoken": "Winifred's family tree is organized as two great branches. The Edith Powers branch begins in England with George Alcock in fifteen eighty-one and runs through Puritan New England to Warren Coss's marriage to Edith Powers. The Mary Ann Goodwater branch begins in France with Louis Hébert in fifteen seventy-five and the Bonneau line on the St. Lawrence. In eighteen fifty-three, Joseph Warren Coss marries Mary Ann Goodwater in Iowa — and the two branches become one.",
+        "paragraphs": [
+          "Dad's document separates the tree into two branches on purpose. The Powers line is English — dissenters, farmers, soldiers, town officers moving west from Massachusetts. The Goodwater line is French-Canadian — Hébert's farm at Québec, Bonneau masons on Île d'Orléans, King's Daughters, subsistence farmers who eventually anglicized their name.",
+          "The first branch formally ends when Warren Coss marries Edith Powers. The second ends when Joseph Warren Coss marries Mary Ann Goodwater on 2 April 1853 in Winneshiek County, Iowa. Everything before those doorways is prologue; everything after is one American family walking toward Winifred."
+        ]
+      }
+    },
+    {
+      "id": "powers-england-mass",
+      "order": 3,
+      "buttonLabel": "Powers — England to Massachusetts",
+      "shortTitle": "Powers branch",
+      "teaser": "George Alcock in Cambridge, 1581 — the English doorway to Massachusetts Bay.",
+      "style": "sky",
+      "branch": "powers",
+      "yearStart": 1581,
+      "yearEnd": 1635,
+      "location": { "name": "Cambridge, England", "lat": 52.2, "lng": 0.12, "scope": "world" },
+      "storyChapterId": "seg-02-two-doorways",
+      "nextTopicId": "goodwater-france-quebec",
+      "narrative": {
+        "label": "Powers Branch",
+        "spoken": "The Powers doorway opens in Cambridge in fifteen eighty-one when George Alcock is born — son of a Protestant minister, no crown noting the day. Barrett, Powers, Preston, Rice, Upham, and French follow in English parishes while the kingdom tears at its own faith. By sixteen thirty the Winthrop Fleet carries that stock to Salem and the Massachusetts Bay Colony — yeomen and dissenters who preferred risk to stagnation.",
+        "paragraphs": [
+          "On 25 March 1581, George Alcock was born at Cambridge in Cambridgeshire — the Powers branch of this tree starts here, in a university town smelling of river mud and ink.",
+          "For two generations the names accumulate in England: Thomas Barrett in Gloucestershire, Walter Powers Sr. baptized at Stanton St. Quinton in Wiltshire in 1605, Edmund Rice and William Towne in yeoman parishes. Faith wars at home made the Atlantic look like an exit.",
+          "In 1630, John Winthrop leads the Great Migration — George Alcock the butcher at Roxbury, Thomas French from the Arabella, Barretts and Powers still in England but not for long. The Edith Powers branch is walking toward Massachusetts."
+        ]
+      }
+    },
+    {
+      "id": "goodwater-france-quebec",
+      "order": 4,
+      "buttonLabel": "Goodwater — France to Québec",
+      "shortTitle": "Goodwater branch",
+      "teaser": "Hébert, Bonneau, and a French name that became Goodwater.",
+      "style": "sage",
+      "branch": "goodwater",
+      "yearStart": 1575,
+      "yearEnd": 1854,
+      "location": { "name": "Québec City", "lat": 46.81, "lng": -71.21, "scope": "world" },
+      "storyChapterId": "seg-02-two-doorways",
+      "nextTopicId": "merge-1853",
+      "narrative": {
+        "label": "Goodwater Branch",
+        "spoken": "The Goodwater branch opens with Louis Hébert in Paris in fifteen seventy-five — later Québec's first farmer — and with Jean Bonneau in fifteen ninety-five, ninth-great-grandfather of Winifred. In sixteen fifty-three Jean Bonneau crosses as a Huguenot; his son Pierre joins him on Île d'Orléans. Centuries later Benjamin Bonneau the third translates Bonneau — good water — on an American census. His daughter Mary Ann carries that name into an Iowa wedding.",
+        "paragraphs": [
+          "In 1575, Louis Hébert is born in Paris — the St. Lawrence doorway for every French cousin in this tree. In 1595, Jean Bonneau is born in France — the Bonneau line that will one day become Goodwater.",
+          "Jean Bonneau arrives in 1653 as a Huguenot under Catholic persecution, farms near Montréal, and writes home so Pierre can join him on Île d'Orléans — fourteen ancestors among the island's three hundred founding families.",
+          "Bonneau translates to good water. By the 1850 Vermont census, Benjamin Bonneau III has taken that English word as his surname; Iowa naturalization in 1854 agrees. Mary Ann, born Bonneau in New York in 1839, marries Joseph Warren Coss in Iowa in 1853 — French Canada and English New England in one name."
+        ]
+      }
+    },
+    {
+      "id": "merge-1853",
+      "order": 5,
+      "buttonLabel": "Where they meet (1853)",
+      "shortTitle": "1853 merge",
+      "teaser": "Joseph Warren Coss marries Mary Ann Goodwater — the two branches join in Iowa.",
+      "style": "rose",
+      "branch": "both",
+      "yearStart": 1853,
+      "yearEnd": 1853,
+      "location": { "name": "Winneshiek County, Iowa", "lat": 43.3, "lng": -91.8, "scope": "us" },
+      "storyChapterId": "seg-09-west-to-iowa",
+      "nextTopicId": "reformation-doorways",
+      "narrative": {
+        "label": "Where the Branches Meet",
+        "spoken": "On 2 April eighteen fifty-three, twenty-seven-year-old Joseph Warren Coss marries fifteen-year-old Mary Ann Goodwater in Winneshiek County, Iowa. Puritan New England and French Canada — the massive Powers tree and the massive Goodwater tree — become one Coss family in a rural county twenty miles south of Minnesota. That wedding is the hinge of Winifred's story.",
+        "paragraphs": [
+          "Joseph Warren Coss was born in 1827 to Warren Coss and Edith Powers — the Powers branch already folded into the Coss name. Mary Ann Goodwater was born Mary Ann Bonneau in Lancaster, New York, in 1839; her father had anglicized the family name a few years earlier.",
+          "The marriage in Winneshiek County is not background color. It is the moment Dad's two-branch structure closes. Everything after 1853 — Wisconsin, Minnesota, Dakota Territory, North Dakota — is one family walking west together."
+        ]
+      }
+    },
+    {
+      "id": "reformation-doorways",
+      "order": 6,
+      "buttonLabel": "Reformation & Atlantic doorways",
+      "shortTitle": "Reformation",
+      "teaser": "Henry VIII, Luther, and the faith wars that pushed people toward the sea.",
+      "style": "amber",
+      "branch": "both",
+      "yearStart": 1485,
+      "yearEnd": 1590,
+      "location": { "name": "Wittenberg, Germany", "lat": 51.87, "lng": 12.65, "scope": "world" },
+      "storyChapterId": "seg-01-doors-opening",
+      "nextTopicId": "winthrop-fleet",
+      "narrative": {
+        "label": "Reformation & Doorways",
+        "spoken": "The story begins with doors, not people. Henry Tudor wins Bosworth in fourteen eighty-five; his son Henry the Eighth breaks with Rome; Luther hammers his theses in Wittenberg in fifteen seventeen. Elizabeth grants patents to men willing to risk the North Atlantic while Cartier claims the St. Lawrence for France. By fifteen ninety, James the Sixth hunts witches in Scotland — a panic this family will meet again in Massachusetts.",
+        "paragraphs": [
+          "In 1485, the last Plantagenet king falls at Bosworth and a Tudor lifts a crown from the mud — the Wars of the Roses end, but the religious wars are just beginning.",
+          "Henry VIII's break with Rome, the dissolution of the monasteries, Edward's English prayer book, Mary's fires at Smithfield, Elizabeth's compromise worn like armor — each turn sends more English minds toward the idea of a New World.",
+          "Across the Channel, France claims Stadacona and kanata. Two colonial stories begin separate and unaware that centuries later they will meet in an Iowa wedding."
+        ]
+      }
+    },
+    {
+      "id": "winthrop-fleet",
+      "order": 7,
+      "buttonLabel": "Puritans & the Winthrop Fleet",
+      "shortTitle": "Winthrop Fleet",
+      "teaser": "1630 — two thousand souls, eleven ships, Massachusetts Bay from Boston mud.",
+      "style": "sky",
+      "branch": "powers",
+      "yearStart": 1630,
+      "yearEnd": 1638,
+      "location": { "name": "Massachusetts Bay Colony", "lat": 42.36, "lng": -71.05, "scope": "us" },
+      "storyChapterId": "seg-04-planting-towns",
+      "nextTopicId": "new-france-st-lawrence",
+      "narrative": {
+        "label": "Winthrop Fleet",
+        "spoken": "April sixteen thirty changes the English branch forever. John Winthrop leads Puritans out of Boston, Lincolnshire, toward a patent from the Merrimack to the Charles — eleven ships, roughly two thousand souls. Salem cannot feed them; they shiver through Charlestown, then cross to Shawmut where William Blackstone offers his peninsula. Boston rises from that mud. George Alcock, Thomas French, the Richardsons, Roger Williams on the Lyon — parish names become town names.",
+        "paragraphs": [
+          "The Massachusetts Bay Company charter arrived in 1629 without requiring meetings in England — investors voted to move the whole company to America. Winthrop was elected governor while still in Lincolnshire.",
+          "The Winthrop Fleet of 1630 is the Great Migration's hinge for this family: Alcock at Roxbury, French on the Arabella, Barretts and Powers in the long roster of 1635 ships — Hopewell, James, Confidence, Truelove.",
+          "By 1636, Thomas Hooker drives congregants west to the Connecticut River; Harvard opens; the Pequot War lights the powder keg. Planting towns is planting the Powers line."
+        ]
+      }
+    },
+    {
+      "id": "new-france-st-lawrence",
+      "order": 8,
+      "buttonLabel": "New France & the St. Lawrence",
+      "shortTitle": "New France",
+      "teaser": "Champlain, Hébert, and a Catholic colony on a frozen river.",
+      "style": "sage",
+      "branch": "goodwater",
+      "yearStart": 1534,
+      "yearEnd": 1663,
+      "location": { "name": "St. Lawrence River", "lat": 48.0, "lng": -68.0, "scope": "world" },
+      "storyChapterId": "seg-03-atlantic-crossings",
+      "nextTopicId": "kings-daughters",
+      "narrative": {
+        "label": "New France",
+        "spoken": "Cartier hears kanata in fifteen thirty-five; Champlain builds Québec; Louis Hébert becomes the first French farmer behind the walls. Richelieu's Company of One Hundred Associates promises four thousand settlers; the seigneurial system lays river-front manors along the St. Lawrence. Robert Giffard recruits from Perche. This is the cold doorway the Goodwater branch walks through.",
+        "paragraphs": [
+          "France's colony is not gold coast and conquistadors — it is furs, fish, and families on a river that freezes solid half the year. Hébert marries Marie Rollet in Paris in 1601; by 1617 he is farming at Québec while the English are still learning to look past their shoreline.",
+          "The Kirke brothers seize Québec in 1629; it returns to France in 1632. Champlain rebuilds a true ville — upper town for elites, lower town for merchants. Giffard's colonists sign three-year contracts for land and animals.",
+          "Life in New France means Iroquois raids, lime kilns, stone houses in the lower town, and registers full of Cloutier, Guyon, Couillard, and Bonneau — names this tree still carries."
+        ]
+      }
+    },
+    {
+      "id": "kings-daughters",
+      "order": 9,
+      "buttonLabel": "King's Daughters & Île d'Orléans",
+      "shortTitle": "King's Daughters",
+      "teaser": "Filles du roi, founding families, and the island in the middle of the river.",
+      "style": "violet",
+      "branch": "goodwater",
+      "yearStart": 1663,
+      "yearEnd": 1675,
+      "location": { "name": "Île d'Orléans", "lat": 46.88, "lng": -70.95, "scope": "world" },
+      "storyChapterId": "seg-05-frontier-and-faith",
+      "nextTopicId": "colonial-wars",
+      "narrative": {
+        "label": "King's Daughters",
+        "spoken": "France needs families, not just fur traders. Filles à marier sail first; then the King's Daughters — filles du roi — answer the crown's call to populate the St. Lawrence. About seven hundred sixty-eight women were recruited; twenty-four connect directly to Mary Ann Goodwater's branch. Fourteen ancestors were among the three hundred founding families of Île d'Orléans, the long island where Joseph Bonneau buys farmland in sixteen seventy.",
+        "paragraphs": [
+          "The Carignan-Salières Regiment arrives in 1665 — twelve hundred soldiers to hold the Richelieu against Iroquois raids armed with Dutch firearms.",
+          "Joseph Bonneau completes a thirty-six-month indenture, leases land on Île d'Orléans, marries Marie-Anne Lelong in Sainte-Famille church. The Bonneau/Gingras/Gautier line that becomes Goodwater grows on island soil.",
+          "Dad's document counts King's Daughters the way other papers count battles — twenty-four direct connections to Winifred's tree, not a footnote."
+        ]
+      }
+    },
+    {
+      "id": "colonial-wars",
+      "order": 10,
+      "buttonLabel": "Colonial wars",
+      "shortTitle": "Colonial wars",
+      "teaser": "Pequot, King Philip's, and the Beaver Wars — frontier fire on both rivers.",
+      "style": "slate",
+      "branch": "both",
+      "yearStart": 1636,
+      "yearEnd": 1701,
+      "location": { "name": "Connecticut River", "lat": 41.76, "lng": -72.67, "scope": "us" },
+      "storyChapterId": "seg-05-frontier-and-faith",
+      "nextTopicId": "salem-witch",
+      "narrative": {
+        "label": "Colonial Wars",
+        "spoken": "Thomas French Jr. fights in the Pequot War and receives grants at Ipswich. The Mystic Massacre of sixteen thirty-seven scars the Connecticut valley. King Philip's War sends Henry Sparks away from home while his wife Martha sits in a Boston jail accused of witchcraft. In Canada, the Beaver Wars pit Iroquois with Dutch guns against Ville-Marie and Trois-Rivières. The family is never merely near these wars — they are in the militia rolls and the prison lists.",
+        "paragraphs": [
+          "Pequot War, 1636–1638: Connecticut towns burned, Endecott's raids, five hundred Pequot dead in a pre-dawn fort fire at Mystic. Sergeant Thomas French Jr. is on the English side of that ledger.",
+          "King Philip's War, 1675–1678: the province of Massachusetts Bay reorganized; frontier towns emptied. Henry Sparks fights west while Martha Barrett Sparks is imprisoned in Boston, October 1691.",
+          "Beaver Wars in New France: Iroquois raids on Trois-Rivières and the Richelieu; Canada counts three hundred fifty souls against twelve thousand Haudenosaunee. Both branches live inside these conflicts, not beside them."
+        ]
+      }
+    },
+    {
+      "id": "salem-witch",
+      "order": 11,
+      "buttonLabel": "Salem & witch panic",
+      "shortTitle": "Salem witch panic",
+      "teaser": "Martha Barrett Sparks in a Boston jail — a direct Powers-branch tie.",
+      "style": "violet",
+      "branch": "powers",
+      "yearStart": 1590,
+      "yearEnd": 1692,
+      "location": { "name": "Salem, Massachusetts", "lat": 42.52, "lng": -70.89, "scope": "us" },
+      "storyChapterId": "seg-06-wars-and-witch-panic",
+      "nextTopicId": "french-indian-british",
+      "narrative": {
+        "label": "Salem Witch Panic",
+        "spoken": "James the Sixth hunts witches in Scotland in fifteen ninety — Daemonologie in fifteen ninety-seven — and the panic crosses the border when he becomes James the First of England. In sixteen ninety-one, Martha Barrett Sparks of Chelmsford is sent to a Boston prison on suspicion of witchcraft while her husband Henry Sparks fights King Philip's War. Her father petitions for release in sixteen ninety-two; she is freed after fifty-eight weeks. That is not living near Salem — that is the Barrett line into the Powers branch.",
+        "paragraphs": [
+          "Witchcraft before 1692 was a capital crime hard to prove; accusation alone could ruin someone because prisoners paid their own jail costs. In 1692, courts allowed spectral evidence and a Court of Oyer and Terminer assumed guilt until innocence was proved.",
+          "Martha (Barrett) Sparks, granddaughter of Thomas Barrett of Chelmsford, was imprisoned 28 October 1691. Thomas Barrett Jr. petitioned Governor Phips on 1 November 1692; Martha was released 8 December 1692.",
+          "Rebecca Barrett married Walter Powers III in 1696; their son Josiah Powers Sr. was born in 1710 on Neshoba Hill — the Edith Powers line carries forward from a family that survived the panic."
+        ]
+      }
+    },
+    {
+      "id": "french-indian-british",
+      "order": 12,
+      "buttonLabel": "French & Indian / British North America",
+      "shortTitle": "Empires at war",
+      "teaser": "King William's through the French & Indian War — Québec becomes British.",
+      "style": "amber",
+      "branch": "both",
+      "yearStart": 1689,
+      "yearEnd": 1763,
+      "location": { "name": "Québec", "lat": 46.81, "lng": -71.21, "scope": "world" },
+      "storyChapterId": "seg-08-empires-at-war",
+      "nextTopicId": "west-to-iowa",
+      "narrative": {
+        "label": "British North America",
+        "spoken": "King William's War, Queen Anne's War, the French and Indian War — Paris and London quarrel and the St. Lawrence changes hands. Treaty of Paris in seventeen sixty-three gives Britain all of New France; French farmers stay on their land under English rule. Josiah Powers Jr. enlists in Continental regiments in seventeen seventy-five. The Bonneau line moves along the Richelieu — Chambly, Saint-Philippe, St-Mathias — while the Powers line pushes into Vermont and New Hampshire.",
+        "paragraphs": [
+          "Intercolonial wars are the background hum of both branches: raids on Deerfield, sieges of Québec, Iroquois alliances shifting when the Dutch lose New Netherland in 1664.",
+          "After 1763, French civil law and Catholic worship continue under British governors — the Goodwater cousins farm through conquest without leaving the river.",
+          "The American Revolution draws Josiah Powers Jr. into New Hampshire regiments; the War of 1812 and Louisiana Purchase reshape the continent the Coss line will soon walk west across."
+        ]
+      }
+    },
+    {
+      "id": "west-to-iowa",
+      "order": 13,
+      "buttonLabel": "West to Iowa",
+      "shortTitle": "West to Iowa",
+      "teaser": "Vermont to Wisconsin to Winneshiek — the long walk before the wedding.",
+      "style": "sky",
+      "branch": "both",
+      "yearStart": 1816,
+      "yearEnd": 1853,
+      "location": { "name": "Iowa", "lat": 43.0, "lng": -93.5, "scope": "us" },
+      "storyChapterId": "seg-09-west-to-iowa",
+      "nextTopicId": "dakota-years",
+      "narrative": {
+        "label": "West to Iowa",
+        "spoken": "Warren Coss and Edith Powers raise Joseph Warren Coss in Vermont and Wisconsin. Benjamin Bonneau III anglicizes to Goodwater on the census and moves from New York to Iowa homestead country. Joseph leaves his father's household and travels farther west to Winneshiek County. The Black Hawk Purchase opens Iowa to settlement. Two families converge in the same county before the 1853 wedding.",
+        "paragraphs": [
+          "Joseph Warren Coss is born in 1827; by 1850 he is in Winneshiek County, no longer living with Warren and Edith in Wisconsin. Mary Ann Bonneau is born in 1839; her father is Benjamin Goodwater on the 1850 Vermont census.",
+          "The Bonneau/Goodwater family fits Dad's profile of poor subsistence Canadian farmers looking for better land — Ossian, Glenwood, Frankville in Winneshiek County.",
+          "1,000-mile migrations repeat: Athens, Vermont to Palmyra, Wisconsin to Iowa — the same restlessness on both branches before they merge."
+        ]
+      }
+    },
+    {
+      "id": "dakota-years",
+      "order": 14,
+      "buttonLabel": "Dakota years",
+      "shortTitle": "Dakota years",
+      "teaser": "Grand Forks hotel, frontier towns, and Mary Ann's death in 1878.",
+      "style": "sage",
+      "branch": "both",
+      "yearStart": 1854,
+      "yearEnd": 1928,
+      "location": { "name": "Grand Forks, North Dakota", "lat": 47.92, "lng": -97.03, "scope": "us" },
+      "storyChapterId": "seg-10-dakota-years",
+      "nextTopicId": "depression-dust",
+      "narrative": {
+        "label": "Dakota Years",
+        "spoken": "After the Iowa wedding, Joseph and Mary Ann push through Wisconsin and Minnesota — Cherry Grove, Getty, Little Sauk. In eighteen seventy-six they travel two hundred thirty miles north to Grand Forks in Dakota Territory and open the first hotel in a frontier town where tepees still stand nearby. Mary Ann dies there in eighteen seventy-eight at thirty-nine. Edgar Putnam Coss raises sons on Dakota farms through bank panics and drought.",
+        "paragraphs": [
+          "Edgar Putnam Coss, born 1855 to Joseph and Mary Ann, marries Sarah Pearson and farms through prosperity and the 1893 panic.",
+          "Joseph Warren Coss remarries in Grand Forks; the Coss name stays on the northern prairie while Benjamin Goodwater III's farm is highlighted on an 1886 Frankville map in Iowa.",
+          "Clarence and Charles Coss will later work as firemen in Grand Forks — the Dakota years bind the merged branches to the Red River valley."
+        ]
+      }
+    },
+    {
+      "id": "depression-dust",
+      "order": 15,
+      "buttonLabel": "Depression & Dust Bowl",
+      "shortTitle": "Depression & Dust",
+      "teaser": "Crowded households, roomers, and farms that would not yield.",
+      "style": "slate",
+      "branch": "both",
+      "yearStart": 1929,
+      "yearEnd": 1940,
+      "location": { "name": "Kenmare, North Dakota", "lat": 48.08, "lng": -102.08, "scope": "us" },
+      "storyChapterId": "seg-11-depression-and-dust",
+      "nextTopicId": "winifred",
+      "narrative": {
+        "label": "Depression & Dust Bowl",
+        "spoken": "The 1930 census finds Winifred at seven in Cavalier; in 1940 she is seventeen in Kenmare. Roomers help cover rent; tight budgets and low grain prices define farm communities. The Dust Bowl winds scrape the prairie while Clarence and Charles Coss work as firemen in Grand Forks. This is the hard ground Winifred walks before the war and the wedding that close Dad's paper.",
+        "paragraphs": [
+          "After Ethel Raymond dies in 1927, five-year-old Winifred is raised by aunt Lorraine Powers Geiger and uncle Winfield Geiger — crowded North Dakota roofs shared with roomers to survive the Depression.",
+          "Bank panics, drought, and dust are not abstract in this chapter — they are census lines, firemen's wages, and photographs of Morris and Winifred at Lake Mead before the world changed again.",
+          "Dad's document ends in the twentieth century still counting farmers and mothers, not presidents alone."
+        ]
+      }
+    },
+    {
+      "id": "winifred",
+      "order": 16,
+      "buttonLabel": "Winifred",
+      "shortTitle": "Winifred",
+      "teaser": "The paper is written for her — Winifred Eloise Coss, 1922–2000s.",
+      "style": "rose",
+      "branch": "both",
+      "yearStart": 1922,
+      "yearEnd": 1950,
+      "location": { "name": "Cavalier, North Dakota", "lat": 48.79, "lng": -97.62, "scope": "us" },
+      "storyChapterId": "seg-11-depression-and-dust",
+      "nextTopicId": null,
+      "narrative": {
+        "label": "Winifred Eloise Coss",
+        "spoken": "Winifred Eloise Coss is why the paper exists. Born to Charles Whitcomb Coss and Ethel Raymond in North Dakota; raised by the Geigers after her mother's death; married to Morris Rankin Batie in Las Vegas in nineteen forty-two. Four centuries of England and Québec, witch panic and world wars, filles du roi and Dust Bowl winds — all preserved so a grandchild could hear the names aloud. Famous people open the chapters; your relatives walk through them.",
+        "paragraphs": [
+          "The following paper is the story of Winifred Eloise Coss's family tree — not a dry chart, but two vast journeys that meet in Iowa and descend to her in North Dakota.",
+          "Photographs in the original document show Morris and Winifred together and Winifred at Lake Mead — a young woman at the edge of the desert, at the edge of a world war.",
+          "You have reached the end of the arc. Start again from the beginning, or open any chapter — the people are still here, names in bold."
+        ]
+      }
+    }
+  ]
+}

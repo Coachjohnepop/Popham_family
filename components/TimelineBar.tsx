@@ -8,17 +8,27 @@ import {
   getMarkerColor,
   getMarkerLabel,
   markerOffsetTop,
+  topicMarkerOffsetTop,
   type TimelineMarkerKind,
   type TimelineTick,
 } from "@/lib/timeline";
+import {
+  TOPIC_MARKER_COLOR,
+  TOPIC_MARKER_LABEL,
+  type TopicTimelineMarker,
+} from "@/lib/story-topics";
 import type { TimelineEvent } from "@/lib/types";
 
 type TimelineBarProps = {
   events: TimelineEvent[];
+  topicMarkers?: TopicTimelineMarker[];
+  showTopics?: boolean;
+  activeTopicId?: string;
   min: number;
   max: number;
   year: number;
   onYearChange: (year: number) => void;
+  onTopicSelect?: (topicId: string, year: number) => void;
 };
 
 function tickLabelClass(tick: TimelineTick): string {
@@ -44,9 +54,20 @@ function tickMarkClass(tick: TimelineTick): string {
   return "h-2 w-px bg-[#8b5e34]/50";
 }
 
-export default function TimelineBar({ events, min, max, year, onYearChange }: TimelineBarProps) {
+export default function TimelineBar({
+  events,
+  topicMarkers = [],
+  showTopics = true,
+  activeTopicId,
+  min,
+  max,
+  year,
+  onYearChange,
+  onTopicSelect,
+}: TimelineBarProps) {
   const markers = useMemo(() => buildTimelineMarkers(events, min, max), [events, min, max]);
   const ticks = useMemo(() => buildTimelineTicks(min, max), [min, max]);
+  const visibleTopicMarkers = showTopics ? topicMarkers : [];
 
   return (
     <div className="rounded-2xl border border-[#e2d4bf] bg-[#fffaf2] p-5">
@@ -108,6 +129,33 @@ export default function TimelineBar({ events, min, max, year, onYearChange }: Ti
           );
         })}
 
+        {visibleTopicMarkers.map((marker) => {
+          const isActive = marker.topicId === activeTopicId;
+          const color = TOPIC_MARKER_COLOR;
+
+          return (
+            <button
+              key={`topic-${marker.topicId}`}
+              type="button"
+              title={`${marker.year} · ${TOPIC_MARKER_LABEL}: ${marker.title}`}
+              aria-label={`${marker.year}, ${TOPIC_MARKER_LABEL}: ${marker.title}`}
+              onClick={() => {
+                onYearChange(marker.year);
+                onTopicSelect?.(marker.topicId, marker.year);
+              }}
+              className="absolute z-20 -translate-x-1/2 rounded-sm border-2 border-[#fffaf2] transition hover:scale-125 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#059669]/50"
+              style={{
+                left: `calc(${marker.left}% + 4px)`,
+                top: `${topicMarkerOffsetTop()}px`,
+                width: isActive ? 12 : 9,
+                height: isActive ? 12 : 9,
+                backgroundColor: color,
+                boxShadow: isActive ? `0 0 0 2px ${color}55` : undefined,
+              }}
+            />
+          );
+        })}
+
         <input
           type="range"
           min={min}
@@ -153,6 +201,15 @@ export default function TimelineBar({ events, min, max, year, onYearChange }: Ti
             {getMarkerLabel(kind)}
           </span>
         ))}
+        {showTopics && (
+          <span className="inline-flex items-center gap-1.5">
+            <span
+              className="inline-block h-2.5 w-2.5 rounded-sm border border-[#fffaf2]"
+              style={{ backgroundColor: TOPIC_MARKER_COLOR }}
+            />
+            {TOPIC_MARKER_LABEL}
+          </span>
+        )}
       </div>
     </div>
   );

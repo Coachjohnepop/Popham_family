@@ -1,10 +1,17 @@
 "use client";
 
 import dynamic from "next/dynamic";
+import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
 import TimelineBar from "@/components/TimelineBar";
-import { getIndexMeta, getTimelineEvents, getYearBounds } from "@/lib/data";
+import { getIndexMeta, getMapStoryTopics, getTimelineEvents, getYearBounds } from "@/lib/data";
+import {
+  buildTopicTimelineMarkers,
+  getStoryTopic,
+  getStoryTopicChapterHref,
+  type StoryTopic,
+} from "@/lib/story-topics";
 
 const FamilyMap = dynamic(() => import("@/components/FamilyMap"), {
   ssr: false,
@@ -16,14 +23,17 @@ const FamilyMap = dynamic(() => import("@/components/FamilyMap"), {
 });
 
 const events = getTimelineEvents();
+const storyTopics = getMapStoryTopics();
 const bounds = getYearBounds(events);
 const meta = getIndexMeta();
+const topicMarkers = buildTopicTimelineMarkers(storyTopics, bounds.min, bounds.max);
 
 export default function MapTimelineView() {
   const searchParams = useSearchParams();
   const yearParam = searchParams.get("year");
   const eventParam = searchParams.get("event");
   const placeParam = searchParams.get("place");
+  const topicParam = searchParams.get("topic");
 
   const [year, setYear] = useState(() => {
     const parsed = yearParam ? Number(yearParam) : bounds.min;
@@ -31,6 +41,8 @@ export default function MapTimelineView() {
   });
   const [scope, setScope] = useState<"us" | "world">("us");
   const [onlyHighlights, setOnlyHighlights] = useState(false);
+  const [showTopics, setShowTopics] = useState(true);
+  const [activeTopicId, setActiveTopicId] = useState<string | null>(topicParam);
 
   useEffect(() => {
     if (yearParam) {
@@ -40,6 +52,18 @@ export default function MapTimelineView() {
       }
     }
   }, [yearParam]);
+
+  useEffect(() => {
+    if (topicParam && getStoryTopic(topicParam)) {
+      setActiveTopicId(topicParam);
+      setShowTopics(true);
+      const topic = getStoryTopic(topicParam);
+      if (topic && !yearParam) {
+        setYear(topic.yearStart);
+        if (topic.location.scope === "world") setScope("world");
+      }
+    }
+  }, [topicParam, yearParam]);
 
   useEffect(() => {
     if (!placeParam) return;
@@ -76,6 +100,15 @@ export default function MapTimelineView() {
     return [...visible].reverse().find((e) => e.year <= year) ?? visible[0];
   }, [visible, year, eventParam]);
 
+  const activeTopic = activeTopicId ? getStoryTopic(activeTopicId) : null;
+
+  function handleTopicSelect(topicId: string, topicYear: number) {
+    setActiveTopicId(topicId);
+    setYear(topicYear);
+    const topic = getStoryTopic(topicId);
+    if (topic?.location.scope === "world") setScope("world");
+  }
+
   return (
     <div className="space-y-4">
       <div className="flex flex-wrap items-end justify-between gap-3">
@@ -84,11 +117,11 @@ export default function MapTimelineView() {
             Interactive map
           </p>
           <p className="text-sm text-[#6f5c49]">
-            Slide the timeline — dots show where events from the family story happened.
+            Slide the timeline — dots show events; green squares show the sixteen story topics.
           </p>
           <p className="mt-1 text-xs text-[#6f5c49]">
-            {meta.timelineElementsRaw} timeline elements in the document · {meta.timelineElementsMapped}{" "}
-            mapped to {meta.indexedLocations} places · {visible.length} visible at {year}
+            {meta.storyTopicCount} story topics · {meta.timelineElementsMapped} timeline events ·{" "}
+            {meta.indexedLocations} places · {visible.length} events visible at {year}
           </p>
         </div>
         <div className="flex flex-wrap gap-2">
@@ -106,6 +139,15 @@ export default function MapTimelineView() {
           ))}
           <button
             type="button"
+            onClick={() => setShowTopics((v) => !v)}
+            className={`rounded-full px-3 py-1.5 text-xs font-semibold uppercase tracking-wider ${
+              showTopics ? "bg-[#059669] text-white" : "bg-[#efe4d2] text-[#5c4a38]"
+            }`}
+          >
+            Story topics
+          </button>
+          <button
+            type="button"
             onClick={() => setOnlyHighlights((v) => !v)}
             className={`rounded-full px-3 py-1.5 text-xs font-semibold uppercase tracking-wider ${
               onlyHighlights ? "bg-[#7c3aed] text-white" : "bg-[#efe4d2] text-[#5c4a38]"
@@ -117,15 +159,27 @@ export default function MapTimelineView() {
       </div>
 
       <div className="overflow-hidden rounded-3xl border border-[#e2d4bf] shadow-sm">
-        <FamilyMap events={scopedEvents} year={year} scope={scope} activeId={active?.id} />
+        <FamilyMap
+          events={scopedEvents}
+          topics={storyTopics}
+          showTopics={showTopics}
+          activeTopicId={activeTopicId ?? undefined}
+          year={year}
+          scope={scope}
+          activeId={active?.id}
+        />
       </div>
 
       <TimelineBar
         events={scopedEvents}
+        topicMarkers={topicMarkers}
+        showTopics={showTopics}
+        activeTopicId={activeTopicId ?? undefined}
         min={bounds.min}
         max={bounds.max}
         year={year}
         onYearChange={setYear}
+        onTopicSelect={handleTopicSelect}
       />
 
       <div className="flex flex-wrap gap-3 text-[11px] text-[#6f5c49]">
@@ -138,9 +192,16 @@ export default function MapTimelineView() {
         <span className="inline-flex items-center gap-1">
           <span className="inline-block h-2.5 w-2.5 rounded-full bg-[#b45309]" /> Active on map
         </span>
+        <span className="inline-flex items-center gap-1">
+          <span className="inline-block h-2.5 w-2.5 rounded-sm bg-[#059669]" /> Story topic
+        </span>
       </div>
 
-      {active && (
+      {activeTopic && (
+        <TopicDetailCard topic={activeTopic} onDismiss={() => setActiveTopicId(null)} />
+      )}
+
+      {!activeTopic && active && (
         <div className="rounded-2xl border border-[#e2d4bf] bg-white p-5">
           <div className="text-[10px] font-semibold uppercase tracking-[0.25em] text-[#8b5e34]">
             {active.year} · {active.location.name}
@@ -169,6 +230,61 @@ export default function MapTimelineView() {
           )}
         </div>
       )}
+    </div>
+  );
+}
+
+function TopicDetailCard({
+  topic,
+  onDismiss,
+}: {
+  topic: StoryTopic;
+  onDismiss: () => void;
+}) {
+  const nextTopic = topic.nextTopicId ? getStoryTopic(topic.nextTopicId) : null;
+
+  return (
+    <div className="rounded-2xl border border-[#86efac] bg-[#f0fdf4] p-5">
+      <div className="flex flex-wrap items-start justify-between gap-3">
+        <div>
+          <div className="text-[10px] font-semibold uppercase tracking-[0.25em] text-[#059669]">
+            Story topic · {topic.yearStart}
+            {topic.yearEnd !== topic.yearStart ? `–${topic.yearEnd}` : ""} · {topic.location.name}
+          </div>
+          <h3 className="mt-1 font-serif text-2xl font-semibold text-[#14532d]">{topic.shortTitle}</h3>
+          <p className="mt-2 text-sm leading-relaxed text-[#166534]">{topic.teaser}</p>
+        </div>
+        <button
+          type="button"
+          onClick={onDismiss}
+          className="rounded-full bg-white px-3 py-1.5 text-xs font-semibold text-[#166534] ring-1 ring-[#86efac] hover:bg-[#dcfce7]"
+        >
+          Show events
+        </button>
+      </div>
+
+      <div className="mt-4 flex flex-wrap gap-2">
+        <Link
+          href={`/story?topic=${topic.id}#story-topics`}
+          className="rounded-full bg-[#059669] px-4 py-2 text-sm font-semibold text-white hover:bg-[#047857]"
+        >
+          Read topic →
+        </Link>
+        <Link
+          href={getStoryTopicChapterHref(topic)}
+          className="rounded-full bg-[#8b5e34] px-4 py-2 text-sm font-semibold text-white hover:bg-[#6f4a28]"
+        >
+          Open chapter →
+        </Link>
+        {nextTopic && (
+          <Link
+            href={`/map?topic=${nextTopic.id}&year=${nextTopic.yearStart}`}
+            className="rounded-full bg-white px-4 py-2 text-sm font-semibold text-[#166534] ring-1 ring-[#86efac] hover:bg-[#dcfce7]"
+          >
+            Up next: {nextTopic.shortTitle} →
+          </Link>
+        )}
+      </div>
     </div>
   );
 }

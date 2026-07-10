@@ -76,6 +76,7 @@ export type IndexMeta = {
   timelineElementsRaw: number;
   timelineElementsMapped: number;
   indexedLocations: number;
+  storyTopicCount: number;
   yearMin: number;
   yearMax: number;
   withFamousOrFamily: number;

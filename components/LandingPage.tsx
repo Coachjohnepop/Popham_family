@@ -19,7 +19,8 @@ export default function LandingPage() {
             The Story of Winifred Coss
           </h1>
           <p className="mt-4 text-base leading-relaxed text-[#6f5c49] sm:text-lg">
-            Two branches of history — one family. Explore at your own pace.
+            England, France, and the Dutch — three kingdoms, three reasons to cross the Atlantic.
+            Two branches of history meet in one family.
           </p>
         </div>
 

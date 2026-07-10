@@ -1,11 +1,30 @@
 {
   "id": "winifred-coss",
   "title": "The Story of Winifred Eloise Coss",
+  "storyHook": {
+    "headline": "Three kingdoms, three reasons to cross the Atlantic",
+    "intro": "Before Iowa, before the Dust Bowl, before Winifred — three European powers opened separate doorways to North America. Each came for something different. This story follows real relatives through all three.",
+    "countries": [
+      {
+        "name": "England",
+        "why": "Religious wars and a crowded island pushed dissenting Protestants toward the sea — patents, plantations, and finally the Winthrop Fleet, building Massachusetts towns where the Powers branch took root."
+      },
+      {
+        "name": "France",
+        "why": "Crown and church claimed the St. Lawrence for empire, furs, and permanent farms — Champlain's Québec, the seigneurial system, and the King's Daughters who populated the Goodwater branch's doorway."
+      },
+      {
+        "name": "The Dutch",
+        "why": "Merchants followed profit, not prayer — trading posts on the Hudson, Connecticut, and Delaware rivers, swapping metal goods for beaver pelts while English and French settlers built colonies on every side."
+      }
+    ],
+    "closing": "Four centuries later those three stories converge in an Iowa wedding and descend to Winifred Eloise Coss in North Dakota. Dig in — the people are still here, names in bold."
+  },
   "summaries": {
     "short": {
       "label": "Short Summary",
       "targetWords": 200,
-      "spoken": "The Story of Winifred Eloise Coss is two great family adventures that finally meet. The Edith Powers branch begins in England around fifteen eighty-one with George Alcock. Puritan families crossed the Atlantic, survived frontier wars, the Salem witch panic, and the American Revolution. The Mary Ann Goodwater branch begins in Paris around fifteen seventy-five with Louis Hébert, France's first farmer in Canada. Those lines built Québec, endured brutal winters, and grew through the King's Daughters. In eighteen fifty-three, Joseph Warren Coss married Mary Ann Goodwater in Iowa, uniting the Powers and Goodwater branches. Generations later came Winifred Eloise Coss — raised in North Dakota through the Depression and Dust Bowl, married to Morris Rankin Batie in nineteen forty-two. This interactive storybook follows real relatives through famous moments in history — not names on a chart, but people who lived it."
+      "spoken": "The Story of Winifred Eloise Coss is shaped by three kingdoms that crossed the Atlantic for three different reasons. England sent dissenting Protestants to plant towns and worship in peace. France claimed the St. Lawrence for empire, furs, and farming families. The Dutch followed beaver pelts and trade, not thrones. Two great family adventures grow out of that — and finally meet. The Edith Powers branch begins in England around fifteen eighty-one with George Alcock. Puritan families crossed the Atlantic, survived frontier wars, the Salem witch panic, and the American Revolution. The Mary Ann Goodwater branch begins in Paris around fifteen seventy-five with Louis Hébert, France's first farmer in Canada. Those lines built Québec, endured brutal winters, and grew through the King's Daughters. In eighteen fifty-three, Joseph Warren Coss married Mary Ann Goodwater in Iowa, uniting the Powers and Goodwater branches. Generations later came Winifred Eloise Coss — raised in North Dakota through the Depression and Dust Bowl, married to Morris Rankin Batie in nineteen forty-two. This interactive storybook follows real relatives through famous moments in history — not names on a chart, but people who lived it."
     },
     "medium": {
       "label": "Medium Summary",

@@ -4,31 +4,62 @@ import { useEffect, useMemo } from "react";
 import L from "leaflet";
 import { CircleMarker, MapContainer, TileLayer, useMap } from "react-leaflet";
 import type { MapScope, TimelineEvent } from "@/lib/types";
+import { TOPIC_MARKER_COLOR, type StoryTopic } from "@/lib/story-topics";
 import "leaflet/dist/leaflet.css";
 
 type FamilyMapProps = {
   events: TimelineEvent[];
+  topics?: StoryTopic[];
+  showTopics?: boolean;
+  activeTopicId?: string;
   year: number;
   scope: MapScope;
   activeId?: string;
 };
 
-function MapViewport({ events, scope }: { events: TimelineEvent[]; scope: MapScope }) {
+function MapViewport({
+  events,
+  topics,
+  showTopics,
+  scope,
+}: {
+  events: TimelineEvent[];
+  topics: StoryTopic[];
+  showTopics: boolean;
+  scope: MapScope;
+}) {
   const map = useMap();
 
   useEffect(() => {
-    if (events.length === 0) {
+    const points: [number, number][] = events.map((e) => [e.location.lat, e.location.lng]);
+    if (showTopics) {
+      for (const topic of topics) {
+        if (scope === "world" || topic.location.scope === "us") {
+          points.push([topic.location.lat, topic.location.lng]);
+        }
+      }
+    }
+
+    if (points.length === 0) {
       map.setView(scope === "us" ? [39.8, -98.5] : [30, 10], scope === "us" ? 4 : 2);
       return;
     }
-    const bounds = L.latLngBounds(events.map((e) => [e.location.lat, e.location.lng]));
+    const bounds = L.latLngBounds(points);
     map.fitBounds(bounds.pad(0.25), { animate: true, maxZoom: scope === "us" ? 6 : 4 });
-  }, [events, map, scope]);
+  }, [events, topics, showTopics, map, scope]);
 
   return null;
 }
 
-export default function FamilyMap({ events, year, scope, activeId }: FamilyMapProps) {
+export default function FamilyMap({
+  events,
+  topics = [],
+  showTopics = true,
+  activeTopicId,
+  year,
+  scope,
+  activeId,
+}: FamilyMapProps) {
   const visible = useMemo(
     () =>
       events.filter(
@@ -36,6 +67,14 @@ export default function FamilyMap({ events, year, scope, activeId }: FamilyMapPr
       ),
     [events, year, scope],
   );
+
+  const visibleTopics = useMemo(() => {
+    if (!showTopics) return [];
+    return topics.filter((topic) => {
+      if (year < topic.yearStart) return false;
+      return scope === "world" || topic.location.scope === "us";
+    });
+  }, [topics, showTopics, year, scope]);
 
   const center: [number, number] = scope === "us" ? [39.8, -98.5] : [30, 10];
   const zoom = scope === "us" ? 4 : 2;
@@ -52,7 +91,12 @@ export default function FamilyMap({ events, year, scope, activeId }: FamilyMapPr
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
-      <MapViewport events={visible} scope={scope} />
+      <MapViewport
+        events={visible}
+        topics={topics}
+        showTopics={showTopics}
+        scope={scope}
+      />
 
       {visible.map((event) => {
         const isActive = event.id === activeId;
@@ -70,6 +114,23 @@ export default function FamilyMap({ events, year, scope, activeId }: FamilyMapPr
               weight: 2,
               fillColor: color,
               fillOpacity: isActive ? 0.95 : 0.75,
+            }}
+          />
+        );
+      })}
+
+      {visibleTopics.map((topic) => {
+        const isActive = topic.id === activeTopicId;
+        return (
+          <CircleMarker
+            key={`topic-${topic.id}`}
+            center={[topic.location.lat, topic.location.lng]}
+            radius={isActive ? 12 : 9}
+            pathOptions={{
+              color: "#fffaf2",
+              weight: 2,
+              fillColor: TOPIC_MARKER_COLOR,
+              fillOpacity: isActive ? 1 : 0.85,
             }}
           />
         );

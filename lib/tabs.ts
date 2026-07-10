@@ -5,9 +5,9 @@ export const APP_TABS = [
     href: "/story",
     tagline: "Read the chapters",
     description:
-      "28 tightened chapters from the original document — key family moments, every photo, optional slideshows.",
+      "11 chronological chapters and 16 story topics — key family moments, every photo, optional slideshows.",
     accent: "border-[#3b82f6] bg-[#eff6ff] text-[#1e3a8a]",
-    badge: "28 chapters · 134 photos",
+    badge: "16 topics · 11 chapters",
   },
   {
     id: "tree",
@@ -25,9 +25,9 @@ export const APP_TABS = [
     href: "/map",
     tagline: "Explore places through time",
     description:
-      "Slide the timeline under the map to watch events appear across the United States and the world, 1469–1950.",
+      "Slide the timeline — 16 story topics and hundreds of events across the United States and the world, 1469–1950.",
     accent: "border-[#8b5e34] bg-[#fffaf2] text-[#5c4a38]",
-    badge: "68 indexed places",
+    badge: "16 topics · 68 places",
   },
 ] as const;
 

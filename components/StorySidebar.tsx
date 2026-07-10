@@ -27,6 +27,12 @@ export default function StorySidebar({ activeId }: StorySidebarProps) {
           Document
         </p>
         <Link
+          href="/story#story-topics"
+          className="block rounded-xl px-3 py-2 text-sm font-semibold text-[#8b5e34] hover:bg-white"
+        >
+          16 story topics
+        </Link>
+        <Link
           href="/story#format"
           className="block rounded-xl px-3 py-2 text-sm font-medium text-[#5c4a38] hover:bg-white"
         >

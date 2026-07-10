@@ -15,9 +15,9 @@ type Step = "name" | "returning" | "intro" | "toc";
 
 const INTRO_SCRIPT = `Welcome to the Winifred Coss Family Tree.
 
-This story is organized into two large branches. The Edith Powers branch begins in England. The Mary Ann Goodwater branch begins in Québec and France.
+Three kingdoms shaped this story before the family branches ever met. England sent dissenting Protestants across the Atlantic to plant towns and worship in peace — that is the doorway for the Edith Powers branch. France claimed the St. Lawrence for empire, furs, and farming families — the doorway for the Mary Ann Goodwater branch. The Dutch followed trade, not thrones — beaver pelts and trading posts on the Hudson and Connecticut rivers, while English and French settlers built colonies on every side.
 
-In 1853, Joseph Warren Coss marries Mary Ann Goodwater — and the two branches join.
+In 1853, Joseph Warren Coss marries Mary Ann Goodwater in Iowa — and the two branches join.
 
 Throughout the story, direct family names appear in bold — purple names can be clicked for more detail. Maiden names appear in parentheses after marriage. Famous historical figures are highlighted where world history touches the family. Estimated dates are marked as about, before, after, or late when records are incomplete.
 

@@ -8,9 +8,22 @@ export type OverviewSummary = {
   spoken: string;
 };
 
+export type StoryHookCountry = {
+  name: string;
+  why: string;
+};
+
+export type StoryHook = {
+  headline: string;
+  intro: string;
+  countries: StoryHookCountry[];
+  closing: string;
+};
+
 export type WinifredOverviewData = {
   id: string;
   title: string;
+  storyHook: StoryHook;
   summaries: Record<OverviewDepth, OverviewSummary>;
 };
 
@@ -20,6 +33,10 @@ export const OVERVIEW_DEPTHS: OverviewDepth[] = ["short", "medium", "full"];
 
 export function getWinifredOverview(): WinifredOverviewData {
   return overview;
+}
+
+export function getStoryHook(): StoryHook {
+  return overview.storyHook;
 }
 
 export function getOverviewSummary(depth: OverviewDepth): OverviewSummary {

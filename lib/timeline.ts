@@ -80,6 +80,10 @@ export function markerOffsetTop(kind: TimelineMarkerKind): number {
   }
 }
 
+export function topicMarkerOffsetTop(): number {
+  return 36;
+}
+
 export type TimelineTickGrid = "century" | "half";
 
 export type TimelineTick = {
