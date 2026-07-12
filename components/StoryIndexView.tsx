@@ -3,8 +3,8 @@ import Link from "next/link";
 import NarratorVoiceDial from "@/components/NarratorVoiceDial";
 import PinSectionButton from "@/components/PinSectionButton";
 import ReadingProgressCard from "@/components/ReadingProgressCard";
-import StoryFormatGuide from "@/components/StoryFormatGuide";
 import StoryAskSection from "@/components/StoryAskSection";
+import StoryDocPanel from "@/components/StoryDocPanel";
 import StoryTopicsHubLoader from "@/components/StoryTopicsHubLoader";
 import { getStorybook } from "@/lib/storybook";
 import { getStoryTopicCount } from "@/lib/story-topics";
@@ -40,11 +40,13 @@ export default function StoryIndexView() {
             {topicCount} story topics above, then {book.sectionCount} chronological chapters
             (1485–1950) with {book.imageCountMapped} photographs. For a spoken overview, start from{" "}
             <HomeLink className="font-semibold text-[#8b5e34] hover:underline">Home</HomeLink>.
+            Use the Document tools (sidebar or below) for topics, format rules, the name index, and
+            sources.
           </p>
         </div>
 
-        <div id="format">
-          <StoryFormatGuide compact />
+        <div className="lg:hidden">
+          <StoryDocPanel compact={false} />
         </div>
 
         <div>

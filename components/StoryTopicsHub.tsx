@@ -96,7 +96,7 @@ export default function StoryTopicsHub({
     return (
       <div className="w-full text-center">
         <Link
-          href="/story#story-topics"
+          href="/story/topics"
           className="inline-flex rounded-full bg-[#8b5e34] px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-[#6f4a28]"
         >
           Explore all {topics.length} story topics →

@@ -1,43 +1,74 @@
 "use client";
 
 import { usePathname } from "next/navigation";
-import { Suspense } from "react";
+import { Suspense, type ReactNode } from "react";
 import FamilyIndexView from "@/components/FamilyIndexView";
 import FavoritesView from "@/components/FavoritesView";
 import ReadingProgressCard from "@/components/ReadingProgressCard";
 import SiteBrandHeader from "@/components/SiteBrandHeader";
 import SiteNavBoxes from "@/components/SiteNavBoxes";
 import StoryChapterView from "@/components/StoryChapterView";
+import StoryFormatGuide from "@/components/StoryFormatGuide";
 import StoryIndexView from "@/components/StoryIndexView";
 import StoryReferencesView from "@/components/StoryReferencesView";
 import StorySidebar from "@/components/StorySidebar";
+import StoryTopicsHubLoader from "@/components/StoryTopicsHubLoader";
 import MapTimelineView from "@/components/MapTimelineView";
 import FamilyTreeView from "@/components/FamilyTreeView";
 import type { TabId } from "@/lib/tabs";
 import SiteFooter from "@/components/SiteFooter";
 
+function StoryDocShell({ children }: { children: ReactNode }) {
+  return (
+    <div className="grid gap-6 lg:grid-cols-[280px_1fr]">
+      <StorySidebar />
+      {children}
+    </div>
+  );
+}
+
 function StoryRouter() {
   const pathname = usePathname();
+
+  if (pathname === "/story/topics") {
+    return (
+      <StoryDocShell>
+        <div className="space-y-4">
+          <StoryTopicsHubLoader />
+        </div>
+      </StoryDocShell>
+    );
+  }
+  if (pathname === "/story/format") {
+    return (
+      <StoryDocShell>
+        <StoryFormatGuide />
+      </StoryDocShell>
+    );
+  }
   if (pathname === "/story/family-index") {
     return (
-      <div className="grid gap-6 lg:grid-cols-[280px_1fr]">
-        <StorySidebar />
+      <StoryDocShell>
         <FamilyIndexView />
-      </div>
+      </StoryDocShell>
     );
   }
   if (pathname === "/story/references") {
     return (
-      <div className="grid gap-6 lg:grid-cols-[280px_1fr]">
-        <StorySidebar />
+      <StoryDocShell>
         <StoryReferencesView />
-      </div>
+      </StoryDocShell>
     );
   }
+
   const match = pathname.match(/^\/story\/([^/]+)$/);
   if (match?.[1]) {
-    return <StoryChapterView sectionId={match[1]} />;
+    const reserved = new Set(["topics", "format", "family-index", "references"]);
+    if (!reserved.has(match[1])) {
+      return <StoryChapterView sectionId={match[1]} />;
+    }
   }
+
   return <StoryIndexView />;
 }
 
@@ -57,9 +88,7 @@ export default function AppTabs({ initialTab }: AppTabsProps) {
             subtitle="Where the Coss family fits into history"
           />
           <SiteNavBoxes activeTab={tab} density="compact" />
-          {tab !== "favorites" && (
-            <ReadingProgressCard variant="compact" />
-          )}
+          {tab !== "favorites" && <ReadingProgressCard variant="compact" />}
         </div>
       </header>
 
