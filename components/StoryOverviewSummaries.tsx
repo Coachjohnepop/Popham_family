@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import GuidedFingerCoach from "@/components/GuidedFingerCoach";
 import {
   getOverviewIntro,
   getOverviewSummary,
@@ -8,6 +9,11 @@ import {
   type OverviewDepth,
 } from "@/lib/winifred-overview";
 import { speakText, type SpeakController, type SpeakState } from "@/lib/speak-text";
+import {
+  DEFAULT_STORY_VOICE_ID,
+  loadSummaryCoachSeen,
+  saveSummaryCoachSeen,
+} from "@/lib/story-voices";
 
 const BUTTON_STYLES: Record<OverviewDepth, string> = {
   short: "bg-[#dbeafe] text-[#1e3a8a] ring-[#93c5fd] hover:bg-[#bfdbfe]",
@@ -30,7 +36,19 @@ export default function StoryOverviewSummaries({
 }: StoryOverviewSummariesProps) {
   const [activeDepth, setActiveDepth] = useState<OverviewDepth | null>(null);
   const [speechState, setSpeechState] = useState<SpeakState>("idle");
+  const [showCoach, setShowCoach] = useState(false);
+  const [mounted, setMounted] = useState(false);
   const controllerRef = useRef<SpeakController | null>(null);
+
+  useEffect(() => {
+    setMounted(true);
+    setShowCoach(!loadSummaryCoachSeen());
+  }, []);
+
+  function dismissCoach() {
+    setShowCoach(false);
+    saveSummaryCoachSeen();
+  }
 
   function stopReading() {
     controllerRef.current?.stop();
@@ -40,6 +58,7 @@ export default function StoryOverviewSummaries({
   }
 
   async function playSummary(depth: OverviewDepth) {
+    dismissCoach();
     if (activeDepth === depth && (speechState === "speaking" || speechState === "loading")) {
       stopReading();
       return;
@@ -52,15 +71,20 @@ export default function StoryOverviewSummaries({
     const summary = getOverviewSummary(depth);
     const script = `${getOverviewIntro(depth)}${summary.spoken}`;
 
-    const controller = await speakText(script, {
-      onLoading: () => setSpeechState("loading"),
-      onSpeaking: () => setSpeechState("speaking"),
-      onPaused: () => setSpeechState("paused"),
-      onIdle: () => {
-        setSpeechState("idle");
-        setActiveDepth(null);
+    // Always use default storyteller voice (Edmund) for overview summaries
+    const controller = await speakText(
+      script,
+      {
+        onLoading: () => setSpeechState("loading"),
+        onSpeaking: () => setSpeechState("speaking"),
+        onPaused: () => setSpeechState("paused"),
+        onIdle: () => {
+          setSpeechState("idle");
+          setActiveDepth(null);
+        },
       },
-    });
+      { voiceId: DEFAULT_STORY_VOICE_ID },
+    );
 
     controllerRef.current = controller;
   }
@@ -73,8 +97,8 @@ export default function StoryOverviewSummaries({
     <section
       className={
         isLanding
-          ? "w-full rounded-3xl border border-[#e2d4bf] bg-white px-5 py-6 shadow-sm sm:px-8"
-          : "mt-4"
+          ? "relative w-full overflow-visible rounded-3xl border border-[#e2d4bf] bg-white px-5 py-6 shadow-sm sm:px-8"
+          : "relative mt-4 overflow-visible"
       }
       aria-labelledby={isLanding ? "document-overview-heading" : undefined}
     >
@@ -87,17 +111,28 @@ export default function StoryOverviewSummaries({
             id="document-overview-heading"
             className="mt-2 text-center font-serif text-xl font-semibold text-[#2b2118] sm:text-2xl"
           >
-            Hear the whole family story
+            Summary of the family story
           </h2>
         </>
       ) : (
         <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-[#8b5e34]">
-          Hear the overview
+          Summary of the family story
         </p>
       )}
+
       <div
-        className={`flex flex-wrap justify-center gap-2 ${isLanding ? "mt-5" : "mt-2"}`}
+        className={`relative flex flex-wrap justify-center gap-2 overflow-visible ${
+          isLanding ? "mt-5" : "mt-2"
+        }`}
       >
+        {mounted && showCoach ? (
+          <GuidedFingerCoach
+            label="Pick a summary length"
+            placement="above"
+            onDismiss={dismissCoach}
+          />
+        ) : null}
+
         {OVERVIEW_DEPTHS.map((depth) => {
           const summary = getOverviewSummary(depth);
           const isActive = activeDepth === depth;
@@ -122,6 +157,7 @@ export default function StoryOverviewSummaries({
           );
         })}
       </div>
+
       {activeDepth && speechState === "paused" && (
         <div className={isLanding ? "mt-3 text-center" : "mt-2"}>
           <button

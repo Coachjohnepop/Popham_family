@@ -50,7 +50,9 @@ export const STORY_VOICES: readonly StoryVoice[] = [
 export const DEFAULT_STORY_VOICE_ID = "edmund";
 
 const STORAGE_KEY = "coss-story-narrator-voice";
-const COACH_SEEN_KEY = "coss-story-voice-dial-coach-seen";
+/** Bump suffix when coach UX changes so users see the tip again. */
+const COACH_SEEN_KEY = "coss-story-voice-dial-coach-seen-v2";
+const SUMMARY_COACH_SEEN_KEY = "coss-summary-coach-seen-v1";
 
 export function getStoryVoice(id: string | null | undefined): StoryVoice {
   const found = STORY_VOICES.find((v) => v.id === id);
@@ -115,6 +117,25 @@ export function saveVoiceDialCoachSeen(): void {
   }
 }
 
+export function loadSummaryCoachSeen(): boolean {
+  if (typeof window === "undefined") return true;
+  try {
+    return window.localStorage.getItem(SUMMARY_COACH_SEEN_KEY) === "1";
+  } catch {
+    return true;
+  }
+}
+
+export function saveSummaryCoachSeen(): void {
+  if (typeof window === "undefined") return;
+  try {
+    window.localStorage.setItem(SUMMARY_COACH_SEEN_KEY, "1");
+  } catch {
+    /* private mode */
+  }
+}
+
 /** Sample line for optional preview when the user turns the dial. */
 export const VOICE_PREVIEW_LINE =
   "Hello — this is your story narrator. I'll read Winifred's family history in a warm, unhurried voice.";
+

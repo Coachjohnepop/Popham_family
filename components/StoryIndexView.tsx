@@ -19,8 +19,10 @@ export default function StoryIndexView() {
       <StorySidebar />
 
       <div className="space-y-6">
-        {/* Voice selection first on Interactive Storybook */}
-        <NarratorVoiceDial variant="story" />
+        {/* Voice selection first on Interactive Storybook (overflow so coach finger is visible) */}
+        <div className="overflow-visible">
+          <NarratorVoiceDial variant="story" />
+        </div>
 
         <ReadingProgressCard />
 

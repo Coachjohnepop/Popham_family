@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useId, useState } from "react";
+import GuidedFingerCoach from "@/components/GuidedFingerCoach";
 import {
   DEFAULT_STORY_VOICE_ID,
   loadStoredStoryVoiceId,
@@ -127,7 +128,7 @@ export default function NarratorVoiceDial({
   const cy = size / 2;
 
   const shellClass =
-    "relative rounded-2xl border border-[#e2d4bf] bg-white p-3 shadow-sm sm:p-4 " +
+    "relative overflow-visible rounded-2xl border border-[#e2d4bf] bg-white p-3 shadow-sm sm:p-4 " +
     className;
   const skeletonClass =
     "rounded-2xl border border-[#e2d4bf] bg-white p-3 shadow-sm opacity-80 " +
@@ -159,23 +160,17 @@ export default function NarratorVoiceDial({
         </p>
       </div>
 
-      <div className="relative mx-auto mt-2 flex w-fit items-start justify-center">
+      <div className="relative mx-auto mt-3 mb-2 flex min-h-[7.5rem] w-fit items-center justify-center overflow-visible px-10 sm:px-14">
         {showCoach ? (
-          <div
-            className="pointer-events-none absolute -right-1 top-2 z-20 flex flex-col items-center sm:-right-4 sm:top-4"
-            aria-hidden="true"
-          >
-            <div className="voice-coach-bubble mb-0.5 max-w-[6.5rem] rounded-xl bg-[#8b5e34] px-2 py-1 text-center text-[9px] font-semibold leading-snug text-white shadow-md">
-              Tap a voice
-            </div>
-            <span className="voice-coach-finger text-xl drop-shadow-md" role="img">
-              {"\u{1F446}"}
-            </span>
-          </div>
+          <GuidedFingerCoach
+            label="Tap a voice on the dial"
+            placement="right"
+            onDismiss={dismissCoach}
+          />
         ) : null}
 
         <div
-          className="relative shrink-0"
+          className="relative shrink-0 overflow-visible"
           style={{ width: size, height: size }}
           role="radiogroup"
           aria-label="Story narrator voice"
@@ -303,18 +298,6 @@ export default function NarratorVoiceDial({
       </div>
 
       <p className="mt-2 text-center text-[10px] text-[#6f5c49]">{selected.blurb}</p>
-
-      {showCoach ? (
-        <div className="mt-1.5 flex justify-center">
-          <button
-            type="button"
-            onClick={dismissCoach}
-            className="text-[10px] font-medium text-[#8b5e34] underline-offset-2 hover:underline"
-          >
-            Got it
-          </button>
-        </div>
-      ) : null}
 
       {previewing ? (
         <div className="mt-1 flex justify-center">
