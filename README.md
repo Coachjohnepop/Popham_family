@@ -8,12 +8,16 @@ Interactive family history app built from *The Story of Winifred Coss Family Tre
 
 ## Tabs
 
-- **Storybook** — narrative chapters with famous-people intersections
-- **My Path** — reading progress, pinned favorites, custom chapter order
+Uniform navigation boxes (top of every page; **My Path** is last):
+
+- **Storybook** — voice dial, ask anything, topics, chapters
 - **Family Tree** — Powers and Goodwater branches converging at Joseph Warren Coss + Mary Ann Goodwater (1853)
 - **Map & Timeline** — Leaflet map with indexed locations from the story (1469–1950)
+- **My Path** — reading progress, pinned favorites, custom chapter order
 
-Progress and pins are stored in the browser (`localStorage`) per reader.
+**Subjects covered** (`/subjects`) — high-level checklist (easter-egg flower in the brand header). Progress and pins live in the browser (`localStorage`) per reader.
+
+Ask-anything search is on the Interactive Storybook page only (not the landing page).
 
 ## Local development
 

@@ -1,0 +1,138 @@
+"use client";
+
+import Link from "next/link";
+import FlowerBouquet from "@/components/FlowerBouquet";
+import SiteBrandHeader from "@/components/SiteBrandHeader";
+import { useOptionalReader } from "@/components/ReaderProvider";
+import {
+  computeSubjectsProgress,
+  getStorySubjects,
+} from "@/lib/subjects";
+
+export default function SubjectsChecklistView() {
+  const reader = useOptionalReader();
+  const subjects = getStorySubjects();
+  const coveredIds = reader?.coveredSubjectIds ?? [];
+  const coveredSet = new Set(coveredIds);
+  const { covered, total, pct } = computeSubjectsProgress(coveredIds);
+
+  return (
+    <div className="mx-auto w-full max-w-2xl space-y-6 px-4 py-8 sm:py-12">
+      <SiteBrandHeader
+        size="app"
+        subtitle="A quiet garden of subjects — check what you have covered as you explore the story."
+      />
+
+      <section className="rounded-3xl border border-[#e2d4bf] bg-white p-5 shadow-sm sm:p-8">
+        <div className="flex items-start gap-3">
+          <FlowerBouquet size="md" />
+          <div>
+            <p className="text-[10px] font-semibold uppercase tracking-[0.3em] text-[#8b5e34]">
+              Secret garden
+            </p>
+            <h2 className="mt-1 font-serif text-2xl font-semibold text-[#2b2118] sm:text-3xl">
+              Subjects covered
+            </h2>
+            <p className="mt-2 text-sm leading-relaxed text-[#6f5c49]">
+              High-level themes from Winifred&apos;s family story. Opening a related chapter marks
+              subjects automatically; you can also check them off by hand.
+            </p>
+          </div>
+        </div>
+
+        <div className="mt-6">
+          <div className="mb-2 flex justify-between text-sm font-semibold text-[#5c4a38]">
+            <span>
+              {covered} of {total} subjects
+            </span>
+            <span>{pct}%</span>
+          </div>
+          <div className="h-2.5 overflow-hidden rounded-full bg-[#efe4d2]">
+            <div
+              className="h-full rounded-full bg-gradient-to-r from-[#5f9e5f] to-[#c97b9a] transition-all duration-500"
+              style={{ width: `${pct}%` }}
+              role="progressbar"
+              aria-valuenow={pct}
+              aria-valuemin={0}
+              aria-valuemax={100}
+              aria-label="Subjects covered"
+            />
+          </div>
+        </div>
+      </section>
+
+      <ul className="space-y-3">
+        {subjects.map((subject) => {
+          const isCovered = coveredSet.has(subject.id);
+          return (
+            <li
+              key={subject.id}
+              className={`rounded-2xl border p-4 transition sm:p-5 ${
+                isCovered
+                  ? "border-[#86efac] bg-[#f0fdf4]"
+                  : "border-[#e2d4bf] bg-white"
+              }`}
+            >
+              <div className="flex gap-3">
+                <button
+                  type="button"
+                  onClick={() => reader?.toggleSubjectCovered(subject.id)}
+                  className={`mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-md border-2 text-sm font-bold transition ${
+                    isCovered
+                      ? "border-[#166534] bg-[#166534] text-white"
+                      : "border-[#d9cbb6] bg-[#fffaf2] text-transparent hover:border-[#8b5e34]"
+                  }`}
+                  aria-pressed={isCovered}
+                  aria-label={
+                    isCovered
+                      ? `Mark ${subject.title} not covered`
+                      : `Mark ${subject.title} covered`
+                  }
+                >
+                  ✓
+                </button>
+                <div className="min-w-0 flex-1">
+                  <div className="flex flex-wrap items-center gap-2 text-[10px] font-semibold uppercase tracking-wider text-[#8b5e34]">
+                    <span>{subject.yearLabel}</span>
+                    <span className="text-[#c8b08d]">·</span>
+                    <span className="text-[#6f5c49]">{subject.branch}</span>
+                    {isCovered && (
+                      <span className="rounded-full bg-[#dcfce7] px-2 py-0.5 text-[#166534]">
+                        Covered
+                      </span>
+                    )}
+                  </div>
+                  <h3 className="mt-1 font-serif text-lg font-semibold text-[#2b2118] sm:text-xl">
+                    {subject.title}
+                  </h3>
+                  <p className="mt-1 text-sm text-[#6f5c49]">{subject.summary}</p>
+                  <Link
+                    href={`/story/${subject.chapterId}`}
+                    className="mt-3 inline-block text-sm font-semibold text-[#8b5e34] hover:underline"
+                  >
+                    Open related chapter →
+                  </Link>
+                </div>
+              </div>
+            </li>
+          );
+        })}
+      </ul>
+
+      <div className="flex flex-wrap justify-center gap-3 pb-8 pt-2">
+        <Link
+          href="/story"
+          className="rounded-full bg-[#8b5e34] px-5 py-2.5 text-sm font-semibold text-white hover:bg-[#6f4a28]"
+        >
+          Back to storybook
+        </Link>
+        <Link
+          href="/"
+          className="rounded-full bg-[#efe4d2] px-5 py-2.5 text-sm font-semibold text-[#5c4a38] hover:bg-[#e4d4bc]"
+        >
+          Home
+        </Link>
+      </div>
+    </div>
+  );
+}

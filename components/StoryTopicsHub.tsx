@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useCallback, useEffect, useRef, useState } from "react";
 import ReadAloudButton from "@/components/ReadAloudButton";
+import { useOptionalReader } from "@/components/ReaderProvider";
 import {
   getStoryTopic,
   getStoryTopicChapterHref,
@@ -22,6 +23,7 @@ export default function StoryTopicsHub({
   initialTopicId = null,
 }: StoryTopicsHubProps) {
   const topics = getStoryTopics();
+  const reader = useOptionalReader();
   const [activeId, setActiveId] = useState<string | null>(initialTopicId);
   const [speakGeneration, setSpeakGeneration] = useState(0);
   const panelRef = useRef<HTMLDivElement>(null);
@@ -52,13 +54,16 @@ export default function StoryTopicsHub({
         } else if (!next && variant === "story-index") {
           window.history.replaceState(null, "", "/story#story-topics");
         }
+        if (next) {
+          reader?.markSubject(next);
+        }
         if (shouldNarrate && next) {
           requestAnimationFrame(() => requestNarration());
         }
         return next;
       });
     },
-    [variant, scrollToPanel, requestNarration],
+    [variant, scrollToPanel, requestNarration, reader],
   );
 
   useEffect(() => {

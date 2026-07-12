@@ -1,20 +1,19 @@
 "use client";
 
-import HomeLink from "@/components/HomeLink";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import { Suspense } from "react";
-import AskEventPanel from "@/components/AskEventPanel";
-import EventSearch from "@/components/EventSearch";
 import FamilyIndexView from "@/components/FamilyIndexView";
 import FavoritesView from "@/components/FavoritesView";
 import ReadingProgressCard from "@/components/ReadingProgressCard";
+import SiteBrandHeader from "@/components/SiteBrandHeader";
+import SiteNavBoxes from "@/components/SiteNavBoxes";
 import StoryChapterView from "@/components/StoryChapterView";
 import StoryIndexView from "@/components/StoryIndexView";
 import StoryReferencesView from "@/components/StoryReferencesView";
 import StorySidebar from "@/components/StorySidebar";
 import MapTimelineView from "@/components/MapTimelineView";
 import FamilyTreeView from "@/components/FamilyTreeView";
-import { APP_TABS, type TabId } from "@/lib/tabs";
+import type { TabId } from "@/lib/tabs";
 import SiteFooter from "@/components/SiteFooter";
 
 function StoryRouter() {
@@ -47,64 +46,21 @@ type AppTabsProps = {
 };
 
 export default function AppTabs({ initialTab }: AppTabsProps) {
-  const router = useRouter();
-  const pathname = usePathname();
   const tab = initialTab;
-
-  function selectTab(id: TabId) {
-    const next = APP_TABS.find((item) => item.id === id);
-    if (next && pathname !== next.href) {
-      router.push(next.href);
-    }
-  }
-
-  const showSearch = pathname !== "/story" && tab !== "favorites";
 
   return (
     <div className="flex min-h-screen flex-col bg-[#f6f1e8] text-[#2b2118]">
       <header className="border-b border-[#d9cbb6] bg-[#fffaf2]">
-        <div className="mx-auto flex max-w-6xl flex-col gap-4 px-4 py-5 sm:flex-row sm:items-end sm:justify-between">
-          <div>
-            <HomeLink className="text-[10px] font-semibold uppercase tracking-[0.35em] text-[#8b5e34] hover:text-[#6f4a28]">
-              Home
-            </HomeLink>
-            <h1 className="font-serif text-2xl font-semibold tracking-tight sm:text-3xl">
-              <HomeLink className="hover:text-[#6f4a28]">The Story of Winifred Coss</HomeLink>
-            </h1>
-            <p className="mt-1 max-w-2xl text-sm text-[#6f5c49]">
-              Where the Coss family fits into history
-            </p>
-          </div>
-          <nav className="flex flex-wrap gap-2">
-            {APP_TABS.map((item) => (
-              <button
-                key={item.id}
-                type="button"
-                onClick={() => selectTab(item.id)}
-                className={`rounded-full px-4 py-2 text-sm font-medium transition ${
-                  tab === item.id
-                    ? item.id === "favorites"
-                      ? "bg-[#db2777] text-white"
-                      : "bg-[#8b5e34] text-white"
-                    : "bg-[#efe4d2] text-[#5c4a38] hover:bg-[#e4d4bc]"
-                }`}
-              >
-                {item.label}
-              </button>
-            ))}
-          </nav>
+        <div className="mx-auto max-w-6xl space-y-4 px-4 py-5 sm:py-6">
+          <SiteBrandHeader
+            size="app"
+            subtitle="Where the Coss family fits into history"
+          />
+          <SiteNavBoxes activeTab={tab} density="compact" />
+          {tab !== "favorites" && (
+            <ReadingProgressCard variant="compact" />
+          )}
         </div>
-        <div className="mx-auto max-w-6xl px-4 pb-3">
-          <ReadingProgressCard variant="compact" />
-        </div>
-        {showSearch && (
-          <div className="mx-auto max-w-6xl space-y-3 px-4 pb-4">
-            <Suspense fallback={null}>
-              <EventSearch />
-            </Suspense>
-            <AskEventPanel />
-          </div>
-        )}
       </header>
 
       <main className="mx-auto w-full max-w-6xl flex-1 px-4 py-6">

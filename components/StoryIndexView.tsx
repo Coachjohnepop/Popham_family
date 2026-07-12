@@ -19,11 +19,14 @@ export default function StoryIndexView() {
       <StorySidebar />
 
       <div className="space-y-6">
-        <ReadingProgressCard />
+        {/* Voice selection first on Interactive Storybook */}
         <NarratorVoiceDial variant="story" />
+
+        <ReadingProgressCard />
 
         <StoryTopicsHubLoader />
 
+        {/* Ask anything only on storybook (not landing) */}
         <StoryAskSection />
 
         <div className="rounded-3xl border border-[#e2d4bf] bg-white p-6 shadow-sm sm:p-8">
@@ -34,8 +37,8 @@ export default function StoryIndexView() {
             The full family story
           </h2>
           <p className="mt-3 text-sm leading-relaxed text-[#6f5c49]">
-            {topicCount} story topics above, then {book.sectionCount} chronological chapters (1485–1950)
-            with {book.imageCountMapped} photographs. For a spoken overview, start from{" "}
+            {topicCount} story topics above, then {book.sectionCount} chronological chapters
+            (1485–1950) with {book.imageCountMapped} photographs. For a spoken overview, start from{" "}
             <HomeLink className="font-semibold text-[#8b5e34] hover:underline">Home</HomeLink>.
           </p>
         </div>
@@ -47,7 +50,7 @@ export default function StoryIndexView() {
         <div>
           <h3 className="font-serif text-xl font-semibold text-[#2b2118]">All chapters</h3>
           <p className="mt-1 text-sm text-[#6f5c49]">
-            Read straight through — or use the topics above as your guide.
+            Read straight through — or use the topics above as your guide. Pin stars for My Path.
           </p>
           <div className="mt-4 grid gap-4 sm:grid-cols-2">
             {book.sections.map((section) => (

@@ -14,9 +14,11 @@ import {
   DEFAULT_ANSWER_DEPTH,
   loadReaderSession,
   markChapterVisited,
+  markSubjectCovered,
   moveFavoriteChapter,
   setFavoriteChapterOrder,
   toggleFavoriteChapter,
+  toggleSubjectCovered,
   updateReaderSession,
   type ReaderSession,
 } from "@/lib/reader-session";
@@ -31,11 +33,15 @@ type ReaderContextValue = {
   saveProgress: (chapterId: string, path?: string) => void;
   visitedChapterIds: string[];
   favoriteChapterIds: string[];
+  coveredSubjectIds: string[];
   isVisited: (chapterId: string) => boolean;
   isFavorite: (chapterId: string) => boolean;
+  isSubjectCovered: (subjectId: string) => boolean;
   toggleFavorite: (chapterId: string) => void;
   moveFavorite: (chapterId: string, direction: "up" | "down") => void;
   setFavoriteOrder: (ids: string[]) => void;
+  markSubject: (subjectId: string) => void;
+  toggleSubjectCovered: (subjectId: string) => void;
   answerDepth: AnswerDepth;
   setAnswerDepth: (depth: AnswerDepth) => void;
   pinnedPerson: TreePerson | null;
@@ -102,8 +108,19 @@ export function ReaderProvider({ children }: { children: ReactNode }) {
     setSession(next);
   }, []);
 
+  const markSubject = useCallback((subjectId: string) => {
+    const next = markSubjectCovered(subjectId);
+    setSession(next);
+  }, []);
+
+  const toggleSubject = useCallback((subjectId: string) => {
+    const next = toggleSubjectCovered(subjectId);
+    setSession(next);
+  }, []);
+
   const visitedChapterIds = session?.visitedChapterIds ?? [];
   const favoriteChapterIds = session?.favoriteChapterIds ?? [];
+  const coveredSubjectIds = session?.coveredSubjectIds ?? [];
 
   const isVisited = useCallback(
     (chapterId: string) => visitedChapterIds.includes(chapterId),
@@ -113,6 +130,11 @@ export function ReaderProvider({ children }: { children: ReactNode }) {
   const isFavorite = useCallback(
     (chapterId: string) => favoriteChapterIds.includes(chapterId),
     [favoriteChapterIds],
+  );
+
+  const isSubjectCovered = useCallback(
+    (subjectId: string) => coveredSubjectIds.includes(subjectId),
+    [coveredSubjectIds],
   );
 
   const setAnswerDepth = useCallback((depth: AnswerDepth) => {
@@ -139,11 +161,15 @@ export function ReaderProvider({ children }: { children: ReactNode }) {
       saveProgress,
       visitedChapterIds,
       favoriteChapterIds,
+      coveredSubjectIds,
       isVisited,
       isFavorite,
+      isSubjectCovered,
       toggleFavorite,
       moveFavorite,
       setFavoriteOrder,
+      markSubject,
+      toggleSubjectCovered: toggleSubject,
       answerDepth: session?.answerDepth ?? DEFAULT_ANSWER_DEPTH,
       setAnswerDepth,
       pinnedPerson,
@@ -162,11 +188,15 @@ export function ReaderProvider({ children }: { children: ReactNode }) {
       saveProgress,
       visitedChapterIds,
       favoriteChapterIds,
+      coveredSubjectIds,
       isVisited,
       isFavorite,
+      isSubjectCovered,
       toggleFavorite,
       moveFavorite,
       setFavoriteOrder,
+      markSubject,
+      toggleSubject,
       setAnswerDepth,
       pinnedPerson,
       storyChapter,

@@ -1,3 +1,4 @@
+/** Primary app destinations — My Path is last by design. */
 export const APP_TABS = [
   {
     id: "story",
@@ -10,16 +11,6 @@ export const APP_TABS = [
     badge: "Topics · chapters",
   },
   {
-    id: "favorites",
-    label: "My Path",
-    href: "/favorites",
-    tagline: "Your progress & pins",
-    description:
-      "See how far you have read, pin favorite sections, and build a custom story path in your own order.",
-    accent: "border-[#db2777] bg-[#fdf2f8] text-[#9d174d]",
-    badge: "Progress · pins",
-  },
-  {
     id: "tree",
     label: "Family Tree",
     href: "/tree",
@@ -27,7 +18,7 @@ export const APP_TABS = [
     description:
       "Two ancestral lines from England and Québec converge in Iowa, 1853 — then descend to Winifred Eloise Coss.",
     accent: "border-[#7c3aed] bg-[#f5f3ff] text-[#4c1d95]",
-    badge: "18 people charted",
+    badge: "People charted",
   },
   {
     id: "map",
@@ -38,6 +29,16 @@ export const APP_TABS = [
       "Slide the timeline — story topics and events across the United States and the world, 1469–1950.",
     accent: "border-[#8b5e34] bg-[#fffaf2] text-[#5c4a38]",
     badge: "Topics · places",
+  },
+  {
+    id: "favorites",
+    label: "My Path",
+    href: "/favorites",
+    tagline: "Your progress & pins",
+    description:
+      "See how far you have read, pin favorite sections, and build a custom story path in your own order.",
+    accent: "border-[#db2777] bg-[#fdf2f8] text-[#9d174d]",
+    badge: "Progress · pins",
   },
 ] as const;
 
