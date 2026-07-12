@@ -17,7 +17,7 @@ export default function SubjectsChecklistView() {
   const { covered, total, pct } = computeSubjectsProgress(coveredIds);
 
   return (
-    <div className="mx-auto w-full max-w-2xl space-y-6 px-4 py-8 sm:py-12">
+    <div className="mx-auto w-full max-w-6xl space-y-6 px-4 py-8 sm:py-12">
       <SiteBrandHeader
         size="app"
         subtitle="A quiet garden of subjects — check what you have covered as you explore the story."
@@ -61,19 +61,19 @@ export default function SubjectsChecklistView() {
         </div>
       </section>
 
-      <ul className="space-y-3">
+      <ul className="grid grid-cols-2 gap-3 lg:grid-cols-3 lg:gap-4">
         {subjects.map((subject) => {
           const isCovered = coveredSet.has(subject.id);
           return (
             <li
               key={subject.id}
-              className={`rounded-2xl border p-4 transition sm:p-5 ${
+              className={`flex h-full flex-col rounded-2xl border p-3 transition sm:p-4 ${
                 isCovered
                   ? "border-[#86efac] bg-[#f0fdf4]"
                   : "border-[#e2d4bf] bg-white"
               }`}
             >
-              <div className="flex gap-3">
+              <div className="flex flex-1 gap-2 sm:gap-3">
                 <button
                   type="button"
                   onClick={() => reader?.toggleSubjectCovered(subject.id)}
@@ -92,7 +92,7 @@ export default function SubjectsChecklistView() {
                   ✓
                 </button>
                 <div className="min-w-0 flex-1">
-                  <div className="flex flex-wrap items-center gap-2 text-[10px] font-semibold uppercase tracking-wider text-[#8b5e34]">
+                  <div className="flex flex-wrap items-center gap-1.5 text-[9px] font-semibold uppercase tracking-wider text-[#8b5e34] sm:text-[10px]">
                     <span>{subject.yearLabel}</span>
                     <span className="text-[#c8b08d]">·</span>
                     <span className="text-[#6f5c49]">{subject.branch}</span>
@@ -102,13 +102,15 @@ export default function SubjectsChecklistView() {
                       </span>
                     )}
                   </div>
-                  <h3 className="mt-1 font-serif text-lg font-semibold text-[#2b2118] sm:text-xl">
+                  <h3 className="mt-1 font-serif text-base font-semibold leading-snug text-[#2b2118] sm:text-lg">
                     {subject.title}
                   </h3>
-                  <p className="mt-1 text-sm text-[#6f5c49]">{subject.summary}</p>
+                  <p className="mt-1 line-clamp-3 text-xs text-[#6f5c49] sm:text-sm">
+                    {subject.summary}
+                  </p>
                   <Link
                     href={`/story/${subject.chapterId}`}
-                    className="mt-3 inline-block text-sm font-semibold text-[#8b5e34] hover:underline"
+                    className="mt-3 inline-block text-xs font-semibold text-[#8b5e34] hover:underline sm:text-sm"
                   >
                     Open related chapter →
                   </Link>
