@@ -121,23 +121,23 @@ export default function NarratorVoiceDial({
   );
   const needleAngle = DIAL_ANGLES[selectedIndex] ?? -90;
 
-  // Half the previous dial footprint (was 200 / 168)
-  const size = variant === "landing" ? 84 : 100;
-  const radius = size / 2 - 4;
+  // Base half-size was 100 / 84; grow +20%
+  const size = variant === "landing" ? 101 : 120;
+  const radius = size / 2 - 5;
   const cx = size / 2;
   const cy = size / 2;
 
   const shellClass =
-    "relative overflow-visible rounded-2xl border border-[#e2d4bf] bg-white p-3 shadow-sm sm:p-4 " +
+    "relative overflow-visible rounded-2xl border border-[#e2d4bf] bg-white p-3.5 shadow-sm sm:p-5 " +
     className;
   const skeletonClass =
-    "rounded-2xl border border-[#e2d4bf] bg-white p-3 shadow-sm opacity-80 " +
+    "rounded-2xl border border-[#e2d4bf] bg-white p-3.5 shadow-sm opacity-80 " +
     className;
 
   if (!mounted) {
     return (
       <div className={skeletonClass} aria-hidden="true">
-        <div className="mx-auto h-[100px] w-[100px] animate-pulse rounded-full bg-[#efe4d2]" />
+        <div className="mx-auto h-[120px] w-[120px] animate-pulse rounded-full bg-[#efe4d2]" />
       </div>
     );
   }
@@ -160,7 +160,7 @@ export default function NarratorVoiceDial({
         </p>
       </div>
 
-      <div className="relative mx-auto mt-3 mb-2 flex min-h-[7.5rem] w-fit items-center justify-center overflow-visible px-10 sm:px-14">
+      <div className="relative mx-auto mt-3 mb-2 flex min-h-[9rem] w-fit items-center justify-center overflow-visible px-10 sm:px-14">
         {showCoach ? (
           <GuidedFingerCoach
             label="Tap a voice on the dial"
@@ -277,15 +277,17 @@ export default function NarratorVoiceDial({
                 aria-label={`${voice.label}, ${voice.gender} narrator. ${voice.blurb}`}
                 onClick={() => selectVoice(voice)}
                 className={
-                  "absolute z-20 flex h-7 w-7 -translate-x-1/2 -translate-y-1/2 flex-col items-center justify-center rounded-full border text-center transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-[#8b5e34] " +
+                  "absolute z-20 flex h-8 w-8 -translate-x-1/2 -translate-y-1/2 flex-col items-center justify-center rounded-full border text-center transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-[#8b5e34] sm:h-9 sm:w-9 " +
                   btnClass
                 }
                 style={{ left: x, top: y }}
               >
-                <span className="text-[7px] font-bold leading-none">{voice.label.slice(0, 1)}</span>
+                <span className="text-[8px] font-bold leading-none sm:text-[9px]">
+                  {voice.label.slice(0, 1)}
+                </span>
                 <span
                   className={
-                    "text-[6px] font-semibold uppercase leading-none " +
+                    "text-[6px] font-semibold uppercase leading-none sm:text-[7px] " +
                     (active ? "text-white" : "text-[#8b5e34]")
                   }
                 >
