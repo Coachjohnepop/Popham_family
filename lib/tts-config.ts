@@ -26,8 +26,8 @@ export const SPEECHIFY_MODEL = process.env.SPEECHIFY_MODEL || "simba-3.2";
 /** OpenAI voice (used only when Speechify is unavailable). */
 export const TTS_VOICE = process.env.TTS_VOICE || "onyx";
 
-/** 1.0 = default; client playback uses preservesPitch so pitch stays natural. */
-export const TTS_SPEED = 0.65;
+/** 1.0 = normal speed; client playback uses preservesPitch so pitch stays natural. */
+export const TTS_SPEED = 1.0;
 
 export const TTS_INSTRUCTIONS =
   "Speak in a warm, refined British English accent. Sound like a thoughtful BBC " +
