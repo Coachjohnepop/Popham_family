@@ -28,6 +28,13 @@ export default function SiteBrandHeader({
 
   return (
     <div className={`relative ${className}`}>
+      {/* Home — always visible top-left */}
+      <HomeLink
+        className="absolute left-0 top-0 z-10 inline-flex items-center rounded-full bg-[#efe4d2] px-3 py-1.5 text-xs font-semibold text-[#5c4a38] shadow-sm transition hover:bg-[#e4d4bc] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#8b5e34] sm:px-4 sm:text-sm"
+      >
+        ← Home
+      </HomeLink>
+
       {/* Easter-egg entry — top right, discrete */}
       <Link
         href="/subjects"
@@ -39,7 +46,7 @@ export default function SiteBrandHeader({
         <span className="sr-only">Subjects covered</span>
       </Link>
 
-      <div className="flex flex-col items-center px-8 text-center sm:px-10">
+      <div className="flex flex-col items-center px-10 text-center sm:px-14">
         <div
           className={`flex items-center justify-center text-[#2b2118] ${
             size === "landing" ? "text-4xl sm:text-5xl" : "text-2xl sm:text-3xl"

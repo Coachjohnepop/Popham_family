@@ -128,12 +128,6 @@ export default function SubjectsChecklistView() {
         >
           Back to storybook
         </Link>
-        <Link
-          href="/"
-          className="rounded-full bg-[#efe4d2] px-5 py-2.5 text-sm font-semibold text-[#5c4a38] hover:bg-[#e4d4bc]"
-        >
-          Home
-        </Link>
       </div>
     </div>
   );
