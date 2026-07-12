@@ -18,45 +18,32 @@ export default function SubjectsChecklistView() {
 
   return (
     <div className="mx-auto w-full max-w-6xl space-y-6 px-4 py-8 sm:py-12">
-      <SiteBrandHeader
-        size="app"
-        subtitle="A quiet garden of subjects — check what you have covered as you explore the story."
-      />
+      <SiteBrandHeader size="app" />
 
-      <section className="rounded-3xl border border-[#e2d4bf] bg-white p-5 shadow-sm sm:p-8">
-        <div className="flex items-start gap-3">
-          <FlowerBouquet size="md" />
-          <div>
-            <p className="text-[10px] font-semibold uppercase tracking-[0.3em] text-[#8b5e34]">
-              Secret garden
-            </p>
-            <h2 className="mt-1 font-serif text-2xl font-semibold text-[#2b2118] sm:text-3xl">
-              Subjects covered
-            </h2>
-            <p className="mt-2 text-sm leading-relaxed text-[#6f5c49]">
-              High-level themes from Winifred&apos;s family story. Opening a related chapter marks
-              subjects automatically; you can also check them off by hand.
-            </p>
-          </div>
-        </div>
-
-        <div className="mt-6">
-          <div className="mb-2 flex justify-between text-sm font-semibold text-[#5c4a38]">
-            <span>
-              {covered} of {total} subjects
-            </span>
-            <span>{pct}%</span>
-          </div>
-          <div className="h-2.5 overflow-hidden rounded-full bg-[#efe4d2]">
-            <div
-              className="h-full rounded-full bg-gradient-to-r from-[#5f9e5f] to-[#c97b9a] transition-all duration-500"
-              style={{ width: `${pct}%` }}
-              role="progressbar"
-              aria-valuenow={pct}
-              aria-valuemin={0}
-              aria-valuemax={100}
-              aria-label="Subjects covered"
-            />
+      <section className="rounded-2xl border border-[#e2d4bf] bg-white px-4 py-3 shadow-sm sm:px-5">
+        <div className="flex items-center gap-3">
+          <FlowerBouquet size="sm" />
+          <h2 className="shrink-0 font-serif text-lg font-semibold text-[#2b2118] sm:text-xl">
+            Subjects covered
+          </h2>
+          <div className="min-w-0 flex-1">
+            <div className="mb-1 flex justify-between text-xs font-semibold text-[#5c4a38]">
+              <span>
+                {covered}/{total}
+              </span>
+              <span>{pct}%</span>
+            </div>
+            <div className="h-1.5 overflow-hidden rounded-full bg-[#efe4d2]">
+              <div
+                className="h-full rounded-full bg-gradient-to-r from-[#5f9e5f] to-[#c97b9a] transition-all duration-500"
+                style={{ width: `${pct}%` }}
+                role="progressbar"
+                aria-valuenow={pct}
+                aria-valuemin={0}
+                aria-valuemax={100}
+                aria-label="Subjects covered"
+              />
+            </div>
           </div>
         </div>
       </section>
