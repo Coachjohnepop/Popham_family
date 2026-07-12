@@ -9,8 +9,11 @@ Interactive family history app built from *The Story of Winifred Coss Family Tre
 ## Tabs
 
 - **Storybook** — narrative chapters with famous-people intersections
+- **My Path** — reading progress, pinned favorites, custom chapter order
 - **Family Tree** — Powers and Goodwater branches converging at Joseph Warren Coss + Mary Ann Goodwater (1853)
 - **Map & Timeline** — Leaflet map with indexed locations from the story (1469–1950)
+
+Progress and pins are stored in the browser (`localStorage`) per reader.
 
 ## Local development
 
@@ -32,6 +35,26 @@ npm run index:narration:ai  # same, with OpenAI summaries (OPENAI_API_KEY)
 ```
 
 Voice answers use `data/narration-summaries.json` (precomputed cache, not a database). Re-run `index:narration` after updating the storybook or briefs.
+
+### Read-aloud (TTS)
+
+Storybook **Read aloud** calls `/api/read-aloud`:
+
+1. **Speechify** (preferred) when `SPEECHIFY_API_KEY` is set  
+2. **OpenAI** `gpt-4o-mini-tts` when `OPENAI_API_KEY` is set  
+3. **Browser** `speechSynthesis` as client-side fallback  
+
+```bash
+# Local
+cp .env.example .env.local
+# paste SPEECHIFY_API_KEY from https://platform.speechify.ai/api-keys
+
+# Production (Vercel)
+SPEECHIFY_API_KEY=sk_... ./scripts/add-speechify-vercel-env.sh
+```
+
+Optional: `SPEECHIFY_VOICE` (default `edmund_32`), `SPEECHIFY_MODEL` (default `simba-3.2`).  
+Health: `GET /api/voice-health` should report `"tts": "speechify"`.
 
 ## Deploy
 

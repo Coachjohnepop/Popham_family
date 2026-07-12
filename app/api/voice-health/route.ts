@@ -1,9 +1,12 @@
 import { NextResponse } from "next/server";
 import { getDeepgramApiKey, parseDeepgramError } from "@/lib/deepgram-server";
 import { getOpenAiApiKey, parseOpenAiError } from "@/lib/openai-server";
+import { getSpeechifyApiKey, parseSpeechifyError } from "@/lib/speechify-server";
+import { SPEECHIFY_MODEL, SPEECHIFY_VOICE } from "@/lib/tts-config";
 
 export async function GET() {
   const deepgramKey = getDeepgramApiKey();
+  const speechifyKey = getSpeechifyApiKey();
   const openaiKey = getOpenAiApiKey();
 
   if (!deepgramKey) {
@@ -11,7 +14,7 @@ export async function GET() {
       ok: false,
       configured: false,
       stt: "missing",
-      tts: openaiKey ? "openai" : "browser-fallback",
+      tts: speechifyKey ? "speechify" : openaiKey ? "openai" : "browser-fallback",
       hint: "DEEPGRAM_API_KEY is missing. Add it in Vercel and redeploy.",
     });
   }
@@ -58,22 +61,41 @@ export async function GET() {
     }
   }
 
+  let ttsProvider: "speechify" | "openai" | "browser-fallback" = "browser-fallback";
   let ttsOk = false;
   let ttsHint: string | undefined;
 
-  if (openaiKey) {
+  if (speechifyKey) {
+    try {
+      const res = await fetch("https://api.speechify.ai/v1/voices", {
+        headers: { Authorization: `Bearer ${speechifyKey}` },
+      });
+      if (res.ok) {
+        ttsOk = true;
+        ttsProvider = "speechify";
+      } else {
+        const detail = await res.text();
+        ttsHint = parseSpeechifyError(detail);
+      }
+    } catch (err) {
+      ttsHint = err instanceof Error ? err.message : "Speechify connection failed";
+    }
+  }
+
+  if (!ttsOk && openaiKey) {
     try {
       const res = await fetch("https://api.openai.com/v1/models", {
         headers: { Authorization: `Bearer ${openaiKey}` },
       });
       if (res.ok) {
         ttsOk = true;
+        ttsProvider = "openai";
       } else {
         const detail = await res.text();
-        ttsHint = parseOpenAiError(detail);
+        ttsHint = ttsHint ?? parseOpenAiError(detail);
       }
     } catch (err) {
-      ttsHint = err instanceof Error ? err.message : "OpenAI connection failed";
+      ttsHint = ttsHint ?? (err instanceof Error ? err.message : "OpenAI connection failed");
     }
   }
 
@@ -85,18 +107,30 @@ export async function GET() {
         ? "Deepgram live + batch transcription ready"
         : "Deepgram batch transcription ready (live captions need Member API key)",
     );
+  } else if (sttHint) {
+    hints.push(`Transcription: ${sttHint}`);
   }
-  else if (sttHint) hints.push(`Transcription: ${sttHint}`);
-  if (ttsOk) hints.push("OpenAI read-aloud ready");
-  else hints.push("Read-aloud uses browser voice (no OpenAI billing needed)");
+
+  if (ttsOk && ttsProvider === "speechify") {
+    hints.push(`Speechify read-aloud ready (voice ${SPEECHIFY_VOICE}, model ${SPEECHIFY_MODEL})`);
+  } else if (ttsOk && ttsProvider === "openai") {
+    hints.push("OpenAI read-aloud ready");
+  } else if (ttsHint) {
+    hints.push(`Read-aloud: ${ttsHint}`);
+  } else {
+    hints.push("Read-aloud uses browser voice (add SPEECHIFY_API_KEY for premium TTS)");
+  }
 
   return NextResponse.json({
     ok,
     configured: true,
     stt: sttOk ? "deepgram" : "error",
-    tts: ttsOk ? "openai" : "browser-fallback",
+    tts: ttsProvider,
+    ...(ttsProvider === "speechify"
+      ? { speechifyVoice: SPEECHIFY_VOICE, speechifyModel: SPEECHIFY_MODEL }
+      : {}),
     hint: hints.join(". "),
     ...(sttHint && !sttOk ? { sttError: sttHint } : {}),
-    ...(ttsHint && openaiKey && !ttsOk ? { ttsError: ttsHint } : {}),
+    ...(ttsHint && (speechifyKey || openaiKey) && !ttsOk ? { ttsError: ttsHint } : {}),
   });
 }

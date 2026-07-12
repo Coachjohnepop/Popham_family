@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 import ClickableStoryText from "@/components/ClickableStoryText";
 import PersonSidePanel from "@/components/PersonSidePanel";
+import PinSectionButton from "@/components/PinSectionButton";
 import ReadAloudButton from "@/components/ReadAloudButton";
 import { useOptionalReader } from "@/components/ReaderProvider";
 import StoryPhotoGallery from "@/components/StoryPhotoGallery";
@@ -120,6 +121,13 @@ export default function StoryChapterReader({ section, prev, next }: StoryChapter
           </span>
         )}
         {pageText && <ReadAloudButton text={pageText} />}
+        <PinSectionButton sectionId={section.id} />
+        <Link
+          href="/favorites"
+          className="text-sm font-semibold text-[#db2777] hover:underline"
+        >
+          My Path
+        </Link>
         <Link
           href="/read"
           className="text-sm font-semibold text-[#8b5e34] hover:underline"
@@ -191,6 +199,36 @@ export default function StoryChapterReader({ section, prev, next }: StoryChapter
               Next page →
             </button>
           </div>
+        </div>
+      )}
+
+      {reader?.isFavorite(section.id) && (
+        <div className="mt-8 rounded-2xl border border-[#f9a8d4] bg-[#fdf2f8] p-4 text-sm">
+          <p className="font-semibold text-[#9d174d]">On your path</p>
+          <p className="mt-1 text-[#6f5c49]">
+            This chapter is pinned.{" "}
+            <Link href="/favorites" className="font-semibold text-[#db2777] hover:underline">
+              Rearrange My Path
+            </Link>
+            {(() => {
+              const favs = reader.favoriteChapterIds;
+              const idx = favs.indexOf(section.id);
+              const pathNext = idx >= 0 && idx < favs.length - 1 ? favs[idx + 1] : null;
+              if (!pathNext) return null;
+              return (
+                <>
+                  {" "}
+                  or jump to{" "}
+                  <Link
+                    href={`/story/${pathNext}`}
+                    className="font-semibold text-[#db2777] hover:underline"
+                  >
+                    next on your path →
+                  </Link>
+                </>
+              );
+            })()}
+          </p>
         </div>
       )}
 

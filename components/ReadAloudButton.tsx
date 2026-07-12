@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { chunkTextForTts, configureTtsPlayback } from "@/lib/tts-config";
 import { speakBritishBrowser, waitForVoices } from "@/lib/browser-tts";
+import { loadStoredStoryVoiceId } from "@/lib/story-voices";
 
 type ReadAloudButtonProps = {
   text: string;
@@ -18,9 +19,26 @@ export default function ReadAloudButton({
 }: ReadAloudButtonProps) {
   const [speaking, setSpeaking] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [voiceId, setVoiceId] = useState(loadStoredStoryVoiceId);
   const stopRef = useRef<(() => void) | null>(null);
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const cancelledRef = useRef(false);
+
+  useEffect(() => {
+    const sync = () => setVoiceId(loadStoredStoryVoiceId());
+    sync();
+    const onCustom = (e: Event) => {
+      const detail = (e as CustomEvent<{ voiceId?: string }>).detail;
+      if (detail?.voiceId) setVoiceId(detail.voiceId);
+      else sync();
+    };
+    window.addEventListener("coss-narrator-voice", onCustom);
+    window.addEventListener("storage", sync);
+    return () => {
+      window.removeEventListener("coss-narrator-voice", onCustom);
+      window.removeEventListener("storage", sync);
+    };
+  }, []);
 
   const stop = useCallback(() => {
     cancelledRef.current = true;
@@ -70,13 +88,14 @@ export default function ReadAloudButton({
 
   const speakApi = useCallback(async () => {
     const chunks = chunkTextForTts(text);
+    const activeVoice = loadStoredStoryVoiceId();
     setSpeaking(true);
     for (const chunk of chunks) {
       if (cancelledRef.current) break;
       const res = await fetch("/api/read-aloud", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ text: chunk }),
+        body: JSON.stringify({ text: chunk, voiceId: activeVoice }),
       });
       if (!res.ok) throw new Error(`TTS ${res.status}`);
       const blob = await res.blob();
@@ -124,7 +143,7 @@ export default function ReadAloudButton({
           ? "bg-[#8b5e34] text-white"
           : "bg-[#efe4d2] text-[#5c4a38] hover:bg-[#e4d4bc]"
       } disabled:opacity-40`}
-      title="British narrator voice"
+      title={`Story narrator (${voiceId})`}
     >
       {caption}
     </button>

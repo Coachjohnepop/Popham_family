@@ -1,4 +1,5 @@
 import { speakBritishBrowser, waitForVoices } from "@/lib/browser-tts";
+import { loadStoredStoryVoiceId } from "@/lib/story-voices";
 import { chunkTextForTts, configureTtsPlayback } from "@/lib/tts-config";
 
 export type SpeakState = "idle" | "loading" | "speaking" | "paused";
@@ -38,6 +39,7 @@ export async function speakText(
     onPaused?: () => void;
     onIdle?: () => void;
   },
+  options?: { voiceId?: string },
 ): Promise<SpeakController> {
   const trimmed = text.trim();
   let cancelled = false;
@@ -46,6 +48,7 @@ export async function speakText(
   let browserStop: (() => void) | null = null;
   let usingBrowser = false;
   const audioOut = { current: null as HTMLAudioElement | null };
+  const voiceId = options?.voiceId ?? loadStoredStoryVoiceId();
 
   const setState = (next: SpeakState) => {
     state = next;
@@ -113,7 +116,6 @@ export async function speakText(
 
   setState("loading");
 
-  let usedApi = false;
   try {
     const chunks = chunkTextForTts(trimmed);
     setState("speaking");
@@ -128,13 +130,12 @@ export async function speakText(
       const res = await fetch("/api/read-aloud", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ text: chunk }),
+        body: JSON.stringify({ text: chunk, voiceId }),
       });
       if (!res.ok) throw new Error(`TTS ${res.status}`);
       const blob = await res.blob();
       if (cancelled) break;
 
-      usedApi = true;
       await playBlob(blob, audioOut);
       while (paused && !cancelled) {
         await new Promise((r) => setTimeout(r, 120));

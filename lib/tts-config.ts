@@ -1,17 +1,29 @@
 /**
- * OpenAI gpt-4o-mini-tts voices (override with TTS_VOICE on Vercel):
- * alloy — balanced neutral
- * ash — clear, conversational
- * ballad — warm, melodic storytelling
- * coral — warm, approachable female
- * echo — smooth male
- * fable — expressive British-leaning narrator
- * onyx — deep, authoritative male (default)
- * nova — friendly, energetic female
- * sage — calm, measured
- * shimmer — bright female
- * verse — versatile audiobook narrator
+ * Read-aloud TTS configuration.
+ *
+ * Provider order (server /api/read-aloud):
+ *   1. Speechify — when SPEECHIFY_API_KEY is set (preferred)
+ *   2. OpenAI gpt-4o-mini-tts — when OPENAI_API_KEY is set
+ *   3. Browser speechSynthesis — client fallback
+ *
+ * Speechify simba-3.2 curated voices (override with SPEECHIFY_VOICE):
+ *   beatrice_32, dominic_32, edmund_32, geffen_32,
+ *   harper_32, hugh_32, imogen_32, wyatt_32
+ * Classic voices also work with simba-english: george, henry, carly, sabrina
+ *
+ * OpenAI gpt-4o-mini-tts voices (override with TTS_VOICE):
+ *   alloy, ash, ballad, coral, echo, fable, onyx (default),
+ *   nova, sage, shimmer, verse
  */
+export const TTS_PROVIDER = (process.env.TTS_PROVIDER || "auto").toLowerCase();
+
+/** Speechify voice id — British-leaning storytelling default. */
+export const SPEECHIFY_VOICE = process.env.SPEECHIFY_VOICE || "edmund_32";
+
+/** simba-3.2 = recommended English model (lowest TTFB, richest expressivity). */
+export const SPEECHIFY_MODEL = process.env.SPEECHIFY_MODEL || "simba-3.2";
+
+/** OpenAI voice (used only when Speechify is unavailable). */
 export const TTS_VOICE = process.env.TTS_VOICE || "onyx";
 
 /** 1.0 = default; client playback uses preservesPitch so pitch stays natural. */
@@ -23,6 +35,7 @@ export const TTS_INSTRUCTIONS =
   "Use a very relaxed, unhurried pace — noticeably slower than everyday conversation. " +
   "Linger gently on commas and take a full beat at full stops. Never rush or sound robotic.";
 
+/** Chunk size for API requests (OpenAI ~4k limit; Speechify allows more). */
 export const TTS_MAX_CHARS = 3500;
 
 export function configureTtsPlayback(audio: HTMLAudioElement): void {

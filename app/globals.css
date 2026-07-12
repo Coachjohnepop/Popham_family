@@ -24,3 +24,36 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+/* Guided learning: bouncing finger on the narrator voice dial */
+@keyframes voice-coach-bounce {
+  0%,
+  100% {
+    transform: translateY(0) rotate(-12deg);
+  }
+  50% {
+    transform: translateY(10px) rotate(-12deg);
+  }
+}
+
+@keyframes voice-coach-pulse {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.88;
+    transform: scale(1.03);
+  }
+}
+
+.voice-coach-finger {
+  display: inline-block;
+  animation: voice-coach-bounce 0.9s ease-in-out infinite;
+  transform-origin: center bottom;
+}
+
+.voice-coach-bubble {
+  animation: voice-coach-pulse 1.6s ease-in-out infinite;
+}

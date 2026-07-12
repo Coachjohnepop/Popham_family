@@ -1,12 +1,13 @@
 "use client";
 
 import HomeLink from "@/components/HomeLink";
-import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { Suspense } from "react";
 import AskEventPanel from "@/components/AskEventPanel";
 import EventSearch from "@/components/EventSearch";
 import FamilyIndexView from "@/components/FamilyIndexView";
+import FavoritesView from "@/components/FavoritesView";
+import ReadingProgressCard from "@/components/ReadingProgressCard";
 import StoryChapterView from "@/components/StoryChapterView";
 import StoryIndexView from "@/components/StoryIndexView";
 import StoryReferencesView from "@/components/StoryReferencesView";
@@ -57,6 +58,8 @@ export default function AppTabs({ initialTab }: AppTabsProps) {
     }
   }
 
+  const showSearch = pathname !== "/story" && tab !== "favorites";
+
   return (
     <div className="flex min-h-screen flex-col bg-[#f6f1e8] text-[#2b2118]">
       <header className="border-b border-[#d9cbb6] bg-[#fffaf2]">
@@ -80,7 +83,9 @@ export default function AppTabs({ initialTab }: AppTabsProps) {
                 onClick={() => selectTab(item.id)}
                 className={`rounded-full px-4 py-2 text-sm font-medium transition ${
                   tab === item.id
-                    ? "bg-[#8b5e34] text-white"
+                    ? item.id === "favorites"
+                      ? "bg-[#db2777] text-white"
+                      : "bg-[#8b5e34] text-white"
                     : "bg-[#efe4d2] text-[#5c4a38] hover:bg-[#e4d4bc]"
                 }`}
               >
@@ -89,7 +94,10 @@ export default function AppTabs({ initialTab }: AppTabsProps) {
             ))}
           </nav>
         </div>
-        {pathname !== "/story" && (
+        <div className="mx-auto max-w-6xl px-4 pb-3">
+          <ReadingProgressCard variant="compact" />
+        </div>
+        {showSearch && (
           <div className="mx-auto max-w-6xl space-y-3 px-4 pb-4">
             <Suspense fallback={null}>
               <EventSearch />
@@ -101,6 +109,7 @@ export default function AppTabs({ initialTab }: AppTabsProps) {
 
       <main className="mx-auto w-full max-w-6xl flex-1 px-4 py-6">
         {tab === "story" && <StoryRouter />}
+        {tab === "favorites" && <FavoritesView />}
         {tab === "tree" && (
           <Suspense fallback={<p className="text-sm text-[#6f5c49]">Loading family tree…</p>}>
             <FamilyTreeView />

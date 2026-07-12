@@ -5,6 +5,8 @@ import { Suspense } from "react";
 import AskEventPanel from "@/components/AskEventPanel";
 import EventSearch from "@/components/EventSearch";
 import ExplorationPaths from "@/components/ExplorationPaths";
+import NarratorVoiceDial from "@/components/NarratorVoiceDial";
+import ReadingProgressCard from "@/components/ReadingProgressCard";
 import StoryOverviewSummaries from "@/components/StoryOverviewSummaries";
 import StoryTopicsHub from "@/components/StoryTopicsHub";
 import { useOptionalReader } from "@/components/ReaderProvider";
@@ -16,6 +18,8 @@ export default function LandingEntry() {
   return (
     <div className="mx-auto mt-8 flex w-full max-w-2xl flex-col items-center gap-6">
       <StoryOverviewSummaries key={`home-overview-${entryKey}`} variant="landing" />
+      <ReadingProgressCard className="w-full" />
+      <NarratorVoiceDial variant="landing" className="w-full" />
       <StoryTopicsHub variant="landing-compact" />
 
       <ExplorationPaths key={`home-paths-${entryKey}`} />
