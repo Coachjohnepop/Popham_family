@@ -57,3 +57,12 @@ body {
 .voice-coach-bubble {
   animation: voice-coach-pulse 1.6s ease-in-out infinite;
 }
+
+/* Chapter cross-fade (opacity driven in component; duration helper) */
+@media (prefers-reduced-motion: reduce) {
+  .chapter-fade,
+  [data-voice-dial] {
+    transition: none !important;
+  }
+}
+

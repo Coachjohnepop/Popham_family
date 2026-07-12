@@ -8,14 +8,19 @@ import { loadStoredStoryVoiceId } from "@/lib/story-voices";
 type ReadAloudButtonProps = {
   text: string;
   label?: string;
-  /** When this value changes, narration starts automatically (e.g. jelly-bean selection). */
+  /** When this value changes, narration starts automatically (e.g. chapter continue). */
   autoPlayKey?: string;
+  /** Delay before auto-play (lets fade-in finish). */
+  autoPlayDelayMs?: number;
+  onSpeakingChange?: (speaking: boolean) => void;
 };
 
 export default function ReadAloudButton({
   text,
   label = "Read aloud",
   autoPlayKey,
+  autoPlayDelayMs = 0,
+  onSpeakingChange,
 }: ReadAloudButtonProps) {
   const [speaking, setSpeaking] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -23,6 +28,16 @@ export default function ReadAloudButton({
   const stopRef = useRef<(() => void) | null>(null);
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const cancelledRef = useRef(false);
+  const textRef = useRef(text);
+  textRef.current = text;
+
+  const reportSpeaking = useCallback(
+    (next: boolean) => {
+      setSpeaking(next);
+      onSpeakingChange?.(next);
+    },
+    [onSpeakingChange],
+  );
 
   useEffect(() => {
     const sync = () => setVoiceId(loadStoredStoryVoiceId());
@@ -48,9 +63,9 @@ export default function ReadAloudButton({
     }
     stopRef.current?.();
     stopRef.current = null;
-    setSpeaking(false);
+    reportSpeaking(false);
     setLoading(false);
-  }, []);
+  }, [reportSpeaking]);
 
   const playBlob = useCallback((blob: Blob): Promise<void> => {
     return new Promise((resolve, reject) => {
@@ -73,23 +88,25 @@ export default function ReadAloudButton({
   }, []);
 
   const speakBrowser = useCallback(async () => {
+    const body = textRef.current;
     await waitForVoices();
     if (cancelledRef.current) return;
     stopRef.current = speakBritishBrowser(
-      text,
+      body,
       () => {
-        setSpeaking(false);
+        reportSpeaking(false);
         stopRef.current = null;
       },
-      () => setSpeaking(false),
+      () => reportSpeaking(false),
     );
-    setSpeaking(true);
-  }, [text]);
+    reportSpeaking(true);
+  }, [reportSpeaking]);
 
   const speakApi = useCallback(async () => {
-    const chunks = chunkTextForTts(text);
+    const body = textRef.current;
+    const chunks = chunkTextForTts(body);
     const activeVoice = loadStoredStoryVoiceId();
-    setSpeaking(true);
+    reportSpeaking(true);
     for (const chunk of chunks) {
       if (cancelledRef.current) break;
       const res = await fetch("/api/read-aloud", {
@@ -103,9 +120,9 @@ export default function ReadAloudButton({
       await playBlob(blob);
     }
     if (!cancelledRef.current) {
-      setSpeaking(false);
+      reportSpeaking(false);
     }
-  }, [text, playBlob]);
+  }, [playBlob, reportSpeaking]);
 
   const speak = useCallback(async () => {
     stop();
@@ -126,7 +143,14 @@ export default function ReadAloudButton({
 
   useEffect(() => {
     if (autoPlayKey == null || !text.trim()) return;
-    void speak();
+    let cancelled = false;
+    const timer = window.setTimeout(() => {
+      if (!cancelled) void speak();
+    }, autoPlayDelayMs);
+    return () => {
+      cancelled = true;
+      window.clearTimeout(timer);
+    };
     // Only react to explicit play triggers, not speak/text churn.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [autoPlayKey]);
