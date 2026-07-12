@@ -52,7 +52,7 @@ export const DEFAULT_STORY_VOICE_ID = "edmund";
 const STORAGE_KEY = "coss-story-narrator-voice";
 /** Bump suffix when coach UX changes so users see the tip again. */
 const COACH_SEEN_KEY = "coss-story-voice-dial-coach-seen-v2";
-const SUMMARY_COACH_SEEN_KEY = "coss-summary-coach-seen-v1";
+const SUMMARY_COACH_SEEN_KEY = "coss-summary-coach-seen-v2";
 
 export function getStoryVoice(id: string | null | undefined): StoryVoice {
   const found = STORY_VOICES.find((v) => v.id === id);

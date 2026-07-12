@@ -125,35 +125,39 @@ export default function StoryOverviewSummaries({
           isLanding ? "mt-5" : "mt-2"
         }`}
       >
-        {mounted && showCoach ? (
-          <GuidedFingerCoach
-            label="Pick a summary length"
-            placement="above"
-            onDismiss={dismissCoach}
-          />
-        ) : null}
-
         {OVERVIEW_DEPTHS.map((depth) => {
           const summary = getOverviewSummary(depth);
           const isActive = activeDepth === depth;
           const isBusy = isActive && (speechState === "loading" || speechState === "speaking");
+          const isShort = depth === "short";
 
           return (
-            <button
+            <div
               key={depth}
-              type="button"
-              onClick={() => void playSummary(depth)}
-              className={`rounded-full px-4 py-2 text-sm font-semibold ring-1 transition ${
-                isActive ? ACTIVE_STYLES[depth] : BUTTON_STYLES[depth]
-              }`}
-              aria-pressed={isActive}
+              className={`relative ${isShort && isLanding ? "ml-2 sm:ml-4" : ""}`}
             >
-              {isBusy
-                ? speechState === "loading"
-                  ? `Loading ${summary.label}…`
-                  : `Stop ${summary.label}`
-                : summary.label}
-            </button>
+              {mounted && showCoach && isShort && isLanding ? (
+                <GuidedFingerCoach
+                  label="Start with Short Summary"
+                  placement="left"
+                  onDismiss={dismissCoach}
+                />
+              ) : null}
+              <button
+                type="button"
+                onClick={() => void playSummary(depth)}
+                className={`rounded-full px-4 py-2 text-sm font-semibold ring-1 transition ${
+                  isActive ? ACTIVE_STYLES[depth] : BUTTON_STYLES[depth]
+                }`}
+                aria-pressed={isActive}
+              >
+                {isBusy
+                  ? speechState === "loading"
+                    ? `Loading ${summary.label}…`
+                    : `Stop ${summary.label}`
+                  : summary.label}
+              </button>
+            </div>
           );
         })}
       </div>

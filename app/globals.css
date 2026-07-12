@@ -54,6 +54,23 @@ body {
   transform-origin: center bottom;
 }
 
+/* Side-pointing finger (👉) — nudge horizontally toward the target */
+@keyframes voice-coach-nudge-x {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(8px);
+  }
+}
+
+.voice-coach-finger-side {
+  display: inline-block;
+  animation: voice-coach-nudge-x 0.9s ease-in-out infinite;
+  transform-origin: center center;
+}
+
 .voice-coach-bubble {
   animation: voice-coach-pulse 1.6s ease-in-out infinite;
 }
