@@ -120,55 +120,55 @@ export default function NarratorVoiceDial({
   );
   const needleAngle = DIAL_ANGLES[selectedIndex] ?? -90;
 
-  const size = variant === "landing" ? 168 : 200;
-  const radius = size / 2 - 8;
+  // Half the previous dial footprint (was 200 / 168)
+  const size = variant === "landing" ? 84 : 100;
+  const radius = size / 2 - 4;
   const cx = size / 2;
   const cy = size / 2;
 
   const shellClass =
-    "relative rounded-3xl border border-[#e2d4bf] bg-white p-5 shadow-sm sm:p-6 " +
+    "relative rounded-2xl border border-[#e2d4bf] bg-white p-3 shadow-sm sm:p-4 " +
     className;
   const skeletonClass =
-    "rounded-3xl border border-[#e2d4bf] bg-white p-4 shadow-sm opacity-80 " +
+    "rounded-2xl border border-[#e2d4bf] bg-white p-3 shadow-sm opacity-80 " +
     className;
 
   if (!mounted) {
     return (
       <div className={skeletonClass} aria-hidden="true">
-        <div className="mx-auto h-[200px] w-[200px] animate-pulse rounded-full bg-[#efe4d2]" />
+        <div className="mx-auto h-[100px] w-[100px] animate-pulse rounded-full bg-[#efe4d2]" />
       </div>
     );
   }
 
   return (
     <section className={shellClass} aria-labelledby={labelId} data-voice-dial="true">
-      <div className="flex flex-col items-center gap-1 text-center">
-        <p className="text-[10px] font-semibold uppercase tracking-[0.3em] text-[#8b5e34]">
+      <div className="flex flex-col items-center gap-0.5 text-center">
+        <p className="text-[9px] font-semibold uppercase tracking-[0.25em] text-[#8b5e34]">
           Narrator voice
         </p>
         <h2
           id={labelId}
-          className="font-serif text-xl font-semibold text-[#2b2118] sm:text-2xl"
+          className="font-serif text-base font-semibold text-[#2b2118] sm:text-lg"
         >
           Who reads the story?
         </h2>
-        <p className="max-w-sm text-sm text-[#6f5c49]">
-          Turn the dial - {selected.label} ({selected.shortLabel.toLowerCase()}) is
-          selected.
-          {previewing ? " Playing a short sample..." : ""}
+        <p className="max-w-xs text-[11px] text-[#6f5c49]">
+          {selected.label} ({selected.shortLabel.toLowerCase()})
+          {previewing ? " · sample…" : ""}
         </p>
       </div>
 
-      <div className="relative mx-auto mt-5 flex w-fit items-start justify-center">
+      <div className="relative mx-auto mt-2 flex w-fit items-start justify-center">
         {showCoach ? (
           <div
-            className="pointer-events-none absolute -right-2 top-6 z-20 flex flex-col items-center sm:-right-8 sm:top-10"
+            className="pointer-events-none absolute -right-1 top-2 z-20 flex flex-col items-center sm:-right-4 sm:top-4"
             aria-hidden="true"
           >
-            <div className="voice-coach-bubble mb-1 max-w-[9.5rem] rounded-2xl bg-[#8b5e34] px-3 py-2 text-center text-[11px] font-semibold leading-snug text-white shadow-lg">
-              Tap a voice on the dial
+            <div className="voice-coach-bubble mb-0.5 max-w-[6.5rem] rounded-xl bg-[#8b5e34] px-2 py-1 text-center text-[9px] font-semibold leading-snug text-white shadow-md">
+              Tap a voice
             </div>
-            <span className="voice-coach-finger text-4xl drop-shadow-md" role="img">
+            <span className="voice-coach-finger text-xl drop-shadow-md" role="img">
               {"\u{1F446}"}
             </span>
           </div>
@@ -181,12 +181,12 @@ export default function NarratorVoiceDial({
           aria-label="Story narrator voice"
         >
           <div
-            className="absolute inset-0 rounded-full border-[6px] border-[#d4c0a0] shadow-inner"
+            className="absolute inset-0 rounded-full border-[3px] border-[#d4c0a0] shadow-inner"
             style={{
               background:
                 "radial-gradient(circle at 40% 35%, #fffaf2 0%, #f0e4d0 55%, #e2d0b4 100%)",
               boxShadow:
-                "inset 0 2px 8px rgba(43,33,24,0.12), 0 8px 20px rgba(43,33,24,0.12)",
+                "inset 0 1px 4px rgba(43,33,24,0.12), 0 4px 10px rgba(43,33,24,0.1)",
             }}
           />
 
@@ -201,7 +201,7 @@ export default function NarratorVoiceDial({
               const angle = DIAL_ANGLES[i] ?? -90;
               const start = (angle - 50) * (Math.PI / 180);
               const end = (angle + 50) * (Math.PI / 180);
-              const rOuter = radius - 4;
+              const rOuter = radius - 2;
               const rInner = radius * 0.42;
               const active = voice.id === selected.id;
               const path = annularSector(cx, cy, rInner, rOuter, start, end);
@@ -211,17 +211,17 @@ export default function NarratorVoiceDial({
                   d={path}
                   fill={active ? "rgba(139,94,52,0.35)" : "rgba(139,94,52,0.08)"}
                   stroke={active ? "#8b5e34" : "rgba(139,94,52,0.25)"}
-                  strokeWidth={active ? 2 : 1}
+                  strokeWidth={active ? 1.5 : 0.75}
                   className="transition-colors duration-200"
                 />
               );
             })}
             {DIAL_ANGLES.map((deg, i) => {
               const rad = (deg * Math.PI) / 180;
-              const x1 = cx + Math.cos(rad) * (radius - 18);
-              const y1 = cy + Math.sin(rad) * (radius - 18);
-              const x2 = cx + Math.cos(rad) * (radius - 6);
-              const y2 = cy + Math.sin(rad) * (radius - 6);
+              const x1 = cx + Math.cos(rad) * (radius - 9);
+              const y1 = cy + Math.sin(rad) * (radius - 9);
+              const x2 = cx + Math.cos(rad) * (radius - 3);
+              const y2 = cy + Math.sin(rad) * (radius - 3);
               return (
                 <line
                   key={i}
@@ -230,7 +230,7 @@ export default function NarratorVoiceDial({
                   x2={x2}
                   y2={y2}
                   stroke="#8b5e34"
-                  strokeWidth={2}
+                  strokeWidth={1.25}
                   strokeLinecap="round"
                   opacity={0.5}
                 />
@@ -241,24 +241,24 @@ export default function NarratorVoiceDial({
           <div
             className="pointer-events-none absolute left-1/2 top-1/2 z-10 origin-bottom transition-transform duration-500 ease-out"
             style={{
-              width: 4,
+              width: 2,
               height: radius * 0.52,
-              marginLeft: -2,
+              marginLeft: -1,
               marginTop: -radius * 0.52,
               transform: `rotate(${needleAngle + 90}deg)`,
               background: "linear-gradient(to top, #5c3d22, #8b5e34)",
-              borderRadius: 2,
-              boxShadow: "0 1px 3px rgba(0,0,0,0.25)",
+              borderRadius: 1,
+              boxShadow: "0 1px 2px rgba(0,0,0,0.25)",
             }}
           >
-            <div className="absolute -left-1.5 -top-1.5 h-4 w-4 rounded-full bg-[#8b5e34] ring-2 ring-[#fffaf2]" />
+            <div className="absolute -left-1 -top-1 h-2 w-2 rounded-full bg-[#8b5e34] ring-1 ring-[#fffaf2]" />
           </div>
 
-          <div className="absolute left-1/2 top-1/2 z-10 flex h-[38%] w-[38%] -translate-x-1/2 -translate-y-1/2 flex-col items-center justify-center rounded-full border-2 border-[#c8b08d] bg-[#fffaf2] text-center shadow-md">
-            <span className="font-serif text-sm font-semibold leading-tight text-[#2b2118] sm:text-base">
+          <div className="absolute left-1/2 top-1/2 z-10 flex h-[38%] w-[38%] -translate-x-1/2 -translate-y-1/2 flex-col items-center justify-center rounded-full border border-[#c8b08d] bg-[#fffaf2] text-center shadow-sm">
+            <span className="font-serif text-[9px] font-semibold leading-tight text-[#2b2118] sm:text-[10px]">
               {selected.label}
             </span>
-            <span className="text-[9px] font-semibold uppercase tracking-wider text-[#8b5e34]">
+            <span className="text-[7px] font-semibold uppercase tracking-wider text-[#8b5e34]">
               {selected.shortLabel}
             </span>
           </div>
@@ -271,7 +271,7 @@ export default function NarratorVoiceDial({
             const y = cy + Math.sin(rad) * labelR;
             const active = voice.id === selected.id;
             const btnClass = active
-              ? "border-[#8b5e34] bg-[#8b5e34] text-white shadow-md scale-105"
+              ? "border-[#8b5e34] bg-[#8b5e34] text-white shadow-sm scale-105"
               : "border-[#d9cbb6] bg-[#fffaf2] text-[#5c4a38] hover:border-[#8b5e34] hover:bg-[#efe4d2]";
             return (
               <button
@@ -282,19 +282,19 @@ export default function NarratorVoiceDial({
                 aria-label={`${voice.label}, ${voice.gender} narrator. ${voice.blurb}`}
                 onClick={() => selectVoice(voice)}
                 className={
-                  "absolute z-20 flex h-14 w-14 -translate-x-1/2 -translate-y-1/2 flex-col items-center justify-center rounded-full border-2 text-center transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#8b5e34] " +
+                  "absolute z-20 flex h-7 w-7 -translate-x-1/2 -translate-y-1/2 flex-col items-center justify-center rounded-full border text-center transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-[#8b5e34] " +
                   btnClass
                 }
                 style={{ left: x, top: y }}
               >
-                <span className="text-[11px] font-bold leading-none">{voice.label}</span>
+                <span className="text-[7px] font-bold leading-none">{voice.label.slice(0, 1)}</span>
                 <span
                   className={
-                    "mt-0.5 text-[8px] font-semibold uppercase tracking-wide " +
+                    "text-[6px] font-semibold uppercase leading-none " +
                     (active ? "text-white" : "text-[#8b5e34]")
                   }
                 >
-                  {voice.shortLabel}
+                  {voice.shortLabel.slice(0, 1)}
                 </span>
               </button>
             );
@@ -302,28 +302,28 @@ export default function NarratorVoiceDial({
         </div>
       </div>
 
-      <p className="mt-4 text-center text-xs text-[#6f5c49]">{selected.blurb}</p>
+      <p className="mt-2 text-center text-[10px] text-[#6f5c49]">{selected.blurb}</p>
 
       {showCoach ? (
-        <div className="mt-3 flex justify-center">
+        <div className="mt-1.5 flex justify-center">
           <button
             type="button"
             onClick={dismissCoach}
-            className="text-xs font-medium text-[#8b5e34] underline-offset-2 hover:underline"
+            className="text-[10px] font-medium text-[#8b5e34] underline-offset-2 hover:underline"
           >
-            Got it - hide tip
+            Got it
           </button>
         </div>
       ) : null}
 
       {previewing ? (
-        <div className="mt-2 flex justify-center">
+        <div className="mt-1 flex justify-center">
           <button
             type="button"
             onClick={stopPreview}
-            className="rounded-full bg-[#efe4d2] px-3 py-1 text-xs font-semibold text-[#5c4a38] hover:bg-[#e4d4bc]"
+            className="rounded-full bg-[#efe4d2] px-2.5 py-0.5 text-[10px] font-semibold text-[#5c4a38] hover:bg-[#e4d4bc]"
           >
-            Stop sample
+            Stop
           </button>
         </div>
       ) : null}
