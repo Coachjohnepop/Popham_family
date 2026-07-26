@@ -53,8 +53,14 @@ function activeSegments(): NarrativeSegment[] {
 const legacyChapterToSegmentId = new Map<string, string>();
 
 for (const segment of narrative.segments) {
+  if (segment.status === "pending") continue;
   if (segment.storybookChapterId) {
     legacyChapterToSegmentId.set(segment.storybookChapterId, segment.id);
+  }
+  for (const chapterId of segment.relatedChapterIds ?? []) {
+    if (!legacyChapterToSegmentId.has(chapterId)) {
+      legacyChapterToSegmentId.set(chapterId, segment.id);
+    }
   }
 }
 
